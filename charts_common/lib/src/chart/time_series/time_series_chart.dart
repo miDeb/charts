@@ -62,4 +62,7 @@ class TimeSeriesChart extends CartesianChart<DateTime> {
   Axis<DateTime> createDomainAxisFromSpec(AxisSpec<DateTime> axisSpec) {
     return (axisSpec as DateTimeAxisSpec).createDateTimeAxis(dateTimeFactory);
   }
+
+  @override
+  bool selectNearestByDomain = false;
 }

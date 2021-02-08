@@ -174,8 +174,6 @@ class SelectNearest<D> implements ChartBehavior<D> {
     var seriesDatumList = <SeriesDatum<D>>[];
 
     if (details != null && details.isNotEmpty) {
-      details.sort((a, b) => a.domainDistance.compareTo(b.domainDistance));
-
       if (maximumDomainDistancePx == null ||
           details[0].domainDistance <= maximumDomainDistancePx) {
         seriesDatumList = expandToDomain
