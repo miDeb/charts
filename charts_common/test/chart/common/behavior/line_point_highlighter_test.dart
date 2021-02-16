@@ -75,8 +75,8 @@ class MockSeriesRenderer extends BaseSeriesRenderer {
   @override
   void paint(_, __) {}
 
-  List<DatumDetails>? getNearestDatumDetailPerSeries(
-      Point<double>? chartPoint, bool byDomain, Rectangle<int>? boundsOverride) {
+  List<DatumDetails>? getNearestDatumDetailPerSeries(Point<double>? chartPoint,
+      bool byDomain, Rectangle<int>? boundsOverride) {
     return null;
   }
 
@@ -101,7 +101,8 @@ void main() {
   final _s2D2 = MyRow(5, 22);
   final _s2D3 = MyRow(6, 23);
 
-  List<DatumDetails?> _mockGetSelectedDatumDetails(List<SeriesDatum> selection) {
+  List<DatumDetails?> _mockGetSelectedDatumDetails(
+      List<SeriesDatum> selection) {
     final details = <DatumDetails?>[];
 
     for (SeriesDatum seriesDatum in selection) {

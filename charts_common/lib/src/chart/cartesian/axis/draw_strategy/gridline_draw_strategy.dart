@@ -15,7 +15,7 @@
 
 import 'dart:math';
 
-import 'package:meta/meta.dart' show immutable, required;
+import 'package:meta/meta.dart' show immutable;
 
 import '../../../../common/graphics_factory.dart' show GraphicsFactory;
 import '../../../../common/line_style.dart' show LineStyle;
@@ -158,6 +158,8 @@ class GridlineTickDrawStrategy<D> extends BaseTickDrawStrategy<D> {
           lineStart = Point(axisBounds!.right - tickLength, y);
         }
         lineEnd = Point(drawAreaBounds!.right, y);
+        break;
+      case null:
         break;
     }
 

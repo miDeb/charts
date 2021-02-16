@@ -91,8 +91,10 @@ class BarChart extends CartesianChart<String?> {
     return new common.BarChart(
         vertical: vertical,
         layoutConfig: layoutConfig?.commonLayoutConfig,
-        primaryMeasureAxis: primaryMeasureAxis?.createAxis() as common.NumericAxis?,
-        secondaryMeasureAxis: secondaryMeasureAxis?.createAxis() as common.NumericAxis?,
+        primaryMeasureAxis:
+            primaryMeasureAxis?.createAxis() as common.NumericAxis?,
+        secondaryMeasureAxis:
+            secondaryMeasureAxis?.createAxis() as common.NumericAxis?,
         disjointMeasureAxes: createDisjointMeasureAxes());
   }
 

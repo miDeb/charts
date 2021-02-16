@@ -16,7 +16,15 @@
 import 'dart:async' show Timer;
 import 'dart:math' show Point;
 import 'package:flutter/material.dart'
-    show BuildContext, GestureDetector, RenderBox, ScaleEndDetails, ScaleStartDetails, ScaleUpdateDetails, TapDownDetails, TapUpDetails;
+    show
+        BuildContext,
+        GestureDetector,
+        RenderBox,
+        ScaleEndDetails,
+        ScaleStartDetails,
+        ScaleUpdateDetails,
+        TapDownDetails,
+        TapUpDetails;
 
 import 'behaviors/chart_behavior.dart' show GestureType;
 import 'chart_container.dart' show ChartContainer, ChartContainerRenderObject;
@@ -38,8 +46,8 @@ class ChartGestureDetector {
 
   makeWidget(BuildContext context, ChartContainer chartContainer,
       Set<GestureType> desiredGestures) {
-    _containerResolver =
-        () => getChartContainerRenderObject(context.findRenderObject() as RenderBox);
+    _containerResolver = () =>
+        getChartContainerRenderObject(context.findRenderObject() as RenderBox);
 
     final wantTapDown = desiredGestures.isNotEmpty;
     final wantTap = desiredGestures.contains(GestureType.onTap);

@@ -173,7 +173,7 @@ class SelectNearest<D> implements ChartBehavior<D> {
     final List<ImmutableSeries<D?>?> seriesList = <ImmutableSeries<D>?>[];
     List<SeriesDatum<D?>> seriesDatumList = <SeriesDatum<D>>[];
 
-    if (details != null && details.isNotEmpty) {
+    if (details.isNotEmpty) {
       if (maximumDomainDistancePx == null ||
           details[0].domainDistance! <= maximumDomainDistancePx!) {
         seriesDatumList = expandToDomain!
@@ -181,8 +181,8 @@ class SelectNearest<D> implements ChartBehavior<D> {
             : [SeriesDatum<D?>(details.first.series, details.first.datum)];
 
         // Filter out points from overlay series.
-        seriesDatumList
-            .removeWhere((SeriesDatum<D?> datum) => datum.series!.overlaySeries!);
+        seriesDatumList.removeWhere(
+            (SeriesDatum<D?> datum) => datum.series!.overlaySeries!);
 
         if (selectClosestSeries! && seriesList.isEmpty) {
           if (details.first.series!.overlaySeries!) {

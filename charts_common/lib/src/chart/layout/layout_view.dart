@@ -14,7 +14,6 @@
 // limitations under the License.
 
 import 'dart:math' show Rectangle;
-import 'package:meta/meta.dart';
 
 import '../../common/graphics_factory.dart' show GraphicsFactory;
 import '../common/chart_canvas.dart' show ChartCanvas;

@@ -93,7 +93,7 @@ class DomainA11yExploreBehavior
   void updateCommonBehavior(common.DomainA11yExploreBehavior commonBehavior) {}
 
   @override
-  String get role => 'DomainA11yExplore-${exploreModeTrigger}';
+  String get role => 'DomainA11yExplore-$exploreModeTrigger';
 
   @override
   bool operator ==(Object o) =>

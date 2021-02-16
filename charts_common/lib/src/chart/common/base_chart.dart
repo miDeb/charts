@@ -69,7 +69,8 @@ abstract class BaseChart<D> {
   Set<String?> _usingRenderers = Set<String?>();
   Map<String?, List<MutableSeries<D>>>? _rendererToSeriesList;
 
-  final Map<String?, SeriesRenderer<D?>> _seriesRenderers = <String?, SeriesRenderer<D>>{};
+  final Map<String?, SeriesRenderer<D?>> _seriesRenderers =
+      <String?, SeriesRenderer<D>>{};
 
   /// Map of named chart behaviors attached to this chart.
   final _behaviorRoleMap = <String, ChartBehavior<D>>{};
@@ -263,7 +264,7 @@ abstract class BaseChart<D> {
     }
 
     final selectionModel = getSelectionModel(selectionModelType);
-    if (selectionModel == null || !selectionModel.hasDatumSelection) {
+    if (!selectionModel.hasDatumSelection) {
       return details;
     }
 
@@ -343,7 +344,7 @@ abstract class BaseChart<D> {
       return false;
     }
 
-    final role = behavior?.role;
+    final role = behavior.role;
     if (role != null && _behaviorRoleMap[role] == behavior) {
       _behaviorRoleMap.remove(role);
     }
@@ -373,7 +374,7 @@ abstract class BaseChart<D> {
 
   /// Tells the chart that this behavior no longer responds to tap events.
   void unregisterTappable(ChartBehavior<D> behavior) {
-    final role = behavior?.role;
+    final role = behavior.role;
     if (role != null && _behaviorTappableMap[role] == behavior) {
       _behaviorTappableMap.remove(role);
     }
@@ -612,9 +613,8 @@ abstract class BaseChart<D> {
     }
   }
 
-  bool get animatingThisDraw => (transition != null &&
-      transition.inMilliseconds > 0 &&
-      !_animationsTemporarilyDisabled!);
+  bool get animatingThisDraw =>
+      (transition.inMilliseconds > 0 && !_animationsTemporarilyDisabled!);
 
   @protected
   void fireOnDraw(List<MutableSeries<D>> seriesList) {

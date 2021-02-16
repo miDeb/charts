@@ -35,8 +35,8 @@ class FakeRenderer extends BaseSeriesRenderer {
   }
 
   @override
-  List<DatumDetails>? getNearestDatumDetailPerSeries(
-      Point<double>? chartPoint, bool byDomain, Rectangle<int>? boundsOverride) {
+  List<DatumDetails>? getNearestDatumDetailPerSeries(Point<double>? chartPoint,
+      bool byDomain, Rectangle<int>? boundsOverride) {
     return null;
   }
 
@@ -111,7 +111,10 @@ void main() {
     _makeBehavior(infoSelectionType,
         selectedData: [SeriesDatumConfig('mySeries1', 'C')]);
 
-    _chart.requestOnDraw([_series1 as MutableSeries<dynamic>, _series2 as MutableSeries<dynamic>]);
+    _chart.requestOnDraw([
+      _series1 as MutableSeries<dynamic>,
+      _series2 as MutableSeries<dynamic>
+    ]);
 
     final model = _chart.getSelectionModel(infoSelectionType);
 
@@ -128,7 +131,10 @@ void main() {
       SeriesDatumConfig('mySeries1', 'D')
     ]);
 
-    _chart.requestOnDraw([_series1 as MutableSeries<dynamic>, _series2 as MutableSeries<dynamic>]);
+    _chart.requestOnDraw([
+      _series1 as MutableSeries<dynamic>,
+      _series2 as MutableSeries<dynamic>
+    ]);
 
     final model = _chart.getSelectionModel(infoSelectionType);
 
@@ -144,7 +150,12 @@ void main() {
   test('selects initial series', () {
     _makeBehavior(infoSelectionType, selectedSeries: ['mySeries2']);
 
-    _chart.requestOnDraw([_series1 as MutableSeries<dynamic>, _series2 as MutableSeries<dynamic>, _series3 as MutableSeries<dynamic>, _series4 as MutableSeries<dynamic>]);
+    _chart.requestOnDraw([
+      _series1 as MutableSeries<dynamic>,
+      _series2 as MutableSeries<dynamic>,
+      _series3 as MutableSeries<dynamic>,
+      _series4 as MutableSeries<dynamic>
+    ]);
 
     final model = _chart.getSelectionModel(infoSelectionType);
 
@@ -157,7 +168,12 @@ void main() {
     _makeBehavior(infoSelectionType,
         selectedSeries: ['mySeries2', 'mySeries4']);
 
-    _chart.requestOnDraw([_series1 as MutableSeries<dynamic>, _series2 as MutableSeries<dynamic>, _series3 as MutableSeries<dynamic>, _series4 as MutableSeries<dynamic>]);
+    _chart.requestOnDraw([
+      _series1 as MutableSeries<dynamic>,
+      _series2 as MutableSeries<dynamic>,
+      _series3 as MutableSeries<dynamic>,
+      _series4 as MutableSeries<dynamic>
+    ]);
 
     final model = _chart.getSelectionModel(infoSelectionType);
 
@@ -172,7 +188,12 @@ void main() {
         selectedData: [SeriesDatumConfig('mySeries1', 'C')],
         selectedSeries: ['mySeries4']);
 
-    _chart.requestOnDraw([_series1 as MutableSeries<dynamic>, _series2 as MutableSeries<dynamic>, _series3 as MutableSeries<dynamic>, _series4 as MutableSeries<dynamic>]);
+    _chart.requestOnDraw([
+      _series1 as MutableSeries<dynamic>,
+      _series2 as MutableSeries<dynamic>,
+      _series3 as MutableSeries<dynamic>,
+      _series4 as MutableSeries<dynamic>
+    ]);
 
     final model = _chart.getSelectionModel(infoSelectionType);
 
@@ -186,7 +207,12 @@ void main() {
   test('selection model is reset when a new series is drawn', () {
     _makeBehavior(infoSelectionType, selectedSeries: ['mySeries2']);
 
-    _chart.requestOnDraw([_series1 as MutableSeries<dynamic>, _series2 as MutableSeries<dynamic>, _series3 as MutableSeries<dynamic>, _series4 as MutableSeries<dynamic>]);
+    _chart.requestOnDraw([
+      _series1 as MutableSeries<dynamic>,
+      _series2 as MutableSeries<dynamic>,
+      _series3 as MutableSeries<dynamic>,
+      _series4 as MutableSeries<dynamic>
+    ]);
 
     final model = _chart.getSelectionModel(infoSelectionType);
 

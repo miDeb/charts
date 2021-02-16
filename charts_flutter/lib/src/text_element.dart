@@ -138,9 +138,9 @@ class TextElement implements common.TextElement {
     _opacity ??= 1.0;
     var color = new Color.fromARGB(
       (textStyle!.color!.a * _opacity!).round(),
-      textStyle!.color!.r!,
-      textStyle!.color!.g!,
-      textStyle!.color!.b!,
+      textStyle!.color!.r,
+      textStyle!.color!.g,
+      textStyle!.color!.b,
     );
 
     _textPainter = new TextPainter(

@@ -168,7 +168,8 @@ void main() {
 
       aboveThresholdTicks = ticks.sublist(2);
       aboveThresholdTicks.retainWhere((Tick tick) =>
-          tick.textElement!.text != '' && !tick.textElement!.text!.contains('<'));
+          tick.textElement!.text != '' &&
+          !tick.textElement!.text!.contains('<'));
       expect(aboveThresholdTicks, hasLength(18));
 
       aboveThresholdTicks = ticks.sublist(2);

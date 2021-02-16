@@ -138,8 +138,8 @@ class ChartCanvas implements common.ChartCanvas {
       new Offset(left, top),
       new Offset(left, top - rect_top_gradient_pixels),
       [
-        new Color.fromARGB(fill.a, fill.r!, fill.g!, fill.b!),
-        new Color.fromARGB(0, fill.r!, fill.g!, fill.b!)
+        new Color.fromARGB(fill.a, fill.r, fill.g, fill.b),
+        new Color.fromARGB(0, fill.r, fill.g, fill.b)
       ],
     );
   }
@@ -172,7 +172,7 @@ class ChartCanvas implements common.ChartCanvas {
       case common.FillPatternType.solid:
       default:
         // Use separate rect for drawing stroke
-        _paint.color = new Color.fromARGB(fill!.a, fill.r!, fill.g!, fill.b!);
+        _paint.color = new Color.fromARGB(fill!.a, fill.r, fill.g, fill.b);
         _paint.style = PaintingStyle.fill;
 
         // Apply a gradient to the top [rect_top_gradient_pixels] to transparent
@@ -190,7 +190,7 @@ class ChartCanvas implements common.ChartCanvas {
     // and a stroke at this time. Use a separate rect for the stroke.
     if (drawStroke) {
       _paint.color =
-          new Color.fromARGB(stroke!.a, stroke.r!, stroke.g!, stroke.b!);
+          new Color.fromARGB(stroke!.a, stroke.r, stroke.g, stroke.b);
       // Set shader to null if no draw area bounds so it can use the color
       // instead.
       _paint.shader = drawAreaBounds != null
@@ -222,7 +222,7 @@ class ChartCanvas implements common.ChartCanvas {
       bool? roundBottomLeft,
       bool? roundBottomRight}) {
     // Use separate rect for drawing stroke
-    _paint.color = new Color.fromARGB(fill!.a, fill.r!, fill.g!, fill.b!);
+    _paint.color = new Color.fromARGB(fill!.a, fill.r, fill.g, fill.b);
     _paint.style = PaintingStyle.fill;
 
     canvas.drawRRect(
@@ -295,7 +295,7 @@ class ChartCanvas implements common.ChartCanvas {
       offsetX -= flutterTextElement.verticalFontShift;
 
       canvas.save();
-      canvas.translate(offsetX.toDouble(), offsetY!.toDouble());
+      canvas.translate(offsetX.toDouble(), offsetY.toDouble());
       canvas.rotate(rotation);
 
       textElement.textPainter!.paint(canvas, new Offset(0.0, 0.0));
@@ -315,7 +315,7 @@ class ChartCanvas implements common.ChartCanvas {
       offsetY -= flutterTextElement.verticalFontShift;
 
       textElement.textPainter!
-          .paint(canvas, new Offset(offsetX!.toDouble(), offsetY.toDouble()));
+          .paint(canvas, new Offset(offsetX.toDouble(), offsetY.toDouble()));
     }
   }
 
@@ -377,7 +377,7 @@ class ChartCanvas implements common.ChartCanvas {
 
     // Fill in the shape with a solid background color.
     _paint.color = new Color.fromARGB(
-        background.a, background.r!, background.g!, background.b!);
+        background.a, background.r, background.g, background.b);
     _paint.style = PaintingStyle.fill;
 
     // Apply a gradient the background if bounds exceed the draw area.

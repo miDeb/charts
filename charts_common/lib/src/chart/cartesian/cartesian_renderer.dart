@@ -34,8 +34,8 @@ abstract class BaseCartesianRenderer<D> extends BaseSeriesRenderer<D>
   bool _renderingVertically = true;
 
   BaseCartesianRenderer(
-      { String? rendererId,
-       int? layoutPaintOrder,
+      {String? rendererId,
+      int? layoutPaintOrder,
       SymbolRenderer? symbolRenderer})
       : super(
             rendererId: rendererId,
@@ -121,7 +121,8 @@ abstract class BaseCartesianRenderer<D> extends BaseSeriesRenderer<D>
       // domainAxis viewport.
       int startIndex =
           findNearestViewportStart(domainAxis, domainFn, series.data!)!;
-      int endIndex = findNearestViewportEnd(domainAxis, domainFn, series.data!)!;
+      int endIndex =
+          findNearestViewportEnd(domainAxis, domainFn, series.data!)!;
 
       addMeasureValuesFor(series, measureAxis, startIndex, endIndex);
     });

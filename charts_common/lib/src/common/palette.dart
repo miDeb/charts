@@ -47,9 +47,9 @@ abstract class Palette {
       {Color? darker, Color? lighter}) {
     final fraction = index / steps;
     return Color(
-      r: color.r! + ((255 - color.r!) * fraction).round(),
-      g: color.g! + ((255 - color.g!) * fraction).round(),
-      b: color.b! + ((255 - color.b!) * fraction).round(),
+      r: color.r + ((255 - color.r) * fraction).round(),
+      g: color.g + ((255 - color.g) * fraction).round(),
+      b: color.b + ((255 - color.b) * fraction).round(),
       a: color.a + ((255 - color.a) * fraction).round(),
       darker: darker,
       lighter: lighter,

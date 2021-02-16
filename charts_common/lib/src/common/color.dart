@@ -64,17 +64,17 @@ class Color {
   Color get darker =>
       _darker ??
       Color(
-          r: (r! * _darkerPercentOfOrig).round(),
-          g: (g! * _darkerPercentOfOrig).round(),
-          b: (b! * _darkerPercentOfOrig).round(),
+          r: (r * _darkerPercentOfOrig).round(),
+          g: (g * _darkerPercentOfOrig).round(),
+          b: (b * _darkerPercentOfOrig).round(),
           a: a);
 
   Color get lighter =>
       _lighter ??
       Color(
-          r: r! + ((255 - r!) * _lighterPercentOfOrig).round(),
-          g: g! + ((255 - g!) * _lighterPercentOfOrig).round(),
-          b: b! + ((255 - b!) * _lighterPercentOfOrig).round(),
+          r: r + ((255 - r) * _lighterPercentOfOrig).round(),
+          g: g + ((255 - g) * _lighterPercentOfOrig).round(),
+          b: b + ((255 - b) * _lighterPercentOfOrig).round(),
           a: a);
 
   @override
@@ -98,14 +98,14 @@ class Color {
   String toString() => rgbaHexString;
 
   /// Converts the character into a #RGBA hex string.
-  String get rgbaHexString => '#${_get2CharHex(r!)}${_get2CharHex(g!)}'
-      '${_get2CharHex(b!)}${_get2CharHex(a)}';
+  String get rgbaHexString => '#${_get2CharHex(r)}${_get2CharHex(g)}'
+      '${_get2CharHex(b)}${_get2CharHex(a)}';
 
   /// Converts the character into a #RGB hex string.
   String get hexString {
     // Alpha is not included in the hex string.
     assert(a == 255);
-    return '#${_get2CharHex(r!)}${_get2CharHex(g!)}${_get2CharHex(b!)}';
+    return '#${_get2CharHex(r)}${_get2CharHex(g)}${_get2CharHex(b)}';
   }
 
   String _get2CharHex(int num) {

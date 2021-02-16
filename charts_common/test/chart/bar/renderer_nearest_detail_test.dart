@@ -85,7 +85,8 @@ void main() {
     return renderer;
   }
 
-  BaseBarRenderer _makeBarRenderer({required bool vertical, BarGroupingType? groupType}) {
+  BaseBarRenderer _makeBarRenderer(
+      {required bool vertical, BarGroupingType? groupType}) {
     final renderer =
         BarRenderer(config: BarRendererConfig(groupingType: groupType));
     _configureBaseRenderer(renderer, vertical);

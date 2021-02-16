@@ -80,9 +80,7 @@ class DomainOutliner<D> implements ChartBehavior<D> {
           if (!selectionModel.isDatumSelected(series, index)) {
             return strokeWidthPx;
           }
-          return strokeWidthPx == null
-              ? defaultStrokePx
-              : strokeWidthPx + strokePaddingPx;
+          return strokeWidthPx + strokePaddingPx;
         };
       }
     }

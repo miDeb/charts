@@ -17,11 +17,10 @@ import 'dart:collection' show LinkedHashMap, HashSet;
 import 'dart:math' show Point, Rectangle, max;
 
 import 'package:collection/collection.dart' show IterableExtension;
-import 'package:meta/meta.dart' show protected, required;
+import 'package:meta/meta.dart' show protected;
 
 import '../../common/color.dart' show Color;
 import '../../common/math.dart' show clamp;
-import '../../common/symbol_renderer.dart' show RoundedRectSymbolRenderer;
 import '../../data/series.dart' show AttributeKey;
 import '../cartesian/axis/axis.dart'
     show ImmutableAxis, OrdinalAxis, domainAxisKey, measureAxisKey;
@@ -105,12 +104,12 @@ abstract class BaseBarRenderer<D, R extends BaseBarRendererElement,
       : super(
           rendererId: rendererId,
           layoutPaintOrder: layoutPaintOrder,
-          symbolRenderer: config?.symbolRenderer ?? RoundedRectSymbolRenderer(),
+          symbolRenderer: config.symbolRenderer,
         );
 
   @override
   void preprocessSeries(List<MutableSeries<D>> seriesList) {
-    int barGroupIndex = 0;
+    int? barGroupIndex = 0;
 
     // Maps used to store the final measure offset of the previous series, for
     // each domain value.
@@ -235,7 +234,7 @@ abstract class BaseBarRenderer<D, R extends BaseBarRendererElement,
       series.setAttr(barElementsKey, elements);
 
       if (config.grouped) {
-        barGroupIndex++;
+        barGroupIndex = barGroupIndex! + 1;
       }
     });
 
@@ -644,9 +643,6 @@ abstract class BaseBarRenderer<D, R extends BaseBarRendererElement,
 
       nearest.retainWhere((d) => d.domain == nearestDomain);
     }
-
-    // If we didn't find anything, then keep an empty list.
-    nearest ??= <DatumDetails<D>>[];
 
     // Note: the details are already sorted by domain & measure distance in
     // base chart.

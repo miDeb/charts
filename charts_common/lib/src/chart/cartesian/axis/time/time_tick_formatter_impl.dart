@@ -14,7 +14,6 @@
 // limitations under the License.
 
 import 'package:intl/intl.dart' show DateFormat;
-import 'package:meta/meta.dart' show required;
 import '../../../../common/date_time_factory.dart' show DateTimeFactory;
 import 'time_tick_formatter.dart' show TimeTickFormatter;
 
@@ -83,6 +82,8 @@ class TimeTickFormatterImpl implements TimeTickFormatter {
         break;
       case CalendarField.second:
         value = dateTime.second;
+        break;
+      case null:
         break;
     }
 

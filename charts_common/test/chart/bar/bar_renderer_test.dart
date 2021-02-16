@@ -49,11 +49,13 @@ class MockChart extends Mock implements CartesianChart {}
 class FakeBarRenderer<D> extends BarRenderer<D> {
   int paintBarCallCount = 0;
 
-  factory FakeBarRenderer({required BarRendererConfig config, String? rendererId}) {
+  factory FakeBarRenderer(
+      {required BarRendererConfig config, String? rendererId}) {
     return FakeBarRenderer._internal(config: config, rendererId: rendererId);
   }
 
-  FakeBarRenderer._internal({required BarRendererConfig config, String? rendererId})
+  FakeBarRenderer._internal(
+      {required BarRendererConfig config, String? rendererId})
       : super.internal(config: config, rendererId: rendererId);
 
   @override

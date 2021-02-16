@@ -43,7 +43,7 @@ class CircleSectorPainter {
       required common.Color fill,
       common.Color? stroke,
       double? strokeWidthPx}) {
-    paint.color = new Color.fromARGB(fill.a, fill.r!, fill.g!, fill.b!);
+    paint.color = new Color.fromARGB(fill.a, fill.r, fill.g, fill.b);
     paint.style = PaintingStyle.fill;
 
     final innerRadiusStartPoint = new Point<double>(
@@ -60,9 +60,7 @@ class CircleSectorPainter {
 
     final centerOffset = new Offset(center.x as double, center.y as double);
 
-    final isFullCircle = startAngle != null &&
-        endAngle != null &&
-        endAngle - startAngle == 2 * pi;
+    final isFullCircle = endAngle - startAngle == 2 * pi;
 
     final midpointAngle = (endAngle + startAngle) / 2;
 

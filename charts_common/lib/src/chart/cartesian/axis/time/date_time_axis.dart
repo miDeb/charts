@@ -27,10 +27,10 @@ class DateTimeAxis extends Axis<DateTime?> {
   DateTimeAxis(DateTimeFactory dateTimeFactory,
       {TickProvider<DateTime?>? tickProvider, TickFormatter? tickFormatter})
       : super(
-          tickProvider: tickProvider??
+          tickProvider: tickProvider ??
               AutoAdjustingDateTimeTickProvider.createDefault(dateTimeFactory),
-          tickFormatter:
-              tickFormatter as TickFormatter<DateTime>? ?? DateTimeTickFormatter(dateTimeFactory),
+          tickFormatter: tickFormatter as TickFormatter<DateTime>? ??
+              DateTimeTickFormatter(dateTimeFactory),
           scale: DateTimeScale(dateTimeFactory),
         );
 

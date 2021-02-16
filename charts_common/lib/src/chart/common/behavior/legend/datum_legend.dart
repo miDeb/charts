@@ -35,7 +35,7 @@ class DatumLegend<D> extends Legend<D> {
 
   DatumLegend({
     SelectionModelType? selectionModelType,
-    LegendEntryGenerator<D>? legendEntryGenerator,
+    LegendEntryGenerator<D?>? legendEntryGenerator,
     MeasureFormatter? measureFormatter,
     MeasureFormatter? secondaryMeasureFormatter,
     bool? showMeasures,
@@ -44,7 +44,7 @@ class DatumLegend<D> extends Legend<D> {
   }) : super(
             selectionModelType: selectionModelType ?? SelectionModelType.info,
             legendEntryGenerator:
-                (legendEntryGenerator ?? PerDatumLegendEntryGenerator()) as LegendEntryGenerator<D?>?,
+                (legendEntryGenerator ?? PerDatumLegendEntryGenerator()),
             entryTextStyle: entryTextStyle) {
     // Call the setters that include the setting for default.
     this.showMeasures = showMeasures;

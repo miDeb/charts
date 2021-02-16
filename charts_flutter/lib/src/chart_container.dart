@@ -31,7 +31,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:logging/logging.dart';
-import 'package:meta/meta.dart' show required;
 import 'chart_canvas.dart' show ChartCanvas;
 import 'chart_state.dart' show ChartState;
 import 'base_chart.dart' show BaseChart;
@@ -108,16 +107,18 @@ class ChartContainerRenderObject<D> extends RenderCustomPaint
 
     if (_chart == null) {
       common.Performance.time('chartsCreate');
-      _chart = config.chartWidget.createCommonChart(_chartState as BaseChartState?) as common.BaseChart<D?>?;
+      _chart =
+          config.chartWidget.createCommonChart(_chartState as BaseChartState?)
+              as common.BaseChart<D?>?;
       _chart!.init(this, new GraphicsFactory(context));
       common.Performance.timeEnd('chartsCreate');
     }
     common.Performance.time('chartsConfig');
-    config.chartWidget
-        .updateCommonChart(_chart!, config.oldChartWidget, _chartState as BaseChartState<dynamic>);
+    config.chartWidget.updateCommonChart(
+        _chart!, config.oldChartWidget, _chartState as BaseChartState<dynamic>);
 
     _rtlSpec = config.rtlSpec ?? const common.RTLSpec();
-    _chartContainerIsRtl = config.rtl ?? false;
+    _chartContainerIsRtl = config.rtl;
 
     common.Performance.timeEnd('chartsConfig');
 
@@ -162,7 +163,8 @@ class ChartContainerRenderObject<D> extends RenderCustomPaint
     if (_seriesList != config.chartWidget.seriesList ||
         _chartState!.chartIsDirty) {
       _chartState!.resetChartDirtyFlag();
-      _seriesList = config.chartWidget.seriesList as List<common.Series<dynamic, D?>>?;
+      _seriesList =
+          config.chartWidget.seriesList as List<common.Series<dynamic, D?>>?;
 
       // Clear out the a11y nodes generated.
       _a11yNodes = null;
@@ -212,7 +214,8 @@ class ChartContainerRenderObject<D> extends RenderCustomPaint
   @override
   void performLayout() {
     common.Performance.time('chartsLayout');
-    _chart!.measure(constraints.maxWidth.toInt(), constraints.maxHeight.toInt());
+    _chart!
+        .measure(constraints.maxWidth.toInt(), constraints.maxHeight.toInt());
     _chart!.layout(constraints.maxWidth.toInt(), constraints.maxHeight.toInt());
     common.Performance.timeEnd('chartsLayout');
     size = constraints.biggest;

@@ -15,8 +15,6 @@
 
 import 'dart:math' show Rectangle;
 
-import 'package:meta/meta.dart' show required;
-
 import '../../common/color.dart' show Color;
 import '../../common/graphics_factory.dart' show GraphicsFactory;
 import '../../common/text_element.dart' show TextDirection, TextElement;
@@ -138,7 +136,6 @@ class BarLabelDecorator<D> extends BarRendererDecorator<D> {
       // Get space available inside and outside the bar.
       final totalPadding = labelPadding * 2;
       final insideBarHeight = bounds.height - totalPadding;
-      final outsideBarHeight = drawBounds!.height - bounds.height - totalPadding;
 
       var calculatedLabelPosition = labelPosition;
       if (calculatedLabelPosition == BarLabelPosition.auto) {
@@ -147,8 +144,8 @@ class BarLabelDecorator<D> extends BarRendererDecorator<D> {
             (labelElement) => labelElement..textStyle = datumInsideLabelStyle);
 
         final labelMaxWidth = labelElements
-            .map(
-                (labelElement) => labelElement.measurement!.horizontalSliceWidth)
+            .map((labelElement) =>
+                labelElement.measurement!.horizontalSliceWidth)
             .fold(0, (dynamic max, current) => max > current ? max : current);
 
         // Total label height depends on the label element's text style.
@@ -176,7 +173,8 @@ class BarLabelDecorator<D> extends BarRendererDecorator<D> {
       for (var labelElement in labelElements) {
         // Calculate the start position of label based on [labelAnchor].
         int? labelY;
-        final labelHeight = labelElement.measurement!.verticalSliceWidth!.round();
+        final labelHeight =
+            labelElement.measurement!.verticalSliceWidth!.round();
         final offsetHeight =
             (labelHeight + _defaultMultiLineLabelPadding) * labelsDrawn;
 
@@ -280,7 +278,8 @@ class BarLabelDecorator<D> extends BarRendererDecorator<D> {
         // more space than the outside, it makes more sense to place the label
         // inside the bar, even if the entire label does not fit.
         calculatedLabelPosition = (insideBarWidth >= outsideBarWidth ||
-                labelElement.measurement!.horizontalSliceWidth! < insideBarWidth)
+                labelElement.measurement!.horizontalSliceWidth! <
+                    insideBarWidth)
             ? BarLabelPosition.inside
             : BarLabelPosition.outside;
       }
@@ -368,10 +367,10 @@ class BarLabelDecorator<D> extends BarRendererDecorator<D> {
   TextStyle _getTextStyle(
       GraphicsFactory graphicsFactory, TextStyleSpec labelSpec) {
     return graphicsFactory.createTextPaint()
-      ..color = labelSpec?.color ?? Color.black
-      ..fontFamily = labelSpec?.fontFamily
-      ..fontSize = labelSpec?.fontSize ?? 12
-      ..lineHeight = labelSpec?.lineHeight;
+      ..color = labelSpec.color ?? Color.black
+      ..fontFamily = labelSpec.fontFamily
+      ..fontSize = labelSpec.fontSize ?? 12
+      ..lineHeight = labelSpec.lineHeight;
   }
 
   /// Helper function to get datum specific style

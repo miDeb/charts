@@ -72,8 +72,10 @@ class NumericComboChart extends CartesianChart<num?> {
     // use its default types (usually a numeric axis).
     return new common.NumericCartesianChart(
         layoutConfig: layoutConfig?.commonLayoutConfig,
-        primaryMeasureAxis: primaryMeasureAxis?.createAxis() as common.NumericAxis?,
-        secondaryMeasureAxis: secondaryMeasureAxis?.createAxis() as common.NumericAxis?);
+        primaryMeasureAxis:
+            primaryMeasureAxis?.createAxis() as common.NumericAxis?,
+        secondaryMeasureAxis:
+            secondaryMeasureAxis?.createAxis() as common.NumericAxis?);
   }
 }
 
@@ -117,7 +119,9 @@ class OrdinalComboChart extends CartesianChart<String?> {
     // use its default types (usually a numeric axis).
     return new common.OrdinalCartesianChart(
         layoutConfig: layoutConfig?.commonLayoutConfig,
-        primaryMeasureAxis: primaryMeasureAxis?.createAxis() as common.NumericAxis?,
-        secondaryMeasureAxis: secondaryMeasureAxis?.createAxis() as common.NumericAxis?);
+        primaryMeasureAxis:
+            primaryMeasureAxis?.createAxis() as common.NumericAxis?,
+        secondaryMeasureAxis:
+            secondaryMeasureAxis?.createAxis() as common.NumericAxis?);
   }
 }

@@ -50,8 +50,10 @@ class AxisSpec<D> {
   }) {
     return AxisSpec(
       renderSpec: renderSpec ?? other.renderSpec as RenderSpec<D>?,
-      tickProviderSpec: tickProviderSpec ?? other.tickProviderSpec as TickProviderSpec<D>?,
-      tickFormatterSpec: tickFormatterSpec ?? other.tickFormatterSpec as TickFormatterSpec<D>?,
+      tickProviderSpec:
+          tickProviderSpec ?? other.tickProviderSpec as TickProviderSpec<D>?,
+      tickFormatterSpec:
+          tickFormatterSpec ?? other.tickFormatterSpec as TickFormatterSpec<D>?,
       showAxisLine: showAxisLine ?? other.showAxisLine,
       scaleSpec: scaleSpec ?? other.scaleSpec,
     );

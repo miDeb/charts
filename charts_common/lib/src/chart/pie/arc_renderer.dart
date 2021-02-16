@@ -17,7 +17,6 @@ import 'dart:collection' show LinkedHashMap;
 import 'dart:math' show atan2, cos, max, sin, pi, Point, Rectangle;
 
 import 'package:collection/collection.dart' show IterableExtension;
-import 'package:meta/meta.dart' show required;
 
 import '../../common/color.dart' show Color;
 import '../../common/style/style_factory.dart' show StyleFactory;
@@ -50,7 +49,8 @@ class ArcRenderer<D> extends BaseSeriesRenderer<D?> {
   ///
   /// [LinkedHashMap] is used to render the series on the canvas in the same
   /// order as the data was given to the chart.
-  final LinkedHashMap<String?, _AnimatedArcList<D?>> _seriesArcMap = LinkedHashMap<String?, _AnimatedArcList<D>>();
+  final LinkedHashMap<String?, _AnimatedArcList<D?>> _seriesArcMap =
+      LinkedHashMap<String?, _AnimatedArcList<D>>();
 
   // Store a list of arcs that exist in the series data.
   //
@@ -66,7 +66,7 @@ class ArcRenderer<D> extends BaseSeriesRenderer<D?> {
   }
 
   ArcRenderer._internal({String? rendererId, required this.config})
-      : arcRendererDecorators = config?.arcRendererDecorators ?? [],
+      : arcRendererDecorators = config.arcRendererDecorators,
         super(
             rendererId: rendererId,
             layoutPaintOrder: config.layoutPaintOrder,
@@ -191,8 +191,8 @@ class ArcRenderer<D> extends BaseSeriesRenderer<D?> {
         var arcKey = '__no_data__';
 
         // If we already have an AnimatingArc for that index, use it.
-        var animatingArc = arcList.arcs.firstWhereOrNull(
-            (_AnimatedArc arc) => arc.key == arcKey);
+        var animatingArc = arcList.arcs
+            .firstWhereOrNull((_AnimatedArc arc) => arc.key == arcKey);
 
         arcList.center = center;
         arcList.radius = radius;
@@ -234,8 +234,8 @@ class ArcRenderer<D> extends BaseSeriesRenderer<D?> {
           var arcKey = '${series.id}__${domainValue.toString()}';
 
           // If we already have an AnimatingArc for that index, use it.
-          var animatingArc = arcList.arcs.firstWhereOrNull(
-              (_AnimatedArc arc) => arc.key == arcKey);
+          var animatingArc = arcList.arcs
+              .firstWhereOrNull((_AnimatedArc arc) => arc.key == arcKey);
 
           arcList.center = center;
           arcList.radius = radius;
@@ -343,8 +343,8 @@ class ArcRenderer<D> extends BaseSeriesRenderer<D?> {
           .map<ArcRendererElement<D?>?>((_AnimatedArc<D?> animatingArc) =>
               animatingArc.getCurrentArc(animationPercent))
           .forEach((ArcRendererElement? arc) {
-        circleSectors
-            .add(CanvasPieSlice(arc!.startAngle, arc.endAngle, fill: arc.color));
+        circleSectors.add(
+            CanvasPieSlice(arc!.startAngle, arc.endAngle, fill: arc.color));
 
         arcElementsList.arcs.add(arc as ArcRendererElement<D?>?);
       });
@@ -469,7 +469,9 @@ class ArcRenderer<D> extends BaseSeriesRenderer<D?> {
 
   @override
   List<DatumDetails<D?>> getNearestDatumDetailPerSeries(
-      Point<double>? chartPoint, bool byDomain, Rectangle<int>? boundsOverride) {
+      Point<double>? chartPoint,
+      bool byDomain,
+      Rectangle<int>? boundsOverride) {
     final List<DatumDetails<D?>> nearest = <DatumDetails<D>>[];
 
     // Was it even in the component bounds?
@@ -673,8 +675,8 @@ class _AnimatedArc<D> {
       return _currentArc;
     }
 
-    _currentArc!.updateAnimationPercent(
-        _previousArc!, _targetArc!, animationPercent!);
+    _currentArc!
+        .updateAnimationPercent(_previousArc!, _targetArc!, animationPercent!);
 
     return _currentArc;
   }

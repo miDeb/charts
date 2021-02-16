@@ -15,8 +15,6 @@
 
 import 'dart:math';
 
-import 'package:meta/meta.dart' show required;
-
 import '../../../common/chart_canvas.dart' show ChartCanvas;
 import '../../../layout/layout_view.dart' show ViewMeasuredSizes;
 import '../axis.dart' show AxisOrientation;

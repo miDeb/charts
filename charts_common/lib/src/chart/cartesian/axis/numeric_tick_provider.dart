@@ -15,8 +15,6 @@
 
 import 'dart:math' show log, log10e, max, min, pow;
 
-import 'package:meta/meta.dart' show required;
-
 import '../../../common/graphics_factory.dart' show GraphicsFactory;
 import '../../common/chart_context.dart' show ChartContext;
 import '../../common/unitconverter/identity_converter.dart'
@@ -143,8 +141,7 @@ class NumericTickProvider extends BaseTickProvider<num?> {
   /// assignment.
   void setFixedTickCount(int tickCount) {
     // Don't allow a single tick, it doesn't make sense. so tickCount > 1
-    _desiredMinTickCount =
-        tickCount != null && tickCount > 1 ? tickCount : null;
+    _desiredMinTickCount = tickCount > 1 ? tickCount : null;
     _desiredMaxTickCount = _desiredMinTickCount;
   }
 
@@ -157,11 +154,9 @@ class NumericTickProvider extends BaseTickProvider<num?> {
   /// [minTickCount] The min tick count must be greater than 1.
   void setTickCount(int maxTickCount, int minTickCount) {
     // Don't allow a single tick, it doesn't make sense. so tickCount > 1
-    if (maxTickCount != null && maxTickCount > 1) {
+    if (maxTickCount > 1) {
       _desiredMaxTickCount = maxTickCount;
-      if (minTickCount != null &&
-          minTickCount > 1 &&
-          minTickCount <= _desiredMaxTickCount!) {
+      if (minTickCount > 1 && minTickCount <= _desiredMaxTickCount!) {
         _desiredMinTickCount = minTickCount;
       } else {
         _desiredMinTickCount = 2;
@@ -210,7 +205,8 @@ class NumericTickProvider extends BaseTickProvider<num?> {
     required TickDrawStrategy tickDrawStrategy,
     required TickHint<num?> tickHint,
   }) {
-    final stepSize = (tickHint.end! - tickHint.start!) / (tickHint.tickCount! - 1);
+    final stepSize =
+        (tickHint.end! - tickHint.start!) / (tickHint.tickCount! - 1);
     // Find the first tick that is greater than or equal to the min
     // viewportDomain.
     final num tickZeroShift = tickHint.start! -
@@ -218,8 +214,8 @@ class NumericTickProvider extends BaseTickProvider<num?> {
             (tickHint.start! >= 0
                 ? (tickHint.start! / stepSize).floor()
                 : (tickHint.start! / stepSize).ceil()));
-    final tickStart =
-        (scale.viewportDomain!.min / stepSize).ceil() * stepSize + tickZeroShift;
+    final tickStart = (scale.viewportDomain!.min / stepSize).ceil() * stepSize +
+        tickZeroShift;
     final stepInfo = _TickStepInfo(stepSize.abs(), tickStart);
     final tickValues = _getTickValues(stepInfo, tickHint.tickCount!);
 
@@ -286,9 +282,6 @@ class NumericTickProvider extends BaseTickProvider<num?> {
           tickCount--) {
         final stepInfo =
             _getStepsForTickCount(tickCount, axisUnitsHigh!, axisUnitsLow);
-        if (stepInfo == null) {
-          continue;
-        }
         final firstTick = dataToAxisUnitConverter.invert(stepInfo.tickStart)!;
         final lastTick = dataToAxisUnitConverter
             .invert(stepInfo.tickStart + stepInfo.stepSize * (tickCount - 1))!;
@@ -499,7 +492,8 @@ class NumericTickProvider extends BaseTickProvider<num?> {
     // We have our size and start, assign all the tick values to the given array.
     for (int i = 0; i < tickCount; i++) {
       tickValues[i] = dataToAxisUnitConverter.invert(
-          _removeRoundingErrors(steps.tickStart + (i * steps.stepSize))) as double?;
+              _removeRoundingErrors(steps.tickStart + (i * steps.stepSize)))
+          as double?;
     }
     return tickValues;
   }

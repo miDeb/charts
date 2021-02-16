@@ -15,7 +15,7 @@
 
 import 'dart:math' show max, min, Point, Rectangle;
 
-import 'package:meta/meta.dart' show protected, required;
+import 'package:meta/meta.dart' show protected;
 
 import '../../common/color.dart' show Color;
 import '../cartesian/axis/axis.dart'
@@ -498,8 +498,10 @@ class BarRendererElement<D> extends BaseBarRendererElement
   @override
   void updateAnimationPercent(BaseBarRendererElement previous,
       BaseBarRendererElement target, double animationPercent) {
-    final BarRendererElement localPrevious = previous as BarRendererElement<dynamic>;
-    final BarRendererElement localTarget = target as BarRendererElement<dynamic>;
+    final BarRendererElement localPrevious =
+        previous as BarRendererElement<dynamic>;
+    final BarRendererElement localTarget =
+        target as BarRendererElement<dynamic>;
 
     final previousBounds = localPrevious.bounds!;
     final targetBounds = localTarget.bounds!;
@@ -534,7 +536,8 @@ class AnimatedBar<D> extends BaseAnimatedBar<D, BarRendererElement<D>> {
 
   @override
   void animateElementToMeasureAxisPosition(BaseBarRendererElement target) {
-    final BarRendererElement localTarget = target as BarRendererElement<dynamic>;
+    final BarRendererElement localTarget =
+        target as BarRendererElement<dynamic>;
 
     // TODO: Animate out bars in the middle of a stack.
     localTarget.bounds = Rectangle<int>(

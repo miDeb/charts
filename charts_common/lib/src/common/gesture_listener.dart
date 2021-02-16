@@ -96,7 +96,8 @@ class GestureListener {
 }
 
 typedef GestureCancelCallback = void Function();
-typedef GestureSinglePointCallback = bool? Function(Point<double> localPosition);
+typedef GestureSinglePointCallback = bool? Function(
+    Point<double> localPosition);
 
 typedef GestureDragStartCallback = bool Function(Point<double> localPosition);
 typedef GestureDragUpdateCallback = bool Function(

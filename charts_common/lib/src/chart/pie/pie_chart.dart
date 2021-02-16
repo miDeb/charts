@@ -66,9 +66,7 @@ class PieChart<D> extends BaseChart<D?> {
       final details =
           (renderer as ArcRenderer).getExpandedDatumDetails(seriesDatum);
 
-      if (details != null) {
-        entries.add(details as DatumDetails<D?>);
-      }
+      entries.add(details as DatumDetails<D?>);
     });
 
     return entries;

@@ -225,8 +225,10 @@ abstract class Legend<D> implements ChartBehavior<D?>, LayoutView {
   /// Internally update legend entries, before calling [updateLegend] that
   /// notifies the native platform.
   void _updateLegendEntries({List<MutableSeries<D>>? seriesList}) {
-    legendEntryGenerator!.updateLegendEntries(legendState._legendEntries,
-        legendState._selectionModel as SelectionModel<D?>?, seriesList ?? chart!.currentSeriesList as List<MutableSeries<D?>>?);
+    legendEntryGenerator!.updateLegendEntries(
+        legendState._legendEntries,
+        legendState._selectionModel as SelectionModel<D?>?,
+        seriesList ?? chart!.currentSeriesList as List<MutableSeries<D?>>?);
 
     updateLegend();
   }

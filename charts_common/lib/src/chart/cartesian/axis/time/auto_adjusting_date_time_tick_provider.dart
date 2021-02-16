@@ -13,8 +13,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import 'package:meta/meta.dart' show required;
-
 import '../../../../common/date_time_factory.dart' show DateTimeFactory;
 import '../../../../common/graphics_factory.dart' show GraphicsFactory;
 import '../../../common/chart_context.dart' show ChartContext;
@@ -79,7 +77,7 @@ class AutoAdjustingDateTimeTickProvider implements TickProvider<DateTime?> {
   /// and this list of tick providers are used in the order they are provided.
   factory AutoAdjustingDateTimeTickProvider.createWith(
       List<TimeRangeTickProvider> potentialTickProviders) {
-    if (potentialTickProviders == null || potentialTickProviders.isEmpty) {
+    if (potentialTickProviders.isEmpty) {
       throw ArgumentError('At least one TimeRangeTickProvider is required');
     }
 
@@ -135,9 +133,10 @@ class AutoAdjustingDateTimeTickProvider implements TickProvider<DateTime?> {
 
   /// Find the closest tick provider based on the tick hint.
   TimeRangeTickProvider? _getClosestTickProvider(TickHint<DateTime?> tickHint) {
-    final stepSize = ((tickHint.end!.difference(tickHint.start!).inMilliseconds) /
-            (tickHint.tickCount! - 1))
-        .round();
+    final stepSize =
+        ((tickHint.end!.difference(tickHint.start!).inMilliseconds) /
+                (tickHint.tickCount! - 1))
+            .round();
 
     int? minDifference;
     TimeRangeTickProvider? closestTickProvider;

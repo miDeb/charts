@@ -16,8 +16,6 @@
 import 'dart:collection' show LinkedHashMap;
 import 'dart:math' show max, Rectangle;
 
-import 'package:meta/meta.dart' show required;
-
 import '../../common/graphics_factory.dart' show GraphicsFactory;
 import '../cartesian/axis/axis.dart' show ImmutableAxis;
 import '../cartesian/cartesian_chart.dart' show CartesianChart;

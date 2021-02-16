@@ -48,7 +48,8 @@ abstract class BaseTreeMapRenderer<D> extends BaseSeriesRenderer<D> {
 
   /// An ordered map of [_AnimatedTreeMapRect] that will get drawn on the
   /// canvas.
-  final LinkedHashMap<D?, _AnimatedTreeMapRect<D?>> _animatedTreeMapRects = LinkedHashMap<D, _AnimatedTreeMapRect<D>>();
+  final LinkedHashMap<D?, _AnimatedTreeMapRect<D?>> _animatedTreeMapRects =
+      LinkedHashMap<D, _AnimatedTreeMapRect<D>>();
 
   /// Renderer configuration.
   final TreeMapRendererConfig<D> config;
@@ -119,7 +120,8 @@ abstract class BaseTreeMapRenderer<D> extends BaseSeriesRenderer<D> {
         _configureRootRendererElement(series.data!.first);
 
         // Applies tiling algorithm to each node.
-        for (final TreeNode? node in series.data as Iterable<TreeNode<dynamic>?>) {
+        for (final TreeNode? node
+            in series.data as Iterable<TreeNode<dynamic>?>) {
           tile(node);
           final element = _rendererElementForTreeNode(node);
           element.refreshPaintProperties();
@@ -176,7 +178,9 @@ abstract class BaseTreeMapRenderer<D> extends BaseSeriesRenderer<D> {
   /// Datum details of nearest rectangles in the treemap.
   @override
   List<DatumDetails<D>> getNearestDatumDetailPerSeries(
-      Point<double>? chartPoint, bool byDomain, Rectangle<int>? boundsOverride) {
+      Point<double>? chartPoint,
+      bool byDomain,
+      Rectangle<int>? boundsOverride) {
     final nearest = <DatumDetails<D>>[];
 
     // Checks if the [chartPoint] is within bounds.
@@ -400,10 +404,10 @@ abstract class BaseTreeMapRenderer<D> extends BaseSeriesRenderer<D> {
         ..series = series;
 
   TreeMapRendererElement<D> _rendererElementForTreeNode(TreeNode? node) {
-    final element = _treeNodeToRendererElement[node!]!;
+    final element = _treeNodeToRendererElement[node!];
     assert(
         element != null, 'There is no associated renderer element for $node.');
-    return element;
+    return element!;
   }
 
   void _ensureSingleTree(List<ImmutableSeries<D>> seriesList) {
@@ -461,8 +465,8 @@ class _AnimatedTreeMapRect<D> {
       return _currentRect;
     }
 
-    _currentRect!.updateAnimationPercent(
-        _previousRect, _targetRect!, animationPercent);
+    _currentRect!
+        .updateAnimationPercent(_previousRect, _targetRect!, animationPercent);
     return _currentRect;
   }
 }

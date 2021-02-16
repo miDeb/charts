@@ -67,7 +67,9 @@ class BucketingNumericAxis extends NumericAxis {
     if (domain == null) {
       return null;
     } else if (_threshold != null && domain < _threshold!) {
-      return _showBucket ? scale![_threshold! / 2] as double? : scale![0.0] as double?;
+      return _showBucket
+          ? scale![_threshold! / 2] as double?
+          : scale![0.0] as double?;
     } else {
       return scale![domain] as double?;
     }

@@ -366,11 +366,7 @@ class _LinePointLayoutView<D> extends LayoutView {
     final endPointPerValueHorizontal = <int, int>{};
 
     for (_PointRendererElement<D>? pointElement in points) {
-      if (pointElement!.point!.x == null || pointElement.point!.y == null) {
-        continue;
-      }
-
-      final roundedX = pointElement.point!.x.round();
+      final roundedX = pointElement!.point!.x.round();
       final roundedY = pointElement.point!.y.round();
 
       // Get the Y value closest to the top of the chart for this X position.
@@ -421,11 +417,7 @@ class _LinePointLayoutView<D> extends LayoutView {
 
     // Draw the follow lines first, below all of the highlight shapes.
     for (_PointRendererElement<D>? pointElement in points) {
-      if (pointElement!.point!.x == null || pointElement.point!.y == null) {
-        continue;
-      }
-
-      final roundedX = pointElement.point!.x.round();
+      final roundedX = pointElement!.point!.x.round();
       final roundedY = pointElement.point!.y.round();
 
       // Draw the horizontal follow line.
@@ -496,12 +488,8 @@ class _LinePointLayoutView<D> extends LayoutView {
 
     // Draw the highlight shapes on top of all follow lines.
     for (_PointRendererElement<D>? pointElement in points) {
-      if (pointElement!.point!.x == null || pointElement.point!.y == null) {
-        continue;
-      }
-
       final bounds = Rectangle<double>(
-          pointElement.point!.x - pointElement.radiusPx!,
+          pointElement!.point!.x - pointElement.radiusPx!,
           pointElement.point!.y - pointElement.radiusPx!,
           pointElement.radiusPx! * 2,
           pointElement.radiusPx! * 2);
@@ -527,7 +515,12 @@ class _DatumPoint<D> extends Point<double> {
   final D? domain;
   final ImmutableSeries<D>? series;
 
-  _DatumPoint({this.datum, this.domain, this.series, required double x, required double y})
+  _DatumPoint(
+      {this.datum,
+      this.domain,
+      this.series,
+      required double x,
+      required double y})
       : super(x, y);
 
   factory _DatumPoint.from(_DatumPoint<D> other, [double? x, double? y]) {

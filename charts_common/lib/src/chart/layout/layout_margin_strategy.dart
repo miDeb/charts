@@ -14,7 +14,6 @@
 // limitations under the License.
 
 import 'dart:math' show Rectangle;
-import 'package:meta/meta.dart';
 import 'layout_view.dart';
 
 class SizeList {
@@ -71,9 +70,7 @@ class _DesiredViewSizes {
 /// A strategy for calculating size of vertical margins (RIGHT & LEFT).
 abstract class VerticalMarginStrategy {
   SizeList measure(Iterable<LayoutView> views,
-      {required int maxWidth,
-      required int? height,
-      required int? fullHeight}) {
+      {required int maxWidth, required int? height, required int? fullHeight}) {
     final measuredWidths = _DesiredViewSizes();
     int remainingWidth = maxWidth;
 
@@ -85,7 +82,7 @@ abstract class VerticalMarginStrategy {
           (params.isFullPosition ? fullHeight : height)! - viewMargin.height;
 
       // Measure with all available space, minus the buffer.
-      remainingWidth = remainingWidth! - viewMargin.width;
+      remainingWidth = remainingWidth - viewMargin.width;
       maxWidth -= viewMargin.width;
 
       ViewMeasuredSizes? size = ViewMeasuredSizes.zero;
@@ -94,12 +91,12 @@ abstract class VerticalMarginStrategy {
       // Measure still needs to be called even when one dimension has a size of
       // zero because if the component is an axis, the axis needs to still
       // recalculate ticks even if it is not to be shown.
-      if (remainingWidth! > 0 || availableHeight > 0) {
+      if (remainingWidth > 0 || availableHeight > 0) {
         size = view.measure(remainingWidth, availableHeight);
         remainingWidth -= size!.preferredWidth!;
       }
 
-      measuredWidths.add(size!.preferredWidth!, size.minWidth);
+      measuredWidths.add(size.preferredWidth!, size.minWidth);
     });
 
     measuredWidths.adjustedTo(maxWidth);
@@ -185,7 +182,7 @@ abstract class HorizontalMarginStrategy {
           (params.isFullPosition ? fullWidth : width) - viewMargin.width;
 
       // Measure with all available space, minus the buffer.
-      remainingHeight = remainingHeight! - viewMargin.height;
+      remainingHeight = remainingHeight - viewMargin.height;
       maxHeight -= viewMargin.height;
 
       ViewMeasuredSizes? size = ViewMeasuredSizes.zero;
@@ -194,12 +191,12 @@ abstract class HorizontalMarginStrategy {
       // Measure still needs to be called even when one dimension has a size of
       // zero because if the component is an axis, the axis needs to still
       // recalculate ticks even if it is not to be shown.
-      if (remainingHeight! > 0 || availableWidth > 0) {
+      if (remainingHeight > 0 || availableWidth > 0) {
         size = view.measure(availableWidth, remainingHeight);
         remainingHeight -= size!.preferredHeight!;
       }
 
-      measuredHeights.add(size!.preferredHeight!, size.minHeight);
+      measuredHeights.add(size.preferredHeight!, size.minHeight);
     });
 
     measuredHeights.adjustedTo(maxHeight);

@@ -70,16 +70,18 @@ class NumericAxisSpec extends AxisSpec<num?> {
   }) {
     return NumericAxisSpec(
       renderSpec: renderSpec ?? other.renderSpec,
-      tickProviderSpec: tickProviderSpec as NumericTickProviderSpec? ?? other.tickProviderSpec as NumericTickProviderSpec?,
-      tickFormatterSpec: tickFormatterSpec as NumericTickFormatterSpec? ?? other.tickFormatterSpec as NumericTickFormatterSpec?,
+      tickProviderSpec: tickProviderSpec as NumericTickProviderSpec? ??
+          other.tickProviderSpec as NumericTickProviderSpec?,
+      tickFormatterSpec: tickFormatterSpec as NumericTickFormatterSpec? ??
+          other.tickFormatterSpec as NumericTickFormatterSpec?,
       showAxisLine: showAxisLine ?? other.showAxisLine,
       viewport: viewport ?? other.viewport,
     );
   }
 
   @override
-  void configure(
-      Axis<num?> axis, ChartContext? context, GraphicsFactory? graphicsFactory) {
+  void configure(Axis<num?> axis, ChartContext? context,
+      GraphicsFactory? graphicsFactory) {
     super.configure(axis, context, graphicsFactory);
 
     if (axis is NumericAxis && viewport != null) {

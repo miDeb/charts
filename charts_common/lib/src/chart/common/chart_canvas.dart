@@ -150,9 +150,9 @@ abstract class ChartCanvas {
 }
 
 Color getAnimatedColor(Color previous, Color target, double animationPercent) {
-  var r = (((target.r! - previous.r!) * animationPercent) + previous.r!).round();
-  var g = (((target.g! - previous.g!) * animationPercent) + previous.g!).round();
-  var b = (((target.b! - previous.b!) * animationPercent) + previous.b!).round();
+  var r = (((target.r - previous.r) * animationPercent) + previous.r).round();
+  var g = (((target.g - previous.g) * animationPercent) + previous.g).round();
+  var b = (((target.b - previous.b) * animationPercent) + previous.b).round();
   var a = (((target.a - previous.a) * animationPercent) + previous.a).round();
 
   return Color(a: a, r: r, g: g, b: b);

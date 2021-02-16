@@ -15,7 +15,7 @@
 
 import 'dart:math';
 
-import 'package:meta/meta.dart' show immutable, protected, required;
+import 'package:meta/meta.dart' show immutable, protected;
 
 import '../../../../common/graphics_factory.dart' show GraphicsFactory;
 import '../../../../common/line_style.dart' show LineStyle;
@@ -324,6 +324,8 @@ abstract class BaseTickDrawStrategy<D> implements TickDrawStrategy<D> {
       case AxisOrientation.left:
         start = axisBounds!.topRight;
         end = axisBounds.bottomRight;
+        break;
+      case null:
         break;
     }
 

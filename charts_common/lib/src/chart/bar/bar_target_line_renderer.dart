@@ -15,8 +15,6 @@
 
 import 'dart:math' show Point, Rectangle, max, min;
 
-import 'package:meta/meta.dart' show required;
-
 import '../../common/color.dart' show Color;
 import '../cartesian/axis/axis.dart'
     show ImmutableAxis, domainAxisKey, measureAxisKey;
@@ -120,7 +118,8 @@ class BarTargetLineRenderer<D> extends BaseBarRenderer<D,
 
   @override
   _BarTargetLineRendererElement getBaseDetails(dynamic datum, int index) {
-    final BarTargetLineRendererConfig<D?> localConfig = config as BarTargetLineRendererConfig<D?>;
+    final BarTargetLineRendererConfig<D?> localConfig =
+        config as BarTargetLineRendererConfig<D?>;
     return _BarTargetLineRendererElement()
       ..roundEndCaps = localConfig.roundEndCaps;
   }
@@ -257,7 +256,8 @@ class BarTargetLineRenderer<D> extends BaseBarRenderer<D,
       previousBarGroupWeight = barGroupIndex! * barGroupWeight;
     }
 
-    final BarTargetLineRendererConfig<D?> localConfig = config as BarTargetLineRendererConfig<D?>;
+    final BarTargetLineRendererConfig<D?> localConfig =
+        config as BarTargetLineRendererConfig<D?>;
 
     // Calculate how wide each bar target line should be within the group of
     // bar target lines. If we only have one series, or are stacked, then
@@ -353,8 +353,10 @@ class _BarTargetLineRendererElement extends BaseBarRendererElement {
   @override
   void updateAnimationPercent(BaseBarRendererElement previous,
       BaseBarRendererElement target, double animationPercent) {
-    final _BarTargetLineRendererElement localPrevious = previous as _BarTargetLineRendererElement;
-    final _BarTargetLineRendererElement localTarget = target as _BarTargetLineRendererElement;
+    final _BarTargetLineRendererElement localPrevious =
+        previous as _BarTargetLineRendererElement;
+    final _BarTargetLineRendererElement localTarget =
+        target as _BarTargetLineRendererElement;
 
     final previousPoints = localPrevious.points;
     final targetPoints = localTarget.points!;
@@ -393,9 +395,10 @@ class _BarTargetLineRendererElement extends BaseBarRendererElement {
       points!.removeRange(pointIndex, points!.length);
     }
 
-    strokeWidthPx = ((localTarget.strokeWidthPx! - localPrevious.strokeWidthPx!) *
-            animationPercent) +
-        localPrevious.strokeWidthPx!;
+    strokeWidthPx =
+        ((localTarget.strokeWidthPx! - localPrevious.strokeWidthPx!) *
+                animationPercent) +
+            localPrevious.strokeWidthPx!;
 
     roundEndCaps = localTarget.roundEndCaps;
 
@@ -414,7 +417,8 @@ class _AnimatedBarTargetLine<D>
 
   @override
   void animateElementToMeasureAxisPosition(BaseBarRendererElement target) {
-    final _BarTargetLineRendererElement localTarget = target as _BarTargetLineRendererElement;
+    final _BarTargetLineRendererElement localTarget =
+        target as _BarTargetLineRendererElement;
 
     final newPoints = <Point<int>>[];
     for (var index = 0; index < localTarget.points!.length; index++) {

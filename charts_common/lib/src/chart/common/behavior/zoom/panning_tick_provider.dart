@@ -13,8 +13,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import 'package:meta/meta.dart' show required;
-
 import '../../../../common/graphics_factory.dart' show GraphicsFactory;
 import '../../../cartesian/axis/axis.dart' show AxisOrientation;
 import '../../../cartesian/axis/draw_strategy/tick_draw_strategy.dart'

@@ -205,7 +205,7 @@ abstract class Axis<D> extends ImmutableAxis<D?> implements LayoutView {
   /// For bars to be renderer properly the RangeBandConfig must be set and
   /// type must not be RangeBandType.none.
   bool get hasValidBarChartRangeBandConfig =>
-      (mutableScale?.rangeBandConfig?.type ?? RangeBandType.none) !=
+      (mutableScale?.rangeBandConfig.type ?? RangeBandType.none) !=
       RangeBandType.none;
 
   void addDomainValue(D domain) {
@@ -310,9 +310,8 @@ abstract class Axis<D> extends ImmutableAxis<D?> implements LayoutView {
     final providedTicks = List.from(_providedTicks ?? []);
 
     for (AxisTicks<D> animatedTick in _axisTicks) {
-      final tick = providedTicks?.firstWhere(
-          (t) => t.value == animatedTick.value,
-          orElse: () => null);
+      final tick = providedTicks
+          .firstWhere((t) => t.value == animatedTick.value, orElse: () => null);
 
       if (tick != null) {
         // Swap out the text element only if the settings are different.
@@ -331,7 +330,7 @@ abstract class Axis<D> extends ImmutableAxis<D?> implements LayoutView {
     }
 
     // Add new ticks
-    providedTicks?.forEach((tick) {
+    providedTicks.forEach((tick) {
       final animatedTick = AxisTicks<D>(tick);
       if (_previousScale != null) {
         animatedTick.animateInFrom(_previousScale![tick.value].toDouble());
@@ -436,6 +435,8 @@ abstract class Axis<D> extends ImmutableAxis<D?> implements LayoutView {
         break;
       case AxisOrientation.left:
         position = LayoutPosition.Left;
+        break;
+      case null:
         break;
     }
 

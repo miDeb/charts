@@ -118,7 +118,7 @@ class FakeBarRendererElement implements ImmutableBarRendererElement<String> {
       {this.measureFn}) {
     index = data.indexOf(datum);
     when(_series.labelAccessorFn).thenReturn(labelAccessor);
-    when(_series.measureFn).thenReturn(measureFn ?? ((_) => 1.0) as num? Function(int?)?);
+    when(_series.measureFn).thenReturn(measureFn ?? (_) => 1.0);
     when(_series.data).thenReturn(data);
   }
 

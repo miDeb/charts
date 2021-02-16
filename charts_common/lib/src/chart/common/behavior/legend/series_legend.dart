@@ -41,7 +41,7 @@ class SeriesLegend<D> extends Legend<D> {
 
   SeriesLegend({
     SelectionModelType? selectionModelType,
-    LegendEntryGenerator<D>? legendEntryGenerator,
+    LegendEntryGenerator<D?>? legendEntryGenerator,
     MeasureFormatter? measureFormatter,
     MeasureFormatter? secondaryMeasureFormatter,
     bool? showMeasures,
@@ -50,7 +50,7 @@ class SeriesLegend<D> extends Legend<D> {
   }) : super(
             selectionModelType: selectionModelType ?? SelectionModelType.info,
             legendEntryGenerator:
-                (legendEntryGenerator ?? PerSeriesLegendEntryGenerator()) as LegendEntryGenerator<D?>?,
+                (legendEntryGenerator ?? PerSeriesLegendEntryGenerator()),
             entryTextStyle: entryTextStyle) {
     // Call the setters that include the setting for default.
     this.showMeasures = showMeasures;

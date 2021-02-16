@@ -26,7 +26,7 @@ import 'package:charts_common/common.dart' as common
         SelectionModelType,
         SelectionTrigger;
 import 'behaviors/select_nearest.dart' show SelectNearest;
-import 'package:meta/meta.dart' show immutable, required;
+import 'package:meta/meta.dart' show immutable;
 import 'behaviors/chart_behavior.dart'
     show ChartBehavior, ChartStateBehavior, GestureType;
 import 'selection_model_config.dart' show SelectionModelConfig;

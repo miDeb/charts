@@ -191,7 +191,6 @@ class Slider<D extends num> implements ChartBehavior<D> {
       default:
         throw ArgumentError('Slider does not support the event trigger '
             '"$eventTrigger"');
-        break;
     }
 
     // Set up chart draw cycle listeners.
@@ -248,7 +247,7 @@ class Slider<D extends num> implements ChartBehavior<D> {
     // instead of the mouse point.
     if (snapToDatum) {
       final details = _chart!.getNearestDatumDetailPerSeries(chartPoint, true);
-      if (details.isNotEmpty && details[0].chartPosition!.x != null) {
+      if (details.isNotEmpty) {
         // Only trigger an animating draw cycle if we need to move the slider.
         if (_domainValue != details[0].domain) {
           _moveSliderToDomain(details[0].domain);
@@ -314,8 +313,7 @@ class Slider<D extends num> implements ChartBehavior<D> {
 
   /// Fires a [SliderListenerDragState] change event if needed.
   void _fireChangeEvent(_) {
-    if (SliderListenerDragState == null ||
-        _sliderEventListener.onChange == null) {
+    if (_sliderEventListener.onChange == null) {
       return;
     }
 
@@ -585,10 +583,10 @@ class SliderStyle {
   int get hashCode {
     int hashcode = fillColor?.hashCode ?? 0;
     hashcode = (hashcode * 37) + (handleOffset?.hashCode ?? 0);
-    hashcode = (hashcode * 37) + (handleSize?.hashCode ?? 0);
-    hashcode = (hashcode * 37) + (strokeWidthPx?.hashCode ?? 0);
-    hashcode = (hashcode * 37) + (strokeColor?.hashCode ?? 0);
-    hashcode = (hashcode * 37) + (handlePosition?.hashCode ?? 0);
+    hashcode = (hashcode * 37) + handleSize.hashCode;
+    hashcode = (hashcode * 37) + strokeWidthPx.hashCode;
+    hashcode = (hashcode * 37) + strokeColor.hashCode;
+    hashcode = (hashcode * 37) + handlePosition.hashCode;
     return hashcode;
   }
 }

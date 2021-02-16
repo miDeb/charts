@@ -15,8 +15,6 @@
 
 import 'dart:math' show Rectangle;
 
-import 'package:meta/meta.dart' show required;
-
 import '../../../cartesian/axis/axis.dart' show ImmutableAxis, domainAxisKey;
 import '../../../cartesian/cartesian_chart.dart' show CartesianChart;
 import '../../base_chart.dart' show BaseChart, LifecycleListener;

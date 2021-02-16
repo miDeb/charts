@@ -17,7 +17,7 @@ import 'dart:collection' show LinkedHashMap;
 import 'dart:math' show Rectangle, Point;
 
 import 'package:collection/collection.dart' show IterableExtension;
-import 'package:meta/meta.dart' show required, visibleForTesting;
+import 'package:meta/meta.dart' show visibleForTesting;
 
 import '../../common/color.dart' show Color;
 import '../../common/math.dart' show clamp;
@@ -351,7 +351,8 @@ class LineRenderer<D> extends BaseCartesianRenderer<D> {
       //
       // TODO: Handle ordinal axes by looking at the next domains.
       if (styleSegments.isNotEmpty && !(domainAxis is OrdinalAxis)) {
-        final startPx = (isRtl ? drawBounds!.right : drawBounds!.left).toDouble();
+        final startPx =
+            (isRtl ? drawBounds!.right : drawBounds!.left).toDouble();
         final endPx = (isRtl ? drawBounds!.left : drawBounds!.right).toDouble();
 
         final startDomain = domainAxis!.getDomain(startPx);
@@ -593,7 +594,8 @@ class LineRenderer<D> extends BaseCartesianRenderer<D> {
     final positionExtent = _createPositionExtent(series, styleSegment);
 
     // Get the line elements we are going to to set up.
-    final List<_LineRendererElement<D?>> lineElements = <_LineRendererElement<D>>[];
+    final List<_LineRendererElement<D?>> lineElements =
+        <_LineRendererElement<D>>[];
     for (var index = 0; index < lineSegments.length; index++) {
       final linePointList = lineSegments[index];
 
@@ -615,7 +617,8 @@ class LineRenderer<D> extends BaseCartesianRenderer<D> {
     }
 
     // Get the area elements we are going to set up.
-    final List<_AreaRendererElement<D?>> areaElements = <_AreaRendererElement<D>>[];
+    final List<_AreaRendererElement<D?>> areaElements =
+        <_AreaRendererElement<D>>[];
     if (config.includeArea) {
       for (var index = 0; index < areaSegments.length; index++) {
         final areaPointList = areaSegments[index];
@@ -636,7 +639,8 @@ class LineRenderer<D> extends BaseCartesianRenderer<D> {
     }
 
     // Create the bounds element
-    final List<_AreaRendererElement<D?>> boundsElements = <_AreaRendererElement<D>>[];
+    final List<_AreaRendererElement<D?>> boundsElements =
+        <_AreaRendererElement<D>>[];
     if (_hasMeasureBounds) {
       // Update the set of bounds that still exist in the series data.
       for (var index = 0; index < boundsSegment.length; index++) {
@@ -728,36 +732,6 @@ class LineRenderer<D> extends BaseCartesianRenderer<D> {
         series.measureLowerBoundFn != null;
 
     for (var index = 0; index < pointList.length; index++) {
-      final point = pointList[index];
-
-      if (point.y == null) {
-        if (startPointIndex == null) {
-          continue;
-        }
-
-        lineSegments
-            .add(_createLineSegment(startPointIndex, endPointIndex!, pointList));
-
-        // Isolated data points are handled by the line painter. Do not add an
-        // area segment for them.
-        if (startPointIndex != endPointIndex) {
-          if (config.includeArea) {
-            areaSegments.add(_createAreaSegment(startPointIndex, endPointIndex,
-                pointList, previousPointList, series, initializeFromZero));
-          }
-          if (seriesHasMeasureBounds) {
-            boundsSegments.add(_createBoundsSegment(
-                pointList.sublist(startPointIndex, endPointIndex + 1),
-                series,
-                initializeFromZero));
-          }
-        }
-
-        startPointIndex = null;
-        endPointIndex = null;
-        continue;
-      }
-
       startPointIndex ??= index;
       endPointIndex = index;
     }
@@ -918,7 +892,8 @@ class LineRenderer<D> extends BaseCartesianRenderer<D> {
     if (animationPercent == 1.0) {
       final keysToRemove = <String?>[];
 
-      _seriesLineMap.forEach((String? key, List<_AnimatedElements<D>>? elements) {
+      _seriesLineMap
+          .forEach((String? key, List<_AnimatedElements<D>>? elements) {
         elements!.removeWhere(
             (_AnimatedElements<D> element) => element.animatingOut);
 
@@ -938,7 +913,7 @@ class LineRenderer<D> extends BaseCartesianRenderer<D> {
                     animatingElement.areas)
             .expand<_AnimatedArea<D>>((List<_AnimatedArea<D>>? areas) => areas!)
             .map<_AreaRendererElement<D>?>((_AnimatedArea<D> animatingArea) =>
-                animatingArea?.getCurrentArea(animationPercent))
+                animatingArea.getCurrentArea(animationPercent))
             .forEach((_AreaRendererElement? area) {
           if (area != null) {
             canvas.drawPolygon(
@@ -954,9 +929,10 @@ class LineRenderer<D> extends BaseCartesianRenderer<D> {
             .map<List<_AnimatedArea<D>>?>(
                 (_AnimatedElements<D> animatingElement) =>
                     animatingElement.bounds)
-            .expand<_AnimatedArea<D>>((List<_AnimatedArea<D>>? bounds) => bounds!)
+            .expand<_AnimatedArea<D>>(
+                (List<_AnimatedArea<D>>? bounds) => bounds!)
             .map<_AreaRendererElement<D>?>((_AnimatedArea<D> animatingBounds) =>
-                animatingBounds?.getCurrentArea(animationPercent))
+                animatingBounds.getCurrentArea(animationPercent))
             .forEach((_AreaRendererElement? bound) {
           if (bound != null) {
             canvas.drawPolygon(
@@ -974,7 +950,7 @@ class LineRenderer<D> extends BaseCartesianRenderer<D> {
                     animatingElement.lines)
             .expand<_AnimatedLine<D>>((List<_AnimatedLine<D>>? lines) => lines!)
             .map<_LineRendererElement<D>?>((_AnimatedLine<D> animatingLine) =>
-                animatingLine?.getCurrentLine(animationPercent))
+                animatingLine.getCurrentLine(animationPercent))
             .forEach((_LineRendererElement? line) {
           if (line != null) {
             canvas.drawLine(
@@ -1045,7 +1021,9 @@ class LineRenderer<D> extends BaseCartesianRenderer<D> {
 
   @override
   List<DatumDetails<D>> getNearestDatumDetailPerSeries(
-      Point<double>? chartPoint, bool byDomain, Rectangle<int>? boundsOverride) {
+      Point<double>? chartPoint,
+      bool byDomain,
+      Rectangle<int>? boundsOverride) {
     final nearest = <DatumDetails<D>>[];
 
     // Was it even in the component bounds?
@@ -1070,21 +1048,9 @@ class LineRenderer<D> extends BaseCartesianRenderer<D> {
             return;
           }
 
-          double measureDistance;
-          double relativeDistance;
-          double domainDistance;
-
-          if (p.y != null) {
-            measureDistance = (p.y - chartPoint!.y).abs();
-            domainDistance = (p.x - chartPoint.x).abs();
-            relativeDistance = chartPoint.distanceTo(p as Point<double>);
-          } else {
-            // Null measures have no real position, so make them the farthest
-            // away by real distance.
-            measureDistance = double.infinity;
-            domainDistance = double.infinity;
-            relativeDistance = byDomain ? domainDistance : double.infinity;
-          }
+          double measureDistance = (p.y - chartPoint!.y).abs();
+          double domainDistance = (p.x - chartPoint.x).abs();
+          double relativeDistance = chartPoint.distanceTo(p as Point<double>);
 
           if (byDomain) {
             if ((domainDistance < nearestDomainDistance) ||
@@ -1147,7 +1113,12 @@ class _DatumPoint<D> extends Point<double> {
   final int? index;
 
   _DatumPoint(
-      {this.datum, this.domain, this.series, this.index, required double x, required double y})
+      {this.datum,
+      this.domain,
+      this.series,
+      this.index,
+      required double x,
+      required double y})
       : super(x, y);
 
   factory _DatumPoint.from(_DatumPoint<D> other, [double? x, double? y]) {
@@ -1178,7 +1149,8 @@ class _LineRendererElement<D> {
     return _LineRendererElement<D>()
       ..points = List<_DatumPoint<D>>.from(points!)
       ..color = color != null ? Color.fromOther(color: color!) : null
-      ..areaColor = areaColor != null ? Color.fromOther(color: areaColor!) : null
+      ..areaColor =
+          areaColor != null ? Color.fromOther(color: areaColor!) : null
       ..dashPattern = dashPattern != null ? List<int>.from(dashPattern!) : null
       ..domainExtent = domainExtent
       ..measureAxisPosition = measureAxisPosition
@@ -1204,25 +1176,19 @@ class _LineRendererElement<D> {
         previousPoint = previous.points![pointIndex] as _DatumPoint<D?>;
         lastPoint = previousPoint;
       } else {
-        previousPoint =
-            _DatumPoint<D?>.from(targetPoint as _DatumPoint<D?>, targetPoint.x, lastPoint.y as double?);
+        previousPoint = _DatumPoint<D?>.from(targetPoint as _DatumPoint<D?>,
+            targetPoint.x, lastPoint.y as double?);
       }
 
       final x = ((targetPoint.x - previousPoint.x) * animationPercent) +
           previousPoint.x;
 
-      double? y;
-      if (targetPoint.y != null && previousPoint.y != null) {
-        y = ((targetPoint.y - previousPoint.y) * animationPercent) +
-            previousPoint.y;
-      } else if (targetPoint.y != null) {
-        y = targetPoint.y;
-      } else {
-        y = null;
-      }
+      double y = ((targetPoint.y - previousPoint.y) * animationPercent) +
+          previousPoint.y;
 
       if (points!.length - 1 >= pointIndex) {
-        points![pointIndex] = _DatumPoint<D?>.from(targetPoint as _DatumPoint<D?>, x, y);
+        points![pointIndex] =
+            _DatumPoint<D?>.from(targetPoint as _DatumPoint<D?>, x, y);
       } else {
         points!.add(_DatumPoint<D?>.from(targetPoint as _DatumPoint<D?>, x, y));
       }
@@ -1240,9 +1206,9 @@ class _LineRendererElement<D> {
           previous.areaColor!, target.areaColor!, animationPercent);
     }
 
-    strokeWidthPx =
-        (((target.strokeWidthPx! - previous.strokeWidthPx!) * animationPercent) +
-            previous.strokeWidthPx!);
+    strokeWidthPx = (((target.strokeWidthPx! - previous.strokeWidthPx!) *
+            animationPercent) +
+        previous.strokeWidthPx!);
   }
 }
 
@@ -1329,7 +1295,8 @@ class _AreaRendererElement<D> {
     return _AreaRendererElement<D>()
       ..points = List<_DatumPoint<D>>.from(points!)
       ..color = color != null ? Color.fromOther(color: color!) : null
-      ..areaColor = areaColor != null ? Color.fromOther(color: areaColor!) : null
+      ..areaColor =
+          areaColor != null ? Color.fromOther(color: areaColor!) : null
       ..domainExtent = domainExtent
       ..measureAxisPosition = measureAxisPosition
       ..positionExtent = positionExtent
@@ -1352,25 +1319,19 @@ class _AreaRendererElement<D> {
         previousPoint = previous.points![pointIndex] as _DatumPoint<D?>;
         lastPoint = previousPoint;
       } else {
-        previousPoint =
-            _DatumPoint<D?>.from(targetPoint as _DatumPoint<D?>, targetPoint.x, lastPoint.y as double?);
+        previousPoint = _DatumPoint<D?>.from(targetPoint as _DatumPoint<D?>,
+            targetPoint.x, lastPoint.y as double?);
       }
 
       final x = ((targetPoint.x - previousPoint.x) * animationPercent) +
           previousPoint.x;
 
-      double? y;
-      if (targetPoint.y != null && previousPoint.y != null) {
-        y = ((targetPoint.y - previousPoint.y) * animationPercent) +
-            previousPoint.y;
-      } else if (targetPoint.y != null) {
-        y = targetPoint.y;
-      } else {
-        y = null;
-      }
+      double y = ((targetPoint.y - previousPoint.y) * animationPercent) +
+          previousPoint.y;
 
       if (points!.length - 1 >= pointIndex) {
-        points![pointIndex] = _DatumPoint<D?>.from(targetPoint as _DatumPoint<D?>, x, y);
+        points![pointIndex] =
+            _DatumPoint<D?>.from(targetPoint as _DatumPoint<D?>, x, y);
       } else {
         points!.add(_DatumPoint<D?>.from(targetPoint as _DatumPoint<D?>, x, y));
       }

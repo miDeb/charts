@@ -132,10 +132,10 @@ abstract class BaseBarRendererConfig<D> extends LayoutViewConfig
     hash = hash * 31 + (dashPattern?.hashCode ?? 0);
     hash = hash * 31 + (fillPattern?.hashCode ?? 0);
     hash = hash * 31 + (groupingType?.hashCode ?? 0);
-    hash = hash * 31 + (minBarLengthPx?.hashCode ?? 0);
+    hash = hash * 31 + minBarLengthPx.hashCode;
     hash = hash * 31 + (stackHorizontalSeparator?.hashCode ?? 0);
-    hash = hash * 31 + (strokeWidthPx?.hashCode ?? 0);
-    hash = hash * 31 + (symbolRenderer?.hashCode ?? 0);
+    hash = hash * 31 + strokeWidthPx.hashCode;
+    hash = hash * 31 + symbolRenderer.hashCode;
     hash = hash * 31 + (weightPattern?.hashCode ?? 0);
     return hash;
   }

@@ -22,7 +22,6 @@ import 'package:charts_common/src/common/text_style.dart';
 import 'package:charts_common/src/chart/cartesian/axis/spec/axis_spec.dart';
 import 'package:charts_common/src/chart/common/chart_canvas.dart';
 import 'package:charts_common/src/data/series.dart';
-import 'package:meta/meta.dart';
 
 import 'treemap_renderer_decorator.dart';
 import 'treemap_renderer_element.dart';
@@ -100,14 +99,14 @@ class TreeMapLabelDecorator<D> extends TreeMapRendererDecorator<D> {
   TextStyle _asTextStyle(
           GraphicsFactory graphicsFactory, TextStyleSpec labelSpec) =>
       graphicsFactory.createTextPaint()
-        ..color = labelSpec?.color ?? Color.black
-        ..fontFamily = labelSpec?.fontFamily
-        ..fontSize = labelSpec?.fontSize ?? _defaultFontSize
-        ..lineHeight = labelSpec?.lineHeight;
+        ..color = labelSpec.color ?? Color.black
+        ..fontFamily = labelSpec.fontFamily
+        ..fontSize = labelSpec.fontSize ?? _defaultFontSize
+        ..lineHeight = labelSpec.lineHeight;
 
   /// Gets datum specific style.
-  TextStyle? _datumStyle(AccessorFn<TextStyleSpec>? labelStyleFn, int? datumIndex,
-      GraphicsFactory? graphicsFactory,
+  TextStyle? _datumStyle(AccessorFn<TextStyleSpec>? labelStyleFn,
+      int? datumIndex, GraphicsFactory? graphicsFactory,
       {TextStyle? defaultStyle}) {
     final styleSpec = (labelStyleFn != null) ? labelStyleFn(datumIndex) : null;
     return (styleSpec != null)

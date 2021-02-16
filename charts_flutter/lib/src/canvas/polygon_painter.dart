@@ -54,11 +54,11 @@ class PolygonPainter {
     }
 
     final strokeColor = stroke != null
-        ? new Color.fromARGB(stroke.a, stroke.r!, stroke.g!, stroke.b!)
+        ? new Color.fromARGB(stroke.a, stroke.r, stroke.g, stroke.b)
         : null;
 
     final fillColor = fill != null
-        ? new Color.fromARGB(fill.a, fill.r!, fill.g!, fill.b!)
+        ? new Color.fromARGB(fill.a, fill.r, fill.g, fill.b)
         : null;
 
     // If the line has a single point, draw a circle.
@@ -66,7 +66,8 @@ class PolygonPainter {
       final point = points.first;
       paint!.color = fillColor!;
       paint.style = PaintingStyle.fill;
-      canvas!.drawCircle(new Offset(point.x as double, point.y as double), strokeWidthPx!, paint);
+      canvas!.drawCircle(new Offset(point.x as double, point.y as double),
+          strokeWidthPx!, paint);
     } else {
       if (strokeColor != null && strokeWidthPx != null) {
         paint!.strokeWidth = strokeWidthPx;

@@ -170,9 +170,6 @@ abstract class KeyboardDomainNavigator<D> implements ChartBehavior<D?> {
   bool _selectDomainIndex(
       SelectionModelType selectionModelType, int domainIndex) {
     final selectionModel = _chart.getSelectionModel(selectionModelType);
-    if (selectionModel == null) {
-      return false;
-    }
 
     if (domainIndex == NO_SELECTION) {
       selectionModel.clearSelection();
@@ -248,7 +245,8 @@ abstract class KeyboardDomainNavigator<D> implements ChartBehavior<D?> {
       }
     }
 
-    final Map<D?, List<SeriesDatum<D?>>> detailsByDomain = <D?, List<SeriesDatum<D>>>{};
+    final Map<D?, List<SeriesDatum<D?>>> detailsByDomain =
+        <D?, List<SeriesDatum<D>>>{};
     for (DatumDetails<D?>? datumDetails in allSeriesDatum) {
       final domain = datumDetails!.domain;
 

@@ -13,8 +13,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import 'package:meta/meta.dart' show required;
-
 import '../../../../common/date_time_factory.dart' show DateTimeFactory;
 import '../tick_formatter.dart' show TickFormatter;
 import 'hour_tick_formatter.dart' show HourTickFormatter;

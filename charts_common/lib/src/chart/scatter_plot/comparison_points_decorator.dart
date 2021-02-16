@@ -15,7 +15,7 @@
 
 import 'dart:math' show Point, Rectangle;
 
-import 'package:meta/meta.dart' show protected, required;
+import 'package:meta/meta.dart' show protected;
 
 import '../../common/graphics_factory.dart' show GraphicsFactory;
 import '../../common/symbol_renderer.dart';
@@ -231,8 +231,9 @@ class _Line {
     // the intersection.
     final x = (other.yIntercept! - yIntercept!) / (slope! - other.slope!);
 
-    final y = slope! * (other.yIntercept! - yIntercept!) / (slope! - other.slope!) +
-        yIntercept!;
+    final y =
+        slope! * (other.yIntercept! - yIntercept!) / (slope! - other.slope!) +
+            yIntercept!;
 
     return Point<double>(x, y);
   }

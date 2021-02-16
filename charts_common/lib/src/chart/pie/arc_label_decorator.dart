@@ -15,7 +15,7 @@
 
 import 'dart:math' show cos, min, sin, pi, Point, Rectangle;
 
-import 'package:meta/meta.dart' show immutable, required;
+import 'package:meta/meta.dart' show immutable;
 
 import '../../common/color.dart' show Color;
 import '../../common/graphics_factory.dart' show GraphicsFactory;
@@ -154,7 +154,8 @@ class ArcLabelDecorator<D> extends ArcRendererDecorator<D> {
               (arcElements.radius! - arcElements.innerRadius!) - labelPadding)
           .round());
 
-      final leaderLineLength = showLeaderLines ? leaderLineStyleSpec.length! : 0;
+      final leaderLineLength =
+          showLeaderLines ? leaderLineStyleSpec.length! : 0;
 
       final outsideArcWidth = ((drawBounds!.width / 2) -
               bounds.width -
@@ -175,7 +176,8 @@ class ArcLabelDecorator<D> extends ArcRendererDecorator<D> {
         // more space than the outside, it makes more sense to place the label
         // inside the arc, even if the entire label does not fit.
         calculatedLabelPosition = (insideArcWidth >= outsideArcWidth ||
-                labelElement.measurement!.horizontalSliceWidth! < insideArcWidth)
+                labelElement.measurement!.horizontalSliceWidth! <
+                    insideArcWidth)
             ? ArcLabelPosition.inside
             : ArcLabelPosition.outside;
       }
@@ -219,10 +221,10 @@ class ArcLabelDecorator<D> extends ArcRendererDecorator<D> {
   TextStyle _getTextStyle(
       GraphicsFactory graphicsFactory, TextStyleSpec labelSpec) {
     return graphicsFactory.createTextPaint()
-      ..color = labelSpec?.color ?? Color.black
-      ..fontFamily = labelSpec?.fontFamily
-      ..fontSize = labelSpec?.fontSize ?? 12
-      ..lineHeight = labelSpec?.lineHeight;
+      ..color = labelSpec.color ?? Color.black
+      ..fontFamily = labelSpec.fontFamily
+      ..fontSize = labelSpec.fontSize ?? 12
+      ..lineHeight = labelSpec.lineHeight;
   }
 
   /// Helper function to get datum specific style

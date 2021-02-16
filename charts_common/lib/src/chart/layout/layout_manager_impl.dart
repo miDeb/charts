@@ -15,8 +15,6 @@
 
 import 'dart:math' show Point, Rectangle, max;
 
-import 'package:meta/meta.dart' show required;
-
 import 'layout_config.dart' show LayoutConfig;
 import 'layout_manager.dart';
 import 'layout_margin_strategy.dart';
@@ -96,8 +94,8 @@ class LayoutManagerImpl implements LayoutManager {
       _positionOrderedViews = List<LayoutView>.from(_views);
 
       _positionOrderedViews!.sort((LayoutView v1, LayoutView v2) => v1
-          .layoutConfig!.positionOrder
-          !.compareTo(v2.layoutConfig!.positionOrder!));
+          .layoutConfig!.positionOrder!
+          .compareTo(v2.layoutConfig!.positionOrder!));
 
       _viewsNeedPositionSort = false;
     }
@@ -117,7 +115,7 @@ class LayoutManagerImpl implements LayoutManager {
     final drawableViews =
         _views.where((LayoutView? view) => view!.isSeriesRenderer);
 
-    var componentBounds = drawableViews?.first?.componentBounds;
+    var componentBounds = drawableViews.first?.componentBounds;
 
     if (componentBounds != null) {
       for (LayoutView? view in drawableViews.skip(1)) {
@@ -226,8 +224,8 @@ class LayoutManagerImpl implements LayoutManager {
     );
 
     // Bounds for the draw area.
-    _drawAreaBounds = Rectangle(measurements.leftWidth!, measurements.topHeight!,
-        drawAreaWidth, drawAreaHeight);
+    _drawAreaBounds = Rectangle(measurements.leftWidth!,
+        measurements.topHeight!, drawAreaWidth, drawAreaHeight);
     _drawAreaBoundsOutdated = false;
   }
 
@@ -246,8 +244,8 @@ class LayoutManagerImpl implements LayoutManager {
     final fullBounds = Rectangle(0, 0, width!, height!);
 
     // Layout the margins.
-    LeftMarginLayoutStrategy()
-        .layout(leftViews, _measurements.leftSizes, fullBounds, drawAreaBounds!);
+    LeftMarginLayoutStrategy().layout(
+        leftViews, _measurements.leftSizes, fullBounds, drawAreaBounds!);
     RightMarginLayoutStrategy().layout(
         rightViews, _measurements.rightSizes, fullBounds, drawAreaBounds!);
     BottomMarginLayoutStrategy().layout(

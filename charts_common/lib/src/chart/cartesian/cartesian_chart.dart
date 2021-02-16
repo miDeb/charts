@@ -149,17 +149,9 @@ abstract class CartesianChart<D> extends BaseChart<D?> {
         _newDomainAxis = domainAxis,
         _primaryMeasureAxis = primaryMeasureAxis ?? NumericAxis(),
         _secondaryMeasureAxis = secondaryMeasureAxis ?? NumericAxis(),
-        _disjointMeasureAxes = (disjointMeasureAxes ?? <String, NumericAxis>{}) as LinkedHashMap<String, NumericAxis>,
-        super(layoutConfig: layoutConfig ?? _defaultLayoutConfig) {
-    // As a convenience for chart configuration, set the paint order on any axis
-    // that is missing one.
-    _primaryMeasureAxis.layoutPaintOrder ??= LayoutViewPaintOrder.measureAxis;
-    _secondaryMeasureAxis.layoutPaintOrder ??= LayoutViewPaintOrder.measureAxis;
-
-    _disjointMeasureAxes.forEach((String axisId, NumericAxis axis) {
-      axis.layoutPaintOrder ??= LayoutViewPaintOrder.measureAxis;
-    });
-  }
+        _disjointMeasureAxes = (disjointMeasureAxes ?? <String, NumericAxis>{})
+            as LinkedHashMap<String, NumericAxis>,
+        super(layoutConfig: layoutConfig ?? _defaultLayoutConfig);
 
   void init(ChartContext context, GraphicsFactory graphicsFactory) {
     super.init(context, graphicsFactory);
@@ -303,7 +295,8 @@ abstract class CartesianChart<D> extends BaseChart<D?> {
   @override
   Map<String?, List<MutableSeries<D?>>> preprocessSeries(
       List<MutableSeries<D?>> seriesList) {
-    Map<String?, List<MutableSeries<D?>>> rendererToSeriesList = super.preprocessSeries(seriesList);
+    Map<String?, List<MutableSeries<D?>>> rendererToSeriesList =
+        super.preprocessSeries(seriesList);
 
     // Check if primary or secondary measure axis is being used.
     for (final series in seriesList) {
@@ -422,7 +415,8 @@ abstract class CartesianChart<D> extends BaseChart<D?> {
   }
 
   @override
-  void onPostLayout(Map<String?, List<MutableSeries<D?>>> rendererToSeriesList) {
+  void onPostLayout(
+      Map<String?, List<MutableSeries<D?>>> rendererToSeriesList) {
     fireOnAxisConfigured();
 
     super.onPostLayout(rendererToSeriesList);
@@ -441,7 +435,7 @@ abstract class CartesianChart<D> extends BaseChart<D?> {
       final domain = series.domainFn!(datumIndex);
       final domainFormatterFn = series.domainFormatterFn;
       final measure = series.measureFn!(datumIndex);
-      final  measureFormatterFn = series.measureFormatterFn;
+      final measureFormatterFn = series.measureFormatterFn;
       final measureOffset = series.measureOffsetFn!(datumIndex);
       final rawMeasure = series.rawMeasureFn!(datumIndex);
       final color = series.colorFn!(datumIndex);

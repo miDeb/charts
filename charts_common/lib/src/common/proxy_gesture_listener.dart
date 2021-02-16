@@ -42,7 +42,8 @@ class ProxyGestureListener {
     // Walk through listeners stopping at the first handled listener.
     final claimingListener = _activeListeners!.firstWhereOrNull(
         (GestureListener listener) =>
-            listener.onLongPress != null && listener.onLongPress!(localPosition)!);
+            listener.onLongPress != null &&
+            listener.onLongPress!(localPosition)!);
 
     // If someone claims the long press, then cancel everyone else.
     if (claimingListener != null) {
@@ -88,7 +89,8 @@ class ProxyGestureListener {
     // Walk through listeners stopping at the first handled listener.
     final claimingListener = _activeListeners!.firstWhereOrNull(
         (GestureListener listener) =>
-            listener.onDragStart != null && listener.onDragStart!(localPosition));
+            listener.onDragStart != null &&
+            listener.onDragStart!(localPosition));
 
     if (claimingListener != null) {
       _activeListeners =
