@@ -24,16 +24,21 @@ class Color {
   static const _darkerPercentOfOrig = 0.7;
   static const _lighterPercentOfOrig = 0.1;
 
-  final int? r;
-  final int? g;
-  final int? b;
+  final int r;
+  final int g;
+  final int b;
   final int a;
 
   final Color? _darker;
   final Color? _lighter;
 
   const Color(
-      {this.r, this.g, this.b, this.a = 255, Color? darker, Color? lighter})
+      {required this.r,
+      required this.g,
+      required this.b,
+      this.a = 255,
+      Color? darker,
+      Color? lighter})
       : _darker = darker,
         _lighter = lighter;
 
