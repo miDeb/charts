@@ -23,7 +23,7 @@ import 'date_time_extents.dart' show DateTimeExtents;
 /// [DateTimeScale] is a wrapper for [LinearScale].
 /// [DateTime] values are converted to millisecondsSinceEpoch and passed to the
 /// [LinearScale].
-class DateTimeScale extends MutableScale<DateTime> {
+class DateTimeScale extends MutableScale<DateTime?> {
   final DateTimeFactory dateTimeFactory;
   final LinearScale _linearScale;
 
@@ -34,8 +34,8 @@ class DateTimeScale extends MutableScale<DateTime> {
         _linearScale = other._linearScale.copy();
 
   @override
-  num operator [](DateTime domainValue) =>
-      _linearScale[domainValue.millisecondsSinceEpoch];
+  num operator [](DateTime? domainValue) =>
+      _linearScale[domainValue!.millisecondsSinceEpoch];
 
   @override
   DateTime reverse(double pixelLocation) =>
@@ -61,18 +61,18 @@ class DateTimeScale extends MutableScale<DateTime> {
   }
 
   @override
-  void setViewportSettings(double viewportScale, double viewportTranslatePx) {
+  void setViewportSettings(double? viewportScale, double? viewportTranslatePx) {
     _linearScale.setViewportSettings(viewportScale, viewportTranslatePx);
   }
 
   @override
-  set range(ScaleOutputExtent extent) {
+  set range(ScaleOutputExtent? extent) {
     _linearScale.range = extent;
   }
 
   @override
-  void addDomain(DateTime domainValue) {
-    _linearScale.addDomain(domainValue.millisecondsSinceEpoch);
+  void addDomain(DateTime? domainValue) {
+    _linearScale.addDomain(domainValue!.millisecondsSinceEpoch);
   }
 
   @override
@@ -81,7 +81,7 @@ class DateTimeScale extends MutableScale<DateTime> {
   }
 
   DateTimeExtents get viewportDomain {
-    final extents = _linearScale.viewportDomain;
+    final extents = _linearScale.viewportDomain!;
     return DateTimeExtents(
         start: dateTimeFactory
             .createDateTimeFromMilliSecondsSinceEpoch(extents.min.toInt()),
@@ -99,18 +99,18 @@ class DateTimeScale extends MutableScale<DateTime> {
   DateTimeScale copy() => DateTimeScale._copy(this);
 
   @override
-  double get viewportTranslatePx => _linearScale.viewportTranslatePx;
+  double? get viewportTranslatePx => _linearScale.viewportTranslatePx;
 
   @override
-  double get viewportScalingFactor => _linearScale.viewportScalingFactor;
+  double? get viewportScalingFactor => _linearScale.viewportScalingFactor;
 
   @override
   bool isRangeValueWithinViewport(double rangeValue) =>
       _linearScale.isRangeValueWithinViewport(rangeValue);
 
   @override
-  int compareDomainValueToViewport(DateTime domainValue) => _linearScale
-      .compareDomainValueToViewport(domainValue.millisecondsSinceEpoch);
+  int compareDomainValueToViewport(DateTime? domainValue) => _linearScale
+      .compareDomainValueToViewport(domainValue!.millisecondsSinceEpoch);
 
   @override
   double get rangeBand => _linearScale.rangeBand;
@@ -128,11 +128,11 @@ class DateTimeScale extends MutableScale<DateTime> {
   int get rangeWidth => _linearScale.rangeWidth;
 
   @override
-  ScaleOutputExtent get range => _linearScale.range;
+  ScaleOutputExtent? get range => _linearScale.range;
 
   @override
-  bool canTranslate(DateTime domainValue) =>
-      _linearScale.canTranslate(domainValue.millisecondsSinceEpoch);
+  bool canTranslate(DateTime? domainValue) =>
+      _linearScale.canTranslate(domainValue!.millisecondsSinceEpoch);
 
   NumericExtents get dataExtent => _linearScale.dataExtent;
 }

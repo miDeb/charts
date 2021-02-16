@@ -21,7 +21,7 @@ import '../../../cartesian/axis/axis.dart' show ImmutableAxis, domainAxisKey;
 import '../../../cartesian/cartesian_chart.dart' show CartesianChart;
 import '../../base_chart.dart' show BaseChart, LifecycleListener;
 import '../../processed_series.dart' show MutableSeries;
-import '../../selection_model/selection_model.dart' show SelectionModelType;
+import '../../selection_model/selection_model.dart' show MutableSelectionModel, SelectionModelType;
 import '../../series_datum.dart' show SeriesDatum;
 import 'a11y_explore_behavior.dart'
     show A11yExploreBehavior, ExploreModeTrigger;
@@ -29,30 +29,30 @@ import 'a11y_node.dart' show A11yNode, OnFocus;
 
 /// Returns a string for a11y vocalization from a list of series datum.
 typedef VocalizationCallback<D> = String Function(
-    List<SeriesDatum<D>> seriesDatums);
+    List<SeriesDatum<D?>> seriesDatums);
 
 /// A simple vocalization that returns the domain value to string.
 String domainVocalization<D>(List<SeriesDatum<D>> seriesDatums) {
-  final datumIndex = seriesDatums.first.index;
-  final domainFn = seriesDatums.first.series.domainFn;
+  final datumIndex = seriesDatums.first.index!;
+  final domainFn = seriesDatums.first.series!.domainFn;
   final domain = domainFn(datumIndex);
 
   return domain.toString();
 }
 
 /// Behavior that generates semantic nodes for each domain.
-class DomainA11yExploreBehavior<D> extends A11yExploreBehavior<D> {
+class DomainA11yExploreBehavior<D> extends A11yExploreBehavior<D?> {
   final VocalizationCallback _vocalizationCallback;
-  LifecycleListener<D> _lifecycleListener;
-  CartesianChart<D> _chart;
-  List<MutableSeries<D>> _seriesList;
+  LifecycleListener<D>? _lifecycleListener;
+  late CartesianChart<D> _chart;
+  late List<MutableSeries<D>> _seriesList;
 
   DomainA11yExploreBehavior(
-      {VocalizationCallback vocalizationCallback,
-      ExploreModeTrigger exploreModeTrigger,
-      double minimumWidth,
-      String exploreModeEnabledAnnouncement,
-      String exploreModeDisabledAnnouncement})
+      {VocalizationCallback? vocalizationCallback,
+      ExploreModeTrigger? exploreModeTrigger,
+      double? minimumWidth,
+      String? exploreModeEnabledAnnouncement,
+      String? exploreModeDisabledAnnouncement})
       : _vocalizationCallback = vocalizationCallback ?? domainVocalization,
         super(
             exploreModeTrigger: exploreModeTrigger,
@@ -67,7 +67,7 @@ class DomainA11yExploreBehavior<D> extends A11yExploreBehavior<D> {
     final nodes = <_DomainA11yNode>[];
 
     // Update the selection model when the a11y node has focus.
-    final selectionModel = _chart.getSelectionModel(SelectionModelType.info);
+    final MutableSelectionModel<D?> selectionModel = _chart.getSelectionModel(SelectionModelType.info)!;
 
     final domainSeriesDatum = <D, List<SeriesDatum<D>>>{};
 
@@ -77,19 +77,19 @@ class DomainA11yExploreBehavior<D> extends A11yExploreBehavior<D> {
         D domain = series.domainFn(index);
 
         domainSeriesDatum[domain] ??= <SeriesDatum<D>>[];
-        domainSeriesDatum[domain].add(SeriesDatum<D>(series, datum));
+        domainSeriesDatum[domain]!.add(SeriesDatum<D>(series, datum));
       }
     }
 
     domainSeriesDatum.forEach((D domain, List<SeriesDatum<D>> seriesDatums) {
       final a11yDescription = _vocalizationCallback(seriesDatums);
 
-      final firstSeries = seriesDatums.first.series;
+      final firstSeries = seriesDatums.first.series!;
       final domainAxis = firstSeries.getAttr(domainAxisKey) as ImmutableAxis<D>;
-      final location = domainAxis.getLocation(domain);
+      final location = domainAxis.getLocation(domain)!;
 
       /// If the step size is smaller than the minimum width, use minimum.
-      final stepSize = (domainAxis.stepSize > minimumWidth)
+      final stepSize = (domainAxis.stepSize! > minimumWidth)
           ? domainAxis.stepSize
           : minimumWidth;
 
@@ -97,7 +97,7 @@ class DomainA11yExploreBehavior<D> extends A11yExploreBehavior<D> {
           location: location,
           stepSize: stepSize,
           chartDrawBounds: _chart.drawAreaBounds,
-          isRtl: _chart.context.isRtl,
+          isRtl: _chart.context!.isRtl,
           renderVertically: _chart.vertical,
           onFocus: () => selectionModel.updateSelection(seriesDatums, [])));
     });
@@ -118,10 +118,10 @@ class DomainA11yExploreBehavior<D> extends A11yExploreBehavior<D> {
   }
 
   @override
-  void attachTo(BaseChart<D> chart) {
+  void attachTo(BaseChart<D?> chart) {
     // Domain selection behavior only works for cartesian charts.
     assert(chart is CartesianChart);
-    _chart = chart as CartesianChart;
+    _chart = (chart as CartesianChart) as CartesianChart<D>;
 
     chart.addLifecycleListener(_lifecycleListener);
 
@@ -145,22 +145,22 @@ class _DomainA11yNode extends A11yNode implements Comparable<_DomainA11yNode> {
   final bool renderVertically;
 
   factory _DomainA11yNode(String label,
-      {@required double location,
-      @required double stepSize,
-      @required Rectangle<int> chartDrawBounds,
-      @required bool isRtl,
-      @required bool renderVertically,
-      OnFocus onFocus}) {
+      {required double location,
+      required double? stepSize,
+      required Rectangle<int>? chartDrawBounds,
+      required bool isRtl,
+      required bool renderVertically,
+      OnFocus? onFocus}) {
     Rectangle<int> boundingBox;
     if (renderVertically) {
-      var left = (location - stepSize / 2).round();
-      var top = chartDrawBounds.top;
+      var left = (location - stepSize! / 2).round();
+      var top = chartDrawBounds!.top;
       var width = stepSize.round();
       var height = chartDrawBounds.height;
       boundingBox = Rectangle(left, top, width, height);
     } else {
-      var left = chartDrawBounds.left;
-      var top = (location - stepSize / 2).round();
+      var left = chartDrawBounds!.left;
+      var top = (location - stepSize! / 2).round();
       var width = chartDrawBounds.width;
       var height = stepSize.round();
       boundingBox = Rectangle(left, top, width, height);
@@ -174,10 +174,10 @@ class _DomainA11yNode extends A11yNode implements Comparable<_DomainA11yNode> {
   }
 
   _DomainA11yNode._internal(String label, Rectangle<int> boundingBox,
-      {@required this.location,
-      @required this.isRtl,
-      @required this.renderVertically,
-      OnFocus onFocus})
+      {required this.location,
+      required this.isRtl,
+      required this.renderVertically,
+      OnFocus? onFocus})
       : super(label, boundingBox, onFocus: onFocus);
 
   @override

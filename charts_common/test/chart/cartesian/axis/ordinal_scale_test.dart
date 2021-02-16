@@ -24,11 +24,11 @@ const EPSILON = 0.001;
 
 class TestStyle extends MaterialStyle {
   @override
-  double rangeBandSize;
+  double? rangeBandSize;
 }
 
 void main() {
-  SimpleOrdinalScale scale;
+  late SimpleOrdinalScale scale;
 
   setUp(() {
     scale = SimpleOrdinalScale();
@@ -158,10 +158,10 @@ void main() {
 
   group('set range persists', () {
     test('', () {
-      expect(scale.range.start, equals(2000));
-      expect(scale.range.end, equals(1000));
-      expect(scale.range.min, equals(1000));
-      expect(scale.range.max, equals(2000));
+      expect(scale.range!.start, equals(2000));
+      expect(scale.range!.end, equals(1000));
+      expect(scale.range!.min, equals(1000));
+      expect(scale.range!.max, equals(2000));
       expect(scale.rangeWidth, equals(1000));
 
       expect(scale.isRangeValueWithinViewport(1500.0), isTrue);

@@ -30,7 +30,7 @@ class HourTimeStepper extends BaseTimeStepper {
         super(dateTimeFactory);
 
   factory HourTimeStepper(DateTimeFactory dateTimeFactory,
-      {List<int> allowedTickIncrements}) {
+      {List<int>? allowedTickIncrements}) {
     // Set the default increments if null.
     allowedTickIncrements ??= _defaultIncrements;
 
@@ -81,7 +81,7 @@ class HourTimeStepper extends BaseTimeStepper {
   ///
   /// [time] is expected to be a [DateTime] with the hour at start of the hour.
   @override
-  DateTime getNextStepTime(DateTime time, int tickIncrement) {
-    return time.add(Duration(hours: tickIncrement));
+  DateTime getNextStepTime(DateTime? time, int tickIncrement) {
+    return time!.add(Duration(hours: tickIncrement));
   }
 }

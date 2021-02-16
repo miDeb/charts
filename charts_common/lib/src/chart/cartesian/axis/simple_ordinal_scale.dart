@@ -34,30 +34,30 @@ import 'scale.dart'
 class SimpleOrdinalScale implements OrdinalScale {
   final _stepSizeConfig = StepSizeConfig.auto();
   OrdinalScaleDomainInfo _domain;
-  ScaleOutputExtent _range = ScaleOutputExtent(0, 1);
-  double _viewportScale = 1.0;
+  ScaleOutputExtent? _range = ScaleOutputExtent(0, 1);
+  double? _viewportScale = 1.0;
   double _viewportTranslatePx = 0.0;
   RangeBandConfig _rangeBandConfig = RangeBandConfig.styleAssignedPercent();
 
   bool _scaleChanged = true;
-  double _cachedStepSizePixels;
-  double _cachedRangeBandShift;
-  double _cachedRangeBandSize;
+  double? _cachedStepSizePixels;
+  late double _cachedRangeBandShift;
+  double? _cachedRangeBandSize;
 
-  int _viewportDataSize;
-  String _viewportStartingDomain;
+  int? _viewportDataSize;
+  String? _viewportStartingDomain;
 
   SimpleOrdinalScale() : _domain = OrdinalScaleDomainInfo();
 
   SimpleOrdinalScale._copy(SimpleOrdinalScale other)
       : _domain = other._domain.copy(),
-        _range = ScaleOutputExtent(other._range.start, other._range.end),
+        _range = ScaleOutputExtent(other._range!.start, other._range!.end),
         _viewportScale = other._viewportScale,
         _viewportTranslatePx = other._viewportTranslatePx,
         _rangeBandConfig = other._rangeBandConfig;
 
   @override
-  double get rangeBand {
+  double? get rangeBand {
     if (_scaleChanged) {
       _updateScale();
     }
@@ -66,7 +66,7 @@ class SimpleOrdinalScale implements OrdinalScale {
   }
 
   @override
-  double get stepSize {
+  double? get stepSize {
     if (_scaleChanged) {
       _updateScale();
     }
@@ -78,7 +78,7 @@ class SimpleOrdinalScale implements OrdinalScale {
   double get domainStepSize => 1.0;
 
   @override
-  set rangeBandConfig(RangeBandConfig barGroupWidthConfig) {
+  set rangeBandConfig(RangeBandConfig? barGroupWidthConfig) {
     if (barGroupWidthConfig == null) {
       throw ArgumentError.notNull('RangeBandConfig must not be null.');
     }
@@ -97,7 +97,7 @@ class SimpleOrdinalScale implements OrdinalScale {
   RangeBandConfig get rangeBandConfig => _rangeBandConfig;
 
   @override
-  set stepSizeConfig(StepSizeConfig config) {
+  set stepSizeConfig(StepSizeConfig? config) {
     if (config != null && config.type != StepSizeType.autoDetect) {
       throw ArgumentError(
           'Ordinal scales only support StepSizeConfig of type Auto');
@@ -112,7 +112,7 @@ class SimpleOrdinalScale implements OrdinalScale {
   ///
   /// Returns 0 if not found.
   @override
-  num operator [](String domainValue) {
+  num operator [](String? domainValue) {
     if (_scaleChanged) {
       _updateScale();
     }
@@ -120,21 +120,21 @@ class SimpleOrdinalScale implements OrdinalScale {
     final i = _domain.indexOf(domainValue);
     if (i != null) {
       return viewportTranslatePx +
-          _range.start +
+          _range!.start +
           _cachedRangeBandShift +
-          (_cachedStepSizePixels * i);
+          (_cachedStepSizePixels! * i);
     }
     // If it wasn't found
     return 0.0;
   }
 
   @override
-  String reverse(double pixelLocation) {
+  String? reverse(double pixelLocation) {
     final index = ((pixelLocation -
             viewportTranslatePx -
-            _range.start -
+            _range!.start -
             _cachedRangeBandShift) /
-        _cachedStepSizePixels);
+        _cachedStepSizePixels!);
 
     // The last pixel belongs in the last step even if it tries to round up.
     //
@@ -147,7 +147,7 @@ class SimpleOrdinalScale implements OrdinalScale {
   }
 
   @override
-  bool canTranslate(String domainValue) =>
+  bool canTranslate(String? domainValue) =>
       (_domain.indexOf(domainValue) != null);
 
   @override
@@ -155,19 +155,19 @@ class SimpleOrdinalScale implements OrdinalScale {
 
   /// Update the scale to include [domainValue].
   @override
-  void addDomain(String domainValue) {
+  void addDomain(String? domainValue) {
     _domain.add(domainValue);
     _scaleChanged = true;
   }
 
   @override
-  set range(ScaleOutputExtent extent) {
+  set range(ScaleOutputExtent? extent) {
     _range = extent;
     _scaleChanged = true;
   }
 
   @override
-  ScaleOutputExtent get range => _range;
+  ScaleOutputExtent? get range => _range;
 
   @override
   void resetDomain() {
@@ -183,25 +183,25 @@ class SimpleOrdinalScale implements OrdinalScale {
   }
 
   @override
-  int get rangeWidth => (range.start - range.end).abs().toInt();
+  int get rangeWidth => (range!.start - range!.end).abs().toInt();
 
   @override
-  double get viewportScalingFactor => _viewportScale;
+  double? get viewportScalingFactor => _viewportScale;
 
   @override
   double get viewportTranslatePx => _viewportTranslatePx;
 
   @override
-  void setViewportSettings(double viewportScale, double viewportTranslatePx) {
+  void setViewportSettings(double? viewportScale, double? viewportTranslatePx) {
     _viewportScale = viewportScale;
     _viewportTranslatePx =
-        min(0.0, max(rangeWidth * (1.0 - viewportScale), viewportTranslatePx));
+        min(0.0, max(rangeWidth * (1.0 - viewportScale!), viewportTranslatePx!));
 
     _scaleChanged = true;
   }
 
   @override
-  void setViewport(int viewportDataSize, String startingDomain) {
+  void setViewport(int? viewportDataSize, String? startingDomain) {
     if (startingDomain != null &&
         viewportDataSize != null &&
         viewportDataSize <= 0) {
@@ -224,13 +224,13 @@ class SimpleOrdinalScale implements OrdinalScale {
 
     // Update the scale with zoom level to help find the correct translate.
     setViewportSettings(
-        _domain.size / min(_viewportDataSize, _domain.size), 0.0);
+        _domain.size / min(_viewportDataSize!, _domain.size), 0.0);
     _recalculateScale();
     final domainIndex = _domain.indexOf(_viewportStartingDomain);
     if (domainIndex != null) {
       // Update the translate so that the scale starts half a step before the
       // chosen domain.
-      final viewportTranslatePx = -(_cachedStepSizePixels * domainIndex);
+      final viewportTranslatePx = -(_cachedStepSizePixels! * domainIndex);
       setViewportSettings(_viewportScale, viewportTranslatePx);
     }
   }
@@ -241,11 +241,11 @@ class SimpleOrdinalScale implements OrdinalScale {
       _updateScale();
     }
 
-    return _domain.isEmpty ? 0 : (rangeWidth ~/ _cachedStepSizePixels);
+    return _domain.isEmpty ? 0 : (rangeWidth ~/ _cachedStepSizePixels!);
   }
 
   @override
-  String get viewportStartingDomain {
+  String? get viewportStartingDomain {
     if (_scaleChanged) {
       _updateScale();
     }
@@ -253,25 +253,25 @@ class SimpleOrdinalScale implements OrdinalScale {
       return null;
     }
     return _domain.getDomainAtIndex(
-        (-_viewportTranslatePx / _cachedStepSizePixels).ceil().toInt());
+        (-_viewportTranslatePx / _cachedStepSizePixels!).ceil().toInt());
   }
 
   @override
   bool isRangeValueWithinViewport(double rangeValue) {
-    return range != null && rangeValue >= range.min && rangeValue <= range.max;
+    return range != null && rangeValue >= range!.min && rangeValue <= range!.max;
   }
 
   @override
-  int compareDomainValueToViewport(String domainValue) {
+  int compareDomainValueToViewport(String? domainValue) {
     // TODO: This currently works because range defaults to 0-1
     // This needs to be looked into further.
     var i = _domain.indexOf(domainValue);
     if (i != null && range != null) {
       var domainPx = this[domainValue];
-      if (domainPx < range.min) {
+      if (domainPx < range!.min) {
         return -1;
       }
-      if (domainPx > range.max) {
+      if (domainPx > range!.max) {
         return 1;
       }
       return 0;
@@ -297,8 +297,8 @@ class SimpleOrdinalScale implements OrdinalScale {
     // adding the band width. If range start is greater than range end, then the
     // domain is calculated by subtracting from the band width (ex. horizontal
     // bar charts where first series is at the bottom of the chart).
-    if (range.start > range.end) {
-      _cachedStepSizePixels *= -1;
+    if (range!.start > range!.end) {
+      _cachedStepSizePixels = -_cachedStepSizePixels!;
       _cachedRangeBandShift *= -1;
     }
 
@@ -316,7 +316,7 @@ class SimpleOrdinalScale implements OrdinalScale {
   void _recalculateScale() {
     final stepSizePixels = _domain.isEmpty
         ? 0.0
-        : _viewportScale * (rangeWidth.toDouble() / _domain.size.toDouble());
+        : _viewportScale! * (rangeWidth.toDouble() / _domain.size.toDouble());
     double rangeBandPixels;
 
     switch (rangeBandConfig.type) {

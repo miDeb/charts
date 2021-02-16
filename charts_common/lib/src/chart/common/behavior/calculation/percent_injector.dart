@@ -38,7 +38,7 @@ const percentInjectedKey =
 /// then this behavior must be added after the [Legend] to ensure that it
 /// calculates values after series have been potentially removed from the list.
 class PercentInjector<D> implements ChartBehavior<D> {
-  LifecycleListener<D> _lifecycleListener;
+  LifecycleListener<D>? _lifecycleListener;
 
   /// The type of data total to be calculated.
   final PercentInjectorTotalType totalType;
@@ -78,7 +78,7 @@ class PercentInjector<D> implements ChartBehavior<D> {
   void _preProcess(List<MutableSeries<D>> seriesList) {
     var percentInjected = true;
     seriesList.forEach((MutableSeries series) {
-      percentInjected = percentInjected && series.getAttr(percentInjectedKey);
+      percentInjected = percentInjected && series.getAttr(percentInjectedKey)!;
     });
 
     if (percentInjected) {
@@ -97,12 +97,12 @@ class PercentInjector<D> implements ChartBehavior<D> {
         // automatically computed by [MutableSeries].
         seriesList.forEach((MutableSeries series) {
           final seriesCategory = series.seriesCategory;
-          final rawMeasureFn = series.rawMeasureFn;
-          final domainFn = series.domainFn;
+          final num? Function(int)? rawMeasureFn = series.rawMeasureFn;
+          final dynamic Function(int) domainFn = series.domainFn;
 
           for (var index = 0; index < series.data.length; index++) {
             final domain = domainFn(index);
-            var measure = rawMeasureFn(index);
+            var measure = rawMeasureFn!(index);
             measure ??= 0.0;
 
             final key = useSeriesCategory
@@ -110,7 +110,7 @@ class PercentInjector<D> implements ChartBehavior<D> {
                 : '${domain.toString()}';
 
             if (totalsByDomain[key] != null) {
-              totalsByDomain[key] = totalsByDomain[key] + measure;
+              totalsByDomain[key] = totalsByDomain[key]! + measure;
             } else {
               totalsByDomain[key] = measure;
             }
@@ -122,7 +122,7 @@ class PercentInjector<D> implements ChartBehavior<D> {
           // Replace the default measure accessor with one that computes the
           // percentage.
           series.measureFn = (int index) {
-            final measure = series.rawMeasureFn(index);
+            final measure = series.rawMeasureFn!(index);
 
             if (measure == null || measure == 0.0) {
               return 0.0;
@@ -134,14 +134,14 @@ class PercentInjector<D> implements ChartBehavior<D> {
                 ? '${series.seriesCategory}__${domain.toString()}'
                 : '${domain.toString()}';
 
-            return measure / totalsByDomain[key];
+            return measure / totalsByDomain[key]!;
           };
 
           // Replace the default measure lower bound accessor with one that
           // computes the  percentage.
           if (series.measureLowerBoundFn != null) {
             series.measureLowerBoundFn = (int index) {
-              final measureLowerBound = series.rawMeasureLowerBoundFn(index);
+              final measureLowerBound = series.rawMeasureLowerBoundFn!(index);
 
               if (measureLowerBound == null || measureLowerBound == 0.0) {
                 return 0.0;
@@ -153,7 +153,7 @@ class PercentInjector<D> implements ChartBehavior<D> {
                   ? '${series.seriesCategory}__${domain.toString()}'
                   : '${domain.toString()}';
 
-              return measureLowerBound / totalsByDomain[key];
+              return measureLowerBound / totalsByDomain[key]!;
             };
           }
 
@@ -161,7 +161,7 @@ class PercentInjector<D> implements ChartBehavior<D> {
           // computes the  percentage.
           if (series.measureUpperBoundFn != null) {
             series.measureUpperBoundFn = (int index) {
-              final measureUpperBound = series.rawMeasureUpperBoundFn(index);
+              final measureUpperBound = series.rawMeasureUpperBoundFn!(index);
 
               if (measureUpperBound == null || measureUpperBound == 0.0) {
                 return 0.0;
@@ -173,7 +173,7 @@ class PercentInjector<D> implements ChartBehavior<D> {
                   ? '${series.seriesCategory}__${domain.toString()}'
                   : '${domain.toString()}';
 
-              return measureUpperBound / totalsByDomain[key];
+              return measureUpperBound / totalsByDomain[key]!;
             };
           }
 
@@ -187,13 +187,13 @@ class PercentInjector<D> implements ChartBehavior<D> {
           // Replace the default measure accessor with one that computes the
           // percentage.
           series.measureFn = (int index) =>
-              series.rawMeasureFn(index) / series.seriesMeasureTotal;
+              series.rawMeasureFn!(index)! / series.seriesMeasureTotal;
 
           // Replace the default measure lower bound accessor with one that
           // computes the  percentage.
           if (series.measureLowerBoundFn != null) {
             series.measureLowerBoundFn = (int index) =>
-                series.rawMeasureLowerBoundFn(index) /
+                series.rawMeasureLowerBoundFn!(index)! /
                 series.seriesMeasureTotal;
           }
 
@@ -201,7 +201,7 @@ class PercentInjector<D> implements ChartBehavior<D> {
           // computes the  percentage.
           if (series.measureUpperBoundFn != null) {
             series.measureUpperBoundFn = (int index) =>
-                series.rawMeasureUpperBoundFn(index) /
+                series.rawMeasureUpperBoundFn!(index)! /
                 series.seriesMeasureTotal;
           }
 

@@ -28,7 +28,7 @@ class MonthTimeStepper extends BaseTimeStepper {
         super(dateTimeFactory);
 
   factory MonthTimeStepper(DateTimeFactory dateTimeFactory,
-      {List<int> allowedTickIncrements}) {
+      {List<int>? allowedTickIncrements}) {
     // Set the default increments if null.
     allowedTickIncrements ??= _defaultIncrements;
 
@@ -65,8 +65,8 @@ class MonthTimeStepper extends BaseTimeStepper {
   }
 
   @override
-  DateTime getNextStepTime(DateTime time, int tickIncrement) {
-    final incrementedMonth = time.month + tickIncrement;
+  DateTime getNextStepTime(DateTime? time, int tickIncrement) {
+    final incrementedMonth = time!.month + tickIncrement;
     final newMonth = incrementedMonth % DateTime.monthsPerYear;
     final newYear =
         time.year + (incrementedMonth / DateTime.monthsPerYear).floor();

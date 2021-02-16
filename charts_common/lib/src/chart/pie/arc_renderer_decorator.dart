@@ -31,7 +31,7 @@ abstract class ArcRendererDecorator<D> {
 
   void decorate(ArcRendererElementList<D> arcElements, ChartCanvas canvas,
       GraphicsFactory graphicsFactory,
-      {@required Rectangle drawBounds,
-      @required double animationPercent,
+      {required Rectangle? drawBounds,
+      required double animationPercent,
       bool rtl = false});
 }

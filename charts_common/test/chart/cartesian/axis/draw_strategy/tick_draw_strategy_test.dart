@@ -34,13 +34,13 @@ class MockContext extends Mock implements ChartContext {}
 class BaseTickDrawStrategyImpl<D> extends BaseTickDrawStrategy<D> {
   BaseTickDrawStrategyImpl(
       ChartContext chartContext, GraphicsFactory graphicsFactory,
-      {TextStyleSpec labelStyleSpec,
-      LineStyleSpec axisLineStyleSpec,
-      TickLabelAnchor labelAnchor,
-      TickLabelJustification labelJustification,
-      int labelOffsetFromAxisPx,
-      int labelOffsetFromTickPx,
-      int minimumPaddingBetweenLabelsPx})
+      {TextStyleSpec? labelStyleSpec,
+      LineStyleSpec? axisLineStyleSpec,
+      TickLabelAnchor? labelAnchor,
+      TickLabelJustification? labelJustification,
+      int? labelOffsetFromAxisPx,
+      int? labelOffsetFromTickPx,
+      int? minimumPaddingBetweenLabelsPx})
       : super(chartContext, graphicsFactory,
             labelStyleSpec: labelStyleSpec,
             axisLineStyleSpec: axisLineStyleSpec,
@@ -51,16 +51,16 @@ class BaseTickDrawStrategyImpl<D> extends BaseTickDrawStrategy<D> {
             minimumPaddingBetweenLabelsPx: minimumPaddingBetweenLabelsPx);
 
   void draw(ChartCanvas canvas, Tick<D> tick,
-      {AxisOrientation orientation,
-      Rectangle<int> axisBounds,
-      Rectangle<int> drawAreaBounds,
-      bool isFirst,
-      bool isLast}) {}
+      {AxisOrientation? orientation,
+      Rectangle<int>? axisBounds,
+      Rectangle<int>? drawAreaBounds,
+      bool? isFirst,
+      bool? isLast}) {}
 
   void drawLabel(ChartCanvas canvas, Tick<D> tick,
-      {AxisOrientation orientation,
-      Rectangle<int> axisBounds,
-      Rectangle<int> drawAreaBounds,
+      {required AxisOrientation orientation,
+      required Rectangle<int> axisBounds,
+      Rectangle<int>? drawAreaBounds,
       bool isFirst = false,
       bool isLast = false}) {
     super.drawLabel(canvas, tick,
@@ -80,17 +80,17 @@ class FakeTextElement implements TextElement {
 
   final String text;
   final TextMeasurement measurement;
-  var textStyle = MockTextStyle();
-  int maxWidth;
-  MaxWidthStrategy maxWidthStrategy;
+  TextStyle? textStyle = MockTextStyle();
+  late int maxWidth;
+  late MaxWidthStrategy maxWidthStrategy;
   TextDirection textDirection;
-  double opacity;
+  double? opacity;
 
   FakeTextElement(
     this.text,
     this.textDirection,
-    double horizontalSliceWidth,
-    double verticalSliceWidth,
+    double? horizontalSliceWidth,
+    double? verticalSliceWidth,
   ) : measurement = TextMeasurement(
             horizontalSliceWidth: horizontalSliceWidth,
             verticalSliceWidth:
@@ -107,9 +107,9 @@ class MockChartCanvas extends Mock implements ChartCanvas {}
 
 /// Helper function to create [Tick] for testing.
 Tick<String> createTick(String value, double locationPx,
-    {double horizontalWidth,
-    double verticalWidth,
-    TextDirection textDirection}) {
+    {double? horizontalWidth,
+    double? verticalWidth,
+    TextDirection textDirection = TextDirection.center}) {
   return Tick<String>(
       value: value,
       locationPx: locationPx,
@@ -118,8 +118,8 @@ Tick<String> createTick(String value, double locationPx,
 }
 
 void main() {
-  GraphicsFactory graphicsFactory;
-  ChartContext chartContext;
+  late GraphicsFactory graphicsFactory;
+  late ChartContext chartContext;
 
   setUpAll(() {
     graphicsFactory = MockGraphicsFactory();
@@ -425,7 +425,7 @@ void main() {
     });
   });
   group('Draw Label', () {
-    void setUpLabel(String text, {double width}) =>
+    void setUpLabel(String text, {double? width}) =>
         when(graphicsFactory.createTextElement(text))
             .thenReturn(FakeTextElement(
           text,
@@ -434,8 +434,8 @@ void main() {
           15.0,
         ));
 
-    BaseTickDrawStrategyImpl drawStrategy;
-    List<Tick> ticks;
+    late BaseTickDrawStrategyImpl drawStrategy;
+    late List<Tick> ticks;
 
     setUp(() {
       drawStrategy = BaseTickDrawStrategyImpl(chartContext, graphicsFactory);

@@ -34,9 +34,9 @@ abstract class BaseCartesianRenderer<D> extends BaseSeriesRenderer<D>
   bool _renderingVertically = true;
 
   BaseCartesianRenderer(
-      {@required String rendererId,
-      @required int layoutPaintOrder,
-      SymbolRenderer symbolRenderer})
+      {String? rendererId,
+      required int layoutPaintOrder,
+      SymbolRenderer? symbolRenderer})
       : super(
             rendererId: rendererId,
             layoutPaintOrder: layoutPaintOrder,
@@ -58,9 +58,9 @@ abstract class BaseCartesianRenderer<D> extends BaseSeriesRenderer<D>
       }
 
       final domainAxis = series.getAttr(domainAxisKey);
-      final domainFn = series.domainFn;
-      final domainLowerBoundFn = series.domainLowerBoundFn;
-      final domainUpperBoundFn = series.domainUpperBoundFn;
+      final D Function(int) domainFn = series.domainFn;
+      final D Function(int)? domainLowerBoundFn = series.domainLowerBoundFn;
+      final D Function(int)? domainUpperBoundFn = series.domainUpperBoundFn;
 
       if (domainAxis == null) {
         return;
@@ -120,8 +120,8 @@ abstract class BaseCartesianRenderer<D> extends BaseSeriesRenderer<D>
       // Only add the measure values for datum who's domain is within the
       // domainAxis viewport.
       int startIndex =
-          findNearestViewportStart(domainAxis, domainFn, series.data);
-      int endIndex = findNearestViewportEnd(domainAxis, domainFn, series.data);
+          findNearestViewportStart(domainAxis, domainFn, series.data)!;
+      int endIndex = findNearestViewportEnd(domainAxis, domainFn, series.data)!;
 
       addMeasureValuesFor(series, measureAxis, startIndex, endIndex);
     });
@@ -129,28 +129,28 @@ abstract class BaseCartesianRenderer<D> extends BaseSeriesRenderer<D>
 
   void addMeasureValuesFor(
       MutableSeries<D> series, Axis measureAxis, int startIndex, int endIndex) {
-    final measureFn = series.measureFn;
-    final measureOffsetFn = series.measureOffsetFn;
-    final measureLowerBoundFn = series.measureLowerBoundFn;
-    final measureUpperBoundFn = series.measureUpperBoundFn;
+    final num? Function(int) measureFn = series.measureFn;
+    final num? Function(int)? measureOffsetFn = series.measureOffsetFn;
+    final num? Function(int)? measureLowerBoundFn = series.measureLowerBoundFn;
+    final num? Function(int)? measureUpperBoundFn = series.measureUpperBoundFn;
 
     for (int i = startIndex; i <= endIndex; i++) {
       final measure = measureFn(i);
-      final measureOffset = measureOffsetFn(i);
+      final measureOffset = measureOffsetFn!(i);
 
       if (measure != null && measureOffset != null) {
         measureAxis.addDomainValue(measure + measureOffset);
 
         if (measureLowerBoundFn != null && measureUpperBoundFn != null) {
-          measureAxis.addDomainValue(measureLowerBoundFn(i) + measureOffset);
-          measureAxis.addDomainValue(measureUpperBoundFn(i) + measureOffset);
+          measureAxis.addDomainValue(measureLowerBoundFn(i)! + measureOffset);
+          measureAxis.addDomainValue(measureUpperBoundFn(i)! + measureOffset);
         }
       }
     }
   }
 
   @visibleForTesting
-  int findNearestViewportStart(
+  int? findNearestViewportStart(
       Axis domainAxis, AccessorFn<D> domainFn, List data) {
     if (data.isEmpty) {
       return null;
@@ -206,7 +206,7 @@ abstract class BaseCartesianRenderer<D> extends BaseSeriesRenderer<D>
   }
 
   @visibleForTesting
-  int findNearestViewportEnd(
+  int? findNearestViewportEnd(
       Axis domainAxis, AccessorFn<D> domainFn, List data) {
     if (data.isEmpty) {
       return null;

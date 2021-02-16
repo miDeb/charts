@@ -21,32 +21,32 @@ import '../../series_renderer.dart' show rendererKey;
 
 /// The most basic possible legend entry - just a display name and positioning.
 class LegendEntryBase {
-  final String label;
-  final TextStyleSpec textStyle;
+  final String? label;
+  final TextStyleSpec? textStyle;
 
   /// Zero based index for the row where this legend appears in the legend.
-  int rowNumber;
+  int? rowNumber;
 
   /// Zero based index for the column where this legend appears in the legend.
-  int columnNumber;
+  int? columnNumber;
 
   /// Total number of rows in the legend.
-  int rowCount;
+  int? rowCount;
 
   /// Total number of columns in the legend.
-  int columnCount;
+  int? columnCount;
 
   /// Indicates whether this is in the first row of a tabular layout.
-  bool inFirstRow;
+  bool? inFirstRow;
 
   /// Indicates whether this is in the first column of a tabular layout.
-  bool inFirstColumn;
+  bool? inFirstColumn;
 
   /// Indicates whether this is in the last row of a tabular layout.
-  bool inLastRow;
+  bool? inLastRow;
 
   /// Indicates whether this is in the last column of a tabular layout.
-  bool inLastColumn;
+  bool? inLastColumn;
 
   LegendEntryBase(this.label,
       {this.textStyle,
@@ -67,15 +67,15 @@ class LegendCategory<D> extends LegendEntryBase {
   final List<LegendEntry<D>> entries;
 
   LegendCategory(String label, this.entries,
-      {TextStyleSpec textStyle,
-      int rowNumber,
-      int columnNumber,
-      int rowCount,
-      int columnCount,
-      bool inFirstRow,
-      bool inFirstColumn,
-      bool inLastRow,
-      bool inLastColumn})
+      {TextStyleSpec? textStyle,
+      int? rowNumber,
+      int? columnNumber,
+      int? rowCount,
+      int? columnCount,
+      bool? inFirstRow,
+      bool? inFirstColumn,
+      bool? inLastRow,
+      bool? inLastColumn})
       : super(label,
             textStyle: textStyle,
             rowNumber: rowNumber,
@@ -95,32 +95,32 @@ class LegendCategory<D> extends LegendEntryBase {
 class LegendEntry<D> extends LegendEntryBase {
   final ImmutableSeries<D> series;
   final dynamic datum;
-  final int datumIndex;
-  final D domain;
-  final Color color;
-  double value;
-  String formattedValue;
+  final int? datumIndex;
+  final D? domain;
+  final Color? color;
+  double? value;
+  String? formattedValue;
   bool isSelected;
 
   // TODO: Forward the default formatters from series and allow for
   // native legends to provide separate formatters.
 
-  LegendEntry(this.series, String label,
+  LegendEntry(this.series, String? label,
       {this.datum,
       this.datumIndex,
       this.domain,
       this.value,
       this.color,
       this.isSelected = false,
-      TextStyleSpec textStyle,
-      int rowNumber,
-      int columnNumber,
-      int rowCount,
-      int columnCount,
-      bool inFirstRow,
-      bool inFirstColumn,
-      bool inLastRow,
-      bool inLastColumn})
+      TextStyleSpec? textStyle,
+      int? rowNumber,
+      int? columnNumber,
+      int? rowCount,
+      int? columnCount,
+      bool? inFirstRow,
+      bool? inFirstColumn,
+      bool? inLastRow,
+      bool? inLastColumn})
       : super(label,
             textStyle: textStyle,
             rowNumber: rowNumber,
@@ -133,6 +133,6 @@ class LegendEntry<D> extends LegendEntryBase {
             inLastColumn: inLastColumn);
 
   /// Get the native symbol renderer stored in the series.
-  SymbolRenderer get symbolRenderer =>
-      series.getAttr(rendererKey).symbolRenderer;
+  SymbolRenderer? get symbolRenderer =>
+      series.getAttr(rendererKey)!.symbolRenderer;
 }

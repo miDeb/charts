@@ -26,12 +26,12 @@ import 'chart_behavior.dart' show ChartBehavior;
 ///
 /// It is used in combination with SelectNearest to update the selection model
 /// and expand selection out to the domain value.
-class DomainHighlighter<D> implements ChartBehavior<D> {
+class DomainHighlighter<D> implements ChartBehavior<D?> {
   final SelectionModelType selectionModelType;
 
-  BaseChart<D> _chart;
+  late BaseChart<D?> _chart;
 
-  LifecycleListener<D> _lifecycleListener;
+  LifecycleListener<D>? _lifecycleListener;
 
   DomainHighlighter([this.selectionModelType = SelectionModelType.info]) {
     _lifecycleListener =
@@ -43,8 +43,8 @@ class DomainHighlighter<D> implements ChartBehavior<D> {
   }
 
   void _updateColorFunctions(List<MutableSeries<D>> seriesList) {
-    SelectionModel selectionModel =
-        _chart.getSelectionModel(selectionModelType);
+    SelectionModel<D?> selectionModel =
+        _chart.getSelectionModel(selectionModelType)!;
     seriesList.forEach((MutableSeries<D> series) {
       final origColorFn = series.colorFn;
 
@@ -52,7 +52,7 @@ class DomainHighlighter<D> implements ChartBehavior<D> {
         series.colorFn = (int index) {
           final origColor = origColorFn(index);
           if (selectionModel.isDatumSelected(series, index)) {
-            return origColor.darker;
+            return origColor!.darker;
           } else {
             return origColor;
           }
@@ -62,18 +62,18 @@ class DomainHighlighter<D> implements ChartBehavior<D> {
   }
 
   @override
-  void attachTo(BaseChart<D> chart) {
+  void attachTo(BaseChart<D?> chart) {
     _chart = chart;
     chart.addLifecycleListener(_lifecycleListener);
     chart
-        .getSelectionModel(selectionModelType)
+        .getSelectionModel(selectionModelType)!
         .addSelectionChangedListener(_selectionChanged);
   }
 
   @override
   void removeFrom(BaseChart chart) {
     chart
-        .getSelectionModel(selectionModelType)
+        .getSelectionModel(selectionModelType)!
         .removeSelectionChangedListener(_selectionChanged);
     chart.removeLifecycleListener(_lifecycleListener);
   }

@@ -20,9 +20,9 @@ import '../layout/layout_view.dart' show LayoutViewConfig, LayoutViewPaintOrder;
 import 'line_renderer.dart' show LineRenderer;
 
 /// Configuration for a line renderer.
-class LineRendererConfig<D> extends LayoutViewConfig
+class LineRendererConfig<D>
     implements SeriesRendererConfig<D> {
-  final String customRendererId;
+  final String? customRendererId;
 
   final SymbolRenderer symbolRenderer;
 
@@ -40,7 +40,7 @@ class LineRendererConfig<D> extends LayoutViewConfig
   final double strokeWidthPx;
 
   /// Dash pattern for the line.
-  final List<int> dashPattern;
+  final List<int>? dashPattern;
 
   /// Configures whether a line representing the data will be drawn.
   final bool includeLine;
@@ -82,7 +82,7 @@ class LineRendererConfig<D> extends LayoutViewConfig
       this.layoutPaintOrder = LayoutViewPaintOrder.line,
       this.areaOpacity = 0.1,
       this.roundEndCaps = false,
-      SymbolRenderer symbolRenderer})
+      SymbolRenderer? symbolRenderer})
       : this.symbolRenderer = symbolRenderer ?? LineSymbolRenderer();
 
   @override

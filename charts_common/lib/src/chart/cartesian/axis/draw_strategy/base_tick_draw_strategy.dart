@@ -39,22 +39,22 @@ import 'tick_draw_strategy.dart' show TickDrawStrategy;
 
 @immutable
 abstract class BaseRenderSpec<D> implements RenderSpec<D> {
-  final TextStyleSpec labelStyle;
-  final TickLabelAnchor labelAnchor;
-  final TickLabelJustification labelJustification;
+  final TextStyleSpec? labelStyle;
+  final TickLabelAnchor? labelAnchor;
+  final TickLabelJustification? labelJustification;
 
-  final int labelOffsetFromAxisPx;
+  final int? labelOffsetFromAxisPx;
 
   /// Absolute distance from the tick to the text if using start/end
-  final int labelOffsetFromTickPx;
+  final int? labelOffsetFromTickPx;
 
-  final int minimumPaddingBetweenLabelsPx;
+  final int? minimumPaddingBetweenLabelsPx;
 
   /// Angle of rotation for tick labels, in degrees. When set to a non-zero
   /// value, all labels drawn for this axis will be rotated.
-  final int labelRotation;
+  final int? labelRotation;
 
-  final LineStyleSpec axisLineStyle;
+  final LineStyleSpec? axisLineStyle;
 
   const BaseRenderSpec({
     this.labelStyle,
@@ -85,13 +85,13 @@ abstract class BaseRenderSpec<D> implements RenderSpec<D> {
   @override
   int get hashCode {
     int hashcode = labelStyle?.hashCode ?? 0;
-    hashcode = (hashcode * 37) + labelAnchor?.hashCode ?? 0;
-    hashcode = (hashcode * 37) + labelJustification?.hashCode ?? 0;
-    hashcode = (hashcode * 37) + labelOffsetFromTickPx?.hashCode ?? 0;
-    hashcode = (hashcode * 37) + labelOffsetFromAxisPx?.hashCode ?? 0;
-    hashcode = (hashcode * 37) + minimumPaddingBetweenLabelsPx?.hashCode ?? 0;
-    hashcode = (hashcode * 37) + labelRotation?.hashCode ?? 0;
-    hashcode = (hashcode * 37) + axisLineStyle?.hashCode ?? 0;
+    hashcode = (hashcode * 37) + (labelAnchor?.hashCode ?? 0);
+    hashcode = (hashcode * 37) + (labelJustification?.hashCode ?? 0);
+    hashcode = (hashcode * 37) + (labelOffsetFromTickPx?.hashCode ?? 0);
+    hashcode = (hashcode * 37) + (labelOffsetFromAxisPx?.hashCode ?? 0);
+    hashcode = (hashcode * 37) + (minimumPaddingBetweenLabelsPx?.hashCode ?? 0);
+    hashcode = (hashcode * 37) + (labelRotation?.hashCode ?? 0);
+    hashcode = (hashcode * 37) + (axisLineStyle?.hashCode ?? 0);
     return hashcode;
   }
 }
@@ -103,29 +103,29 @@ abstract class BaseTickDrawStrategy<D> implements TickDrawStrategy<D> {
 
   static num _degToRad(num deg) => deg * (pi / 180.0);
 
-  final ChartContext chartContext;
+  final ChartContext? chartContext;
   final GraphicsFactory graphicsFactory;
 
-  LineStyle axisLineStyle;
-  TextStyle labelStyle;
-  TickLabelAnchor tickLabelAnchor;
-  TickLabelJustification tickLabelJustification;
-  int labelOffsetFromAxisPx;
-  int labelOffsetFromTickPx;
+  late LineStyle axisLineStyle;
+  late TextStyle labelStyle;
+  TickLabelAnchor? tickLabelAnchor;
+  TickLabelJustification? tickLabelJustification;
+  late int labelOffsetFromAxisPx;
+  late int labelOffsetFromTickPx;
 
-  int minimumPaddingBetweenLabelsPx;
+  late int minimumPaddingBetweenLabelsPx;
 
-  int labelRotation;
+  late int labelRotation;
 
   BaseTickDrawStrategy(this.chartContext, this.graphicsFactory,
-      {TextStyleSpec labelStyleSpec,
-      LineStyleSpec axisLineStyleSpec,
-      TickLabelAnchor labelAnchor,
-      TickLabelJustification labelJustification,
-      int labelOffsetFromAxisPx,
-      int labelOffsetFromTickPx,
-      int minimumPaddingBetweenLabelsPx,
-      int labelRotation}) {
+      {TextStyleSpec? labelStyleSpec,
+      LineStyleSpec? axisLineStyleSpec,
+      TickLabelAnchor? labelAnchor,
+      TickLabelJustification? labelJustification,
+      int? labelOffsetFromAxisPx,
+      int? labelOffsetFromTickPx,
+      int? minimumPaddingBetweenLabelsPx,
+      int? labelRotation}) {
     labelStyle = (graphicsFactory.createTextPaint()
       ..color = labelStyleSpec?.color ?? StyleFactory.style.tickColor
       ..fontFamily = labelStyleSpec?.fontFamily
@@ -154,16 +154,16 @@ abstract class BaseTickDrawStrategy<D> implements TickDrawStrategy<D> {
         tick.textElement.textStyle = labelStyle;
       } else {
         //Fill in whatever is missing
-        tick.textElement.textStyle.color ??= labelStyle.color;
-        tick.textElement.textStyle.fontFamily ??= labelStyle.fontFamily;
-        tick.textElement.textStyle.fontSize ??= labelStyle.fontSize;
-        tick.textElement.textStyle.lineHeight ??= labelStyle.lineHeight;
+        tick.textElement.textStyle!.color ??= labelStyle.color;
+        tick.textElement.textStyle!.fontFamily ??= labelStyle.fontFamily;
+        tick.textElement.textStyle!.fontSize ??= labelStyle.fontSize;
+        tick.textElement.textStyle!.lineHeight ??= labelStyle.lineHeight;
       }
     }
   }
 
   @override
-  CollisionReport collides(List<Tick<D>> ticks, AxisOrientation orientation) {
+  CollisionReport collides(List<Tick<D>>? ticks, AxisOrientation? orientation) {
     // TODO: Collision analysis for rotated labels are not
     // supported yet.
 
@@ -179,9 +179,9 @@ abstract class BaseTickDrawStrategy<D> implements TickDrawStrategy<D> {
     // First sort ticks by smallest locationPx first (NOT sorted by value).
     // This allows us to only check if a tick collides with the previous tick.
     ticks.sort((a, b) {
-      if (a.locationPx < b.locationPx) {
+      if (a.locationPx! < b.locationPx!) {
         return -1;
-      } else if (a.locationPx > b.locationPx) {
+      } else if (a.locationPx! > b.locationPx!) {
         return 1;
       } else {
         return 0;
@@ -196,26 +196,26 @@ abstract class BaseTickDrawStrategy<D> implements TickDrawStrategy<D> {
 
       if (vertical) {
         final adjustedHeight =
-            tickSize.verticalSliceWidth + minimumPaddingBetweenLabelsPx;
+            tickSize.verticalSliceWidth! + minimumPaddingBetweenLabelsPx;
 
         if (tickLabelAnchor == TickLabelAnchor.inside) {
           if (identical(tick, ticks.first)) {
             // Top most tick draws down from the location
             collides = false;
-            previousEnd = tick.locationPx + adjustedHeight;
+            previousEnd = tick.locationPx! + adjustedHeight;
           } else if (identical(tick, ticks.last)) {
             // Bottom most tick draws up from the location
-            collides = previousEnd > tick.locationPx - adjustedHeight;
-            previousEnd = tick.locationPx;
+            collides = previousEnd > tick.locationPx! - adjustedHeight;
+            previousEnd = tick.locationPx!;
           } else {
             // All other ticks is centered.
             final halfHeight = adjustedHeight / 2;
-            collides = previousEnd > tick.locationPx - halfHeight;
-            previousEnd = tick.locationPx + halfHeight;
+            collides = previousEnd > tick.locationPx! - halfHeight;
+            previousEnd = tick.locationPx! + halfHeight;
           }
         } else {
-          collides = previousEnd > tick.locationPx;
-          previousEnd = tick.locationPx + adjustedHeight;
+          collides = previousEnd > tick.locationPx!;
+          previousEnd = tick.locationPx! + adjustedHeight;
         }
       } else {
         // Use the text direction the ticks specified, unless the label anchor
@@ -226,24 +226,24 @@ abstract class BaseTickDrawStrategy<D> implements TickDrawStrategy<D> {
         // the value also.
         final textDirection = _normalizeHorizontalAnchor(
             tickLabelAnchor,
-            chartContext.isRtl,
+            chartContext!.isRtl,
             identical(tick, ticks.first),
             identical(tick, ticks.last));
         final adjustedWidth =
-            tickSize.horizontalSliceWidth + minimumPaddingBetweenLabelsPx;
+            tickSize.horizontalSliceWidth! + minimumPaddingBetweenLabelsPx;
         switch (textDirection) {
           case TextDirection.ltr:
-            collides = previousEnd > tick.locationPx;
-            previousEnd = tick.locationPx + adjustedWidth;
+            collides = previousEnd > tick.locationPx!;
+            previousEnd = tick.locationPx! + adjustedWidth;
             break;
           case TextDirection.rtl:
-            collides = previousEnd > (tick.locationPx - adjustedWidth);
-            previousEnd = tick.locationPx;
+            collides = previousEnd > (tick.locationPx! - adjustedWidth);
+            previousEnd = tick.locationPx!;
             break;
           case TextDirection.center:
             final halfWidth = adjustedWidth / 2;
-            collides = previousEnd > tick.locationPx - halfWidth;
-            previousEnd = tick.locationPx + halfWidth;
+            collides = previousEnd > tick.locationPx! - halfWidth;
+            previousEnd = tick.locationPx! + halfWidth;
 
             break;
         }
@@ -261,11 +261,11 @@ abstract class BaseTickDrawStrategy<D> implements TickDrawStrategy<D> {
 
   @override
   ViewMeasuredSizes measureVerticallyDrawnTicks(
-      List<Tick<D>> ticks, int maxWidth, int maxHeight) {
+      List<Tick<D>>? ticks, int maxWidth, int maxHeight) {
     // TODO: Add spacing to account for the distance between the
     // text and the axis baseline (even if it isn't drawn).
 
-    final maxHorizontalSliceWidth = ticks.fold(0.0, (double prevMax, tick) {
+    final maxHorizontalSliceWidth = ticks!.fold(0.0, (double prevMax, tick) {
       final labelElements = _splitLabel(tick.textElement);
 
       return max(
@@ -273,7 +273,7 @@ abstract class BaseTickDrawStrategy<D> implements TickDrawStrategy<D> {
           _calculateWidthForRotatedLabel(
                 labelRotation,
                 _getLabelHeight(labelElements),
-                _getLabelWidth(labelElements),
+                _getLabelWidth(labelElements)!,
               ) +
               labelOffsetFromAxisPx);
     }).round();
@@ -284,8 +284,8 @@ abstract class BaseTickDrawStrategy<D> implements TickDrawStrategy<D> {
 
   @override
   ViewMeasuredSizes measureHorizontallyDrawnTicks(
-      List<Tick<D>> ticks, int maxWidth, int maxHeight) {
-    final maxVerticalSliceWidth = ticks.fold(0.0, (double prevMax, tick) {
+      List<Tick<D>>? ticks, int maxWidth, int maxHeight) {
+    final maxVerticalSliceWidth = ticks!.fold(0.0, (double prevMax, tick) {
       final labelElements = _splitLabel(tick.textElement);
 
       return max(
@@ -338,14 +338,14 @@ abstract class BaseTickDrawStrategy<D> implements TickDrawStrategy<D> {
 
   @protected
   void drawLabel(ChartCanvas canvas, Tick<D> tick,
-      {@required AxisOrientation orientation,
-      @required Rectangle<int> axisBounds,
-      @required Rectangle<int> drawAreaBounds,
-      @required bool isFirst,
-      @required bool isLast}) {
+      {required AxisOrientation orientation,
+      required Rectangle<int> axisBounds,
+      Rectangle<int>? drawAreaBounds,
+      required bool isFirst,
+      required bool isLast}) {
     final locationPx = tick.locationPx;
     final labelOffsetPx = tick.labelOffsetPx ?? 0;
-    final isRtl = chartContext.isRtl;
+    final isRtl = chartContext!.isRtl;
     final labelElements = _splitLabel(tick.textElement);
     final labelHeight = _getLabelHeight(labelElements);
     int multiLineLabelOffset = 0;
@@ -369,14 +369,14 @@ abstract class BaseTickDrawStrategy<D> implements TickDrawStrategy<D> {
 
         switch (direction) {
           case TextDirection.rtl:
-            x = (locationPx + labelOffsetFromTickPx + labelOffsetPx).toInt();
+            x = (locationPx! + labelOffsetFromTickPx + labelOffsetPx).toInt();
             break;
           case TextDirection.ltr:
-            x = (locationPx - labelOffsetFromTickPx - labelOffsetPx).toInt();
+            x = (locationPx! - labelOffsetFromTickPx - labelOffsetPx).toInt();
             break;
           case TextDirection.center:
           default:
-            x = (locationPx - labelOffsetPx).toInt();
+            x = (locationPx! - labelOffsetPx).toInt();
             break;
         }
       } else {
@@ -401,30 +401,30 @@ abstract class BaseTickDrawStrategy<D> implements TickDrawStrategy<D> {
 
         switch (_normalizeVerticalAnchor(tickLabelAnchor, isFirst, isLast)) {
           case _PixelVerticalDirection.over:
-            y = (locationPx -
+            y = (locationPx! -
                     (labelHeight - multiLineLabelOffset) -
                     labelOffsetFromTickPx -
                     labelOffsetPx)
                 .toInt();
             break;
           case _PixelVerticalDirection.under:
-            y = (locationPx + labelOffsetFromTickPx + labelOffsetPx).toInt();
+            y = (locationPx! + labelOffsetFromTickPx + labelOffsetPx).toInt();
             break;
           case _PixelVerticalDirection.center:
           default:
-            y = (locationPx - labelHeight / 2 + labelOffsetPx).toInt();
+            y = (locationPx! - labelHeight / 2 + labelOffsetPx).toInt();
             break;
         }
       }
       canvas.drawText(line, x, y + multiLineLabelOffset,
-          rotation: _degToRad(labelRotation));
+          rotation: _degToRad(labelRotation) as double);
       multiLineLabelOffset +=
-          _multiLineLabelPadding + line.measurement.verticalSliceWidth.round();
+          _multiLineLabelPadding + line.measurement.verticalSliceWidth!.round();
     }
   }
 
   TextDirection _normalizeHorizontalAnchor(
-      TickLabelAnchor anchor, bool isRtl, bool isFirst, bool isLast) {
+      TickLabelAnchor? anchor, bool isRtl, bool isFirst, bool isLast) {
     switch (anchor) {
       case TickLabelAnchor.before:
         return isRtl ? TextDirection.ltr : TextDirection.rtl;
@@ -445,7 +445,7 @@ abstract class BaseTickDrawStrategy<D> implements TickDrawStrategy<D> {
   }
 
   _PixelVerticalDirection _normalizeVerticalAnchor(
-      TickLabelAnchor anchor, bool isFirst, bool isLast) {
+      TickLabelAnchor? anchor, bool isFirst, bool isLast) {
     switch (anchor) {
       case TickLabelAnchor.before:
         return _PixelVerticalDirection.under;
@@ -530,13 +530,13 @@ abstract class BaseTickDrawStrategy<D> implements TickDrawStrategy<D> {
   /// If the label spans multiple lines then it returns the width of the
   /// longest line.
   double _getLabelWidth(Iterable<TextElement> labelElements) => labelElements
-      .map((line) => line.measurement.horizontalSliceWidth)
+      .map((line) => line.measurement.horizontalSliceWidth!)
       .reduce(max);
 
   /// The height of the label (handles labels spanning multiple lines).
   double _getLabelHeight(Iterable<TextElement> labelElements) {
     if (labelElements.isEmpty) return 0;
-    final textHeight = labelElements.first.measurement.verticalSliceWidth;
+    final textHeight = labelElements.first.measurement.verticalSliceWidth!;
     final numLines = labelElements.length;
     return (textHeight * numLines) + (_multiLineLabelPadding * (numLines - 1));
   }

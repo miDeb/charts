@@ -88,7 +88,7 @@ class ViewMargin {
   final int rightPx;
   final int leftPx;
 
-  const ViewMargin({int topPx, int bottomPx, int rightPx, int leftPx})
+  const ViewMargin({int? topPx, int? bottomPx, int? rightPx, int? leftPx})
       : topPx = topPx ?? 0,
         bottomPx = bottomPx ?? 0,
         rightPx = rightPx ?? 0,
@@ -104,7 +104,7 @@ class ViewMargin {
 /// Configuration of a [LayoutView].
 class LayoutViewConfig {
   /// Unique identifier for the [LayoutView].
-  String id;
+  String? id;
 
   /// The order to paint a [LayoutView] on the canvas.
   ///
@@ -133,10 +133,10 @@ class LayoutViewConfig {
   /// [position] the [ComponentPosition] of this component.
   /// [positionOrder] the order of this component in a chart margin.
   LayoutViewConfig(
-      {@required this.paintOrder,
-      @required this.position,
-      @required this.positionOrder,
-      ViewMargin viewMargin})
+      {required this.paintOrder,
+      required this.position,
+      required this.positionOrder,
+      ViewMargin? viewMargin})
       : viewMargin = viewMargin ?? ViewMargin.empty;
 
   /// Returns true if it is a full position.
@@ -167,10 +167,10 @@ class ViewMeasuredSizes {
   /// [minWidth] the component's minimum width. If not set, default to 0.
   /// [minHeight] the component's minimum height. If not set, default to 0.
   const ViewMeasuredSizes(
-      {@required this.preferredWidth,
-      @required this.preferredHeight,
-      int minWidth,
-      int minHeight})
+      {required this.preferredWidth,
+      required this.preferredHeight,
+      int? minWidth,
+      int? minHeight})
       : minWidth = minWidth ?? 0,
         minHeight = minHeight ?? 0;
 }
@@ -188,7 +188,7 @@ abstract class LayoutView {
   ///
   /// This measurement is without the [ComponentBuffer], which is added by the
   /// layout manager.
-  ViewMeasuredSizes measure(int maxWidth, int maxHeight);
+  ViewMeasuredSizes? measure(int maxWidth, int maxHeight);
 
   /// Layout this component.
   void layout(Rectangle<int> componentBounds, Rectangle<int> drawAreaBounds);
