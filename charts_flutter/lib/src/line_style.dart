@@ -19,7 +19,7 @@ class LineStyle implements common.LineStyle {
   @override
   common.Color? color;
   @override
-  late List<int> dashPattern;
+  late List<int>? dashPattern;
   @override
   late int strokeWidth;
 }
