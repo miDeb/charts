@@ -333,7 +333,7 @@ class LineRenderer<D> extends BaseCartesianRenderer<D> {
     _mergeIntoSeriesMap(seriesList);
 
     seriesList.forEach((ImmutableSeries<D> series) {
-      final domainAxis = series.getAttr(domainAxisKey) as ImmutableAxis<D>?;
+      final domainAxis = series.getAttr(domainAxisKey);
       final lineKey = series.id;
       final stackIndex = series.getAttr(lineStackIndexKey);
 

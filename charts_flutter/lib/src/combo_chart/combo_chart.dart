@@ -16,6 +16,7 @@
 import 'package:charts_common/common.dart' as common
     show
         AxisSpec,
+        NumericAxis,
         NumericCartesianChart,
         OrdinalCartesianChart,
         RTLSpec,
@@ -33,23 +34,23 @@ import '../selection_model_config.dart' show SelectionModelConfig;
 /// Note that if you have DateTime data, you should use [TimeSeriesChart]. We do
 /// not expose a separate DateTimeComboChart because it would just be a copy of
 /// that chart.
-class NumericComboChart extends CartesianChart<num> {
+class NumericComboChart extends CartesianChart<num?> {
   NumericComboChart(
     List<common.Series> seriesList, {
-    bool animate,
-    Duration animationDuration,
-    common.AxisSpec domainAxis,
-    common.AxisSpec primaryMeasureAxis,
-    common.AxisSpec secondaryMeasureAxis,
-    common.SeriesRendererConfig<num> defaultRenderer,
-    List<common.SeriesRendererConfig<num>> customSeriesRenderers,
-    List<ChartBehavior> behaviors,
-    List<SelectionModelConfig<num>> selectionModels,
-    common.RTLSpec rtlSpec,
-    LayoutConfig layoutConfig,
+    bool? animate,
+    Duration? animationDuration,
+    common.AxisSpec? domainAxis,
+    common.AxisSpec? primaryMeasureAxis,
+    common.AxisSpec? secondaryMeasureAxis,
+    common.SeriesRendererConfig<num>? defaultRenderer,
+    List<common.SeriesRendererConfig<num>>? customSeriesRenderers,
+    List<ChartBehavior>? behaviors,
+    List<SelectionModelConfig<num>>? selectionModels,
+    common.RTLSpec? rtlSpec,
+    LayoutConfig? layoutConfig,
     bool defaultInteractions = true,
   }) : super(
-          seriesList,
+          seriesList as List<common.Series<dynamic, num>>,
           animate: animate,
           animationDuration: animationDuration,
           domainAxis: domainAxis,
@@ -65,36 +66,36 @@ class NumericComboChart extends CartesianChart<num> {
         );
 
   @override
-  common.NumericCartesianChart createCommonChart(BaseChartState chartState) {
+  common.NumericCartesianChart createCommonChart(BaseChartState? chartState) {
     // Optionally create primary and secondary measure axes if the chart was
     // configured with them. If no axes were configured, then the chart will
     // use its default types (usually a numeric axis).
     return new common.NumericCartesianChart(
         layoutConfig: layoutConfig?.commonLayoutConfig,
-        primaryMeasureAxis: primaryMeasureAxis?.createAxis(),
-        secondaryMeasureAxis: secondaryMeasureAxis?.createAxis());
+        primaryMeasureAxis: primaryMeasureAxis?.createAxis() as common.NumericAxis?,
+        secondaryMeasureAxis: secondaryMeasureAxis?.createAxis() as common.NumericAxis?);
   }
 }
 
 /// An ordinal combo chart supports rendering each series of data with different
 /// series renderers.
-class OrdinalComboChart extends CartesianChart<String> {
+class OrdinalComboChart extends CartesianChart<String?> {
   OrdinalComboChart(
     List<common.Series> seriesList, {
-    bool animate,
-    Duration animationDuration,
-    common.AxisSpec domainAxis,
-    common.AxisSpec primaryMeasureAxis,
-    common.AxisSpec secondaryMeasureAxis,
-    common.SeriesRendererConfig<String> defaultRenderer,
-    List<common.SeriesRendererConfig<String>> customSeriesRenderers,
-    List<ChartBehavior> behaviors,
-    List<SelectionModelConfig<String>> selectionModels,
-    common.RTLSpec rtlSpec,
-    LayoutConfig layoutConfig,
+    bool? animate,
+    Duration? animationDuration,
+    common.AxisSpec? domainAxis,
+    common.AxisSpec? primaryMeasureAxis,
+    common.AxisSpec? secondaryMeasureAxis,
+    common.SeriesRendererConfig<String>? defaultRenderer,
+    List<common.SeriesRendererConfig<String>>? customSeriesRenderers,
+    List<ChartBehavior>? behaviors,
+    List<SelectionModelConfig<String>>? selectionModels,
+    common.RTLSpec? rtlSpec,
+    LayoutConfig? layoutConfig,
     bool defaultInteractions = true,
   }) : super(
-          seriesList,
+          seriesList as List<common.Series<dynamic, String>>,
           animate: animate,
           animationDuration: animationDuration,
           domainAxis: domainAxis,
@@ -110,13 +111,13 @@ class OrdinalComboChart extends CartesianChart<String> {
         );
 
   @override
-  common.OrdinalCartesianChart createCommonChart(BaseChartState chartState) {
+  common.OrdinalCartesianChart createCommonChart(BaseChartState? chartState) {
     // Optionally create primary and secondary measure axes if the chart was
     // configured with them. If no axes were configured, then the chart will
     // use its default types (usually a numeric axis).
     return new common.OrdinalCartesianChart(
         layoutConfig: layoutConfig?.commonLayoutConfig,
-        primaryMeasureAxis: primaryMeasureAxis?.createAxis(),
-        secondaryMeasureAxis: secondaryMeasureAxis?.createAxis());
+        primaryMeasureAxis: primaryMeasureAxis?.createAxis() as common.NumericAxis?,
+        secondaryMeasureAxis: secondaryMeasureAxis?.createAxis() as common.NumericAxis?);
   }
 }
