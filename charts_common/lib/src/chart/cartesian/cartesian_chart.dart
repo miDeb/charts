@@ -234,7 +234,7 @@ abstract class CartesianChart<D> extends BaseChart<D?> {
       axis = _secondaryMeasureAxis;
     } else if (axisId == Axis.primaryMeasureAxisId) {
       axis = _primaryMeasureAxis;
-    } else if (_disjointMeasureAxes[axisId!] != null) {
+    } else if (_disjointMeasureAxes[axisId] != null) {
       axis = _disjointMeasureAxes[axisId];
     }
 
