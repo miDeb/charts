@@ -207,7 +207,7 @@ abstract class BaseChart<D> extends StatefulWidget {
       final prevChangedListener =
           chartState.addedSelectionChangedListenersByType[model.type];
       if (!identical(model.changedListener, prevChangedListener)) {
-        selectionModel.removeSelectionChangedListener(prevChangedListener!);
+        selectionModel.removeSelectionChangedListener(prevChangedListener);
         selectionModel.addSelectionChangedListener(model.changedListener!);
         chartState.addedSelectionChangedListenersByType[model.type] =
             model.changedListener;
@@ -231,7 +231,7 @@ abstract class BaseChart<D> extends StatefulWidget {
         ..removeSelectionChangedListener(
             chartState.addedSelectionChangedListenersByType[type]!)
         ..removeSelectionUpdatedListener(
-            chartState.addedSelectionUpdatedListenersByType[type]!);
+            chartState.addedSelectionUpdatedListenersByType[type]);
     });
   }
 

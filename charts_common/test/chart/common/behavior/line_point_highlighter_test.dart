@@ -55,7 +55,7 @@ class MockSelectionModel extends Mock implements MutableSelectionModel {
       lastListener = listener;
 
   @override
-  void removeSelectionChangedListener(SelectionModelListener listener) {
+  void removeSelectionChangedListener(SelectionModelListener? listener) {
     expect(listener, equals(lastListener));
     lastListener = null;
   }

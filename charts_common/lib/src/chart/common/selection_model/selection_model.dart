@@ -194,7 +194,7 @@ class MutableSelectionModel<D> extends SelectionModel<D> {
   }
 
   /// Remove listener from being notified when this [SelectionModel] changes.
-  void removeSelectionChangedListener(SelectionModelListener<D> listener) {
+  void removeSelectionChangedListener(SelectionModelListener<D>? listener) {
     _changedListeners.remove(listener);
   }
 
@@ -212,7 +212,7 @@ class MutableSelectionModel<D> extends SelectionModel<D> {
   }
 
   /// Remove listener from being notified when [updateSelection] is called.
-  void removeSelectionUpdatedListener(SelectionModelListener<D> listener) {
+  void removeSelectionUpdatedListener(SelectionModelListener<D>? listener) {
     _updatedListeners.remove(listener);
   }
 
@@ -222,7 +222,7 @@ class MutableSelectionModel<D> extends SelectionModel<D> {
   }
 
   /// Remove listener from being notified when this [SelectionModel]  is locked.
-  void removeSelectionLockChangedListener(SelectionModelListener<D> listener) {
+  void removeSelectionLockChangedListener(SelectionModelListener<D>? listener) {
     _lockChangedListeners.remove(listener);
   }
 
