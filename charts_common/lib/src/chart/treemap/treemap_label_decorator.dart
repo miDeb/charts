@@ -45,14 +45,14 @@ class TreeMapLabelDecorator<D> extends TreeMapRendererDecorator<D> {
   final int labelPadding;
 
   TreeMapLabelDecorator(
-      {TextStyleSpec labelStyleSpec, this.labelPadding = _defaultLabelPadding})
+      {TextStyleSpec? labelStyleSpec, this.labelPadding = _defaultLabelPadding})
       : this.labelStyleSpec = labelStyleSpec ?? _defaultLabelStyle;
 
   @override
   void decorate(TreeMapRendererElement<D> rendererElement, ChartCanvas canvas,
-      GraphicsFactory graphicsFactory,
-      {@required Rectangle drawBounds,
-      @required double animationPercent,
+      GraphicsFactory? graphicsFactory,
+      {required Rectangle? drawBounds,
+      required double? animationPercent,
       bool rtl = false,
       bool renderVertically = false}) {
     // Decorates the renderer elements when animation is completed.
@@ -60,9 +60,9 @@ class TreeMapLabelDecorator<D> extends TreeMapRendererDecorator<D> {
 
     // Creates [TextStyle] from [TextStyleSpec] to be used by all the elements.
     // The [GraphicsFactory] is needed since it cannot be created earlier.
-    final labelStyle = _asTextStyle(graphicsFactory, labelStyleSpec);
+    final labelStyle = _asTextStyle(graphicsFactory!, labelStyleSpec);
 
-    final labelFn = rendererElement.series.labelAccessorFn;
+    final labelFn = rendererElement.series!.labelAccessorFn;
     final datumIndex = rendererElement.index;
     final label = labelFn != null ? labelFn(datumIndex) : null;
 
@@ -71,14 +71,14 @@ class TreeMapLabelDecorator<D> extends TreeMapRendererDecorator<D> {
 
     // Uses datum specific label style if provided.
     final datumLabelStyle = _datumStyle(
-        rendererElement.series.insideLabelStyleAccessorFn,
+        rendererElement.series!.insideLabelStyleAccessorFn,
         datumIndex,
         graphicsFactory,
         defaultStyle: labelStyle);
 
     final rect = rendererElement.boundingRect;
     final maxLabelHeight =
-        (renderVertically ? rect.width : rect.height) - (labelPadding * 2);
+        (renderVertically ? rect!.width : rect!.height) - (labelPadding * 2);
     final maxLabelWidth =
         (renderVertically ? rect.height : rect.width) - (labelPadding * 2);
 
@@ -89,8 +89,8 @@ class TreeMapLabelDecorator<D> extends TreeMapRendererDecorator<D> {
       ..textDirection = rtl ? TextDirection.rtl : TextDirection.ltr;
 
     // Skips if the label text cannot fit into the rectangle.
-    if (labelElement.measurement.verticalSliceWidth > maxLabelHeight) return;
-    if (labelElement.maxWidth > 0) {
+    if (labelElement.measurement!.verticalSliceWidth! > maxLabelHeight) return;
+    if (labelElement.maxWidth! > 0) {
       _drawLabel(canvas, rect, labelElement,
           rtl: rtl, rotate: renderVertically);
     }
@@ -106,29 +106,29 @@ class TreeMapLabelDecorator<D> extends TreeMapRendererDecorator<D> {
         ..lineHeight = labelSpec?.lineHeight;
 
   /// Gets datum specific style.
-  TextStyle _datumStyle(AccessorFn<TextStyleSpec> labelStyleFn, int datumIndex,
-      GraphicsFactory graphicsFactory,
-      {TextStyle defaultStyle}) {
+  TextStyle? _datumStyle(AccessorFn<TextStyleSpec>? labelStyleFn, int? datumIndex,
+      GraphicsFactory? graphicsFactory,
+      {TextStyle? defaultStyle}) {
     final styleSpec = (labelStyleFn != null) ? labelStyleFn(datumIndex) : null;
     return (styleSpec != null)
-        ? _asTextStyle(graphicsFactory, styleSpec)
+        ? _asTextStyle(graphicsFactory!, styleSpec)
         : defaultStyle;
   }
 
   /// Draws a label inside of a treemap renderer element.
-  void _drawLabel(ChartCanvas canvas, Rectangle elementBoundingRect,
+  void _drawLabel(ChartCanvas canvas, Rectangle? elementBoundingRect,
       TextElement labelElement,
       {bool rtl: false, bool rotate: false}) {
     num x;
 
     if (rotate) {
-      x = elementBoundingRect.left +
+      x = elementBoundingRect!.left +
           labelPadding -
-          labelElement.textStyle.fontSize;
+          labelElement.textStyle!.fontSize!;
     } else if (rtl) {
-      x = elementBoundingRect.right - labelPadding;
+      x = elementBoundingRect!.right - labelPadding;
     } else {
-      x = elementBoundingRect.left + labelPadding;
+      x = elementBoundingRect!.left + labelPadding;
     }
     final y = rtl && rotate
         ? elementBoundingRect.bottom - labelPadding

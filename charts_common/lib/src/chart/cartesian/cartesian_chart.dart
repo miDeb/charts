@@ -44,13 +44,13 @@ import 'axis/draw_strategy/small_tick_draw_strategy.dart'
     show SmallTickRendererSpec;
 import 'axis/spec/axis_spec.dart' show AxisSpec;
 
-class NumericCartesianChart extends CartesianChart<num> {
+class NumericCartesianChart extends CartesianChart<num?> {
   NumericCartesianChart(
-      {bool vertical,
-      LayoutConfig layoutConfig,
-      NumericAxis primaryMeasureAxis,
-      NumericAxis secondaryMeasureAxis,
-      LinkedHashMap<String, NumericAxis> disjointMeasureAxes})
+      {bool? vertical,
+      LayoutConfig? layoutConfig,
+      NumericAxis? primaryMeasureAxis,
+      NumericAxis? secondaryMeasureAxis,
+      LinkedHashMap<String, NumericAxis>? disjointMeasureAxes})
       : super(
             vertical: vertical,
             layoutConfig: layoutConfig,
@@ -61,18 +61,18 @@ class NumericCartesianChart extends CartesianChart<num> {
 
   @protected
   void initDomainAxis() {
-    _domainAxis.tickDrawStrategy = SmallTickRendererSpec<num>()
+    _domainAxis!.tickDrawStrategy = SmallTickRendererSpec<num>()
         .createDrawStrategy(context, graphicsFactory);
   }
 }
 
-class OrdinalCartesianChart extends CartesianChart<String> {
+class OrdinalCartesianChart extends CartesianChart<String?> {
   OrdinalCartesianChart(
-      {bool vertical,
-      LayoutConfig layoutConfig,
-      NumericAxis primaryMeasureAxis,
-      NumericAxis secondaryMeasureAxis,
-      LinkedHashMap<String, NumericAxis> disjointMeasureAxes})
+      {bool? vertical,
+      LayoutConfig? layoutConfig,
+      NumericAxis? primaryMeasureAxis,
+      NumericAxis? secondaryMeasureAxis,
+      LinkedHashMap<String, NumericAxis>? disjointMeasureAxes})
       : super(
             vertical: vertical,
             layoutConfig: layoutConfig,
@@ -83,13 +83,13 @@ class OrdinalCartesianChart extends CartesianChart<String> {
 
   @protected
   void initDomainAxis() {
-    _domainAxis
+    _domainAxis!
       ..tickDrawStrategy = SmallTickRendererSpec<String>()
           .createDrawStrategy(context, graphicsFactory);
   }
 }
 
-abstract class CartesianChart<D> extends BaseChart<D> {
+abstract class CartesianChart<D> extends BaseChart<D?> {
   static final _defaultLayoutConfig = LayoutConfig(
     topSpec: MarginSpec.fromPixel(minPixel: 20),
     bottomSpec: MarginSpec.fromPixel(minPixel: 20),
@@ -100,7 +100,7 @@ abstract class CartesianChart<D> extends BaseChart<D> {
   bool vertical;
 
   /// The current domain axis for this chart.
-  Axis<D> _domainAxis;
+  Axis<D?>? _domainAxis;
 
   /// Temporarily stores the new domain axis that is passed in the constructor
   /// and the new domain axis created when [domainAxisSpec] is set to a new
@@ -110,23 +110,23 @@ abstract class CartesianChart<D> extends BaseChart<D> {
   /// [context] is available. [configurationChanged] is called after [context]
   /// is available and [_newDomainAxis] will be set to [_domainAxis] and then
   /// reset back to null.
-  Axis<D> _newDomainAxis;
+  Axis<D?>? _newDomainAxis;
 
   /// The current domain axis spec that was used to configure [_domainAxis].
   ///
   /// This is kept to check if the axis spec has changed when [domainAxisSpec]
   /// is set.
-  AxisSpec<D> _domainAxisSpec;
+  AxisSpec<D?>? _domainAxisSpec;
 
   /// Temporarily stores the new domain axis spec that is passed in when
   /// [domainAxisSpec] is set and is different from [_domainAxisSpec]. This spec
   /// is then applied to the new domain axis when [configurationChanged] is
   /// called.
-  AxisSpec<D> _newDomainAxisSpec;
+  AxisSpec<D?>? _newDomainAxisSpec;
 
-  final Axis<num> _primaryMeasureAxis;
+  final Axis<num?> _primaryMeasureAxis;
 
-  final Axis<num> _secondaryMeasureAxis;
+  final Axis<num?> _secondaryMeasureAxis;
 
   final LinkedHashMap<String, NumericAxis> _disjointMeasureAxes;
 
@@ -138,18 +138,18 @@ abstract class CartesianChart<D> extends BaseChart<D> {
   bool _useSecondaryMeasureAxis = false;
 
   CartesianChart(
-      {bool vertical,
-      LayoutConfig layoutConfig,
-      Axis<D> domainAxis,
-      NumericAxis primaryMeasureAxis,
-      NumericAxis secondaryMeasureAxis,
-      LinkedHashMap<String, NumericAxis> disjointMeasureAxes})
+      {bool? vertical,
+      LayoutConfig? layoutConfig,
+      Axis<D>? domainAxis,
+      NumericAxis? primaryMeasureAxis,
+      NumericAxis? secondaryMeasureAxis,
+      LinkedHashMap<String, NumericAxis>? disjointMeasureAxes})
       : vertical = vertical ?? true,
         // [domainAxis] will be set to the new axis in [configurationChanged].
         _newDomainAxis = domainAxis,
         _primaryMeasureAxis = primaryMeasureAxis ?? NumericAxis(),
         _secondaryMeasureAxis = secondaryMeasureAxis ?? NumericAxis(),
-        _disjointMeasureAxes = disjointMeasureAxes ?? <String, NumericAxis>{},
+        _disjointMeasureAxes = (disjointMeasureAxes ?? <String, NumericAxis>{}) as LinkedHashMap<String, NumericAxis>,
         super(layoutConfig: layoutConfig ?? _defaultLayoutConfig) {
     // As a convenience for chart configuration, set the paint order on any axis
     // that is missing one.
@@ -178,7 +178,7 @@ abstract class CartesianChart<D> extends BaseChart<D> {
     });
   }
 
-  Axis get domainAxis => _domainAxis;
+  Axis<D?>? get domainAxis => _domainAxis;
 
   /// Allows the chart to configure the domain axis when it is created.
   @protected
@@ -188,14 +188,14 @@ abstract class CartesianChart<D> extends BaseChart<D> {
   /// [configurationChanged].
   set domainAxisSpec(AxisSpec axisSpec) {
     if (_domainAxisSpec != axisSpec) {
-      _newDomainAxis = createDomainAxisFromSpec(axisSpec);
+      _newDomainAxis = createDomainAxisFromSpec(axisSpec as AxisSpec<D?>);
       _newDomainAxisSpec = axisSpec;
     }
   }
 
   /// Creates the domain axis spec from provided axis spec.
   @protected
-  Axis<D> createDomainAxisFromSpec(AxisSpec<D> axisSpec) {
+  Axis<D?>? createDomainAxisFromSpec(AxisSpec<D?> axisSpec) {
     return axisSpec.createAxis();
   }
 
@@ -207,7 +207,7 @@ abstract class CartesianChart<D> extends BaseChart<D> {
       }
 
       _domainAxis = _newDomainAxis;
-      _domainAxis
+      _domainAxis!
         ..context = context
         ..layoutPaintOrder = LayoutViewPaintOrder.domainAxis;
 
@@ -220,7 +220,7 @@ abstract class CartesianChart<D> extends BaseChart<D> {
 
     if (_newDomainAxisSpec != null) {
       _domainAxisSpec = _newDomainAxisSpec;
-      _newDomainAxisSpec.configure(_domainAxis, context, graphicsFactory);
+      _newDomainAxisSpec!.configure(_domainAxis!, context, graphicsFactory);
       _newDomainAxisSpec = null;
     }
   }
@@ -228,13 +228,13 @@ abstract class CartesianChart<D> extends BaseChart<D> {
   /// Gets the measure axis matching the provided id.
   ///
   /// If none is provided, this returns the primary measure axis.
-  Axis getMeasureAxis({String axisId}) {
-    Axis axis;
+  Axis getMeasureAxis({String? axisId}) {
+    Axis? axis;
     if (axisId == Axis.secondaryMeasureAxisId) {
       axis = _secondaryMeasureAxis;
     } else if (axisId == Axis.primaryMeasureAxisId) {
       axis = _primaryMeasureAxis;
-    } else if (_disjointMeasureAxes[axisId] != null) {
+    } else if (_disjointMeasureAxes[axisId!] != null) {
       axis = _disjointMeasureAxes[axisId];
     }
 
@@ -277,13 +277,13 @@ abstract class CartesianChart<D> extends BaseChart<D> {
   set disjointMeasureAxisSpecs(LinkedHashMap<String, AxisSpec> axisSpecs) {
     axisSpecs.forEach((String axisId, AxisSpec axisSpec) {
       axisSpec.configure(
-          _disjointMeasureAxes[axisId], context, graphicsFactory);
+          _disjointMeasureAxes[axisId]!, context, graphicsFactory);
     });
   }
 
   @override
-  MutableSeries<D> makeSeries(Series<dynamic, D> series) {
-    MutableSeries<D> s = super.makeSeries(series);
+  MutableSeries<D?> makeSeries(Series<dynamic, D?> series) {
+    MutableSeries<D?> s = super.makeSeries(series);
 
     s.measureOffsetFn ??= (_) => 0;
 
@@ -301,9 +301,9 @@ abstract class CartesianChart<D> extends BaseChart<D> {
   }
 
   @override
-  Map<String, List<MutableSeries<D>>> preprocessSeries(
-      List<MutableSeries<D>> seriesList) {
-    var rendererToSeriesList = super.preprocessSeries(seriesList);
+  Map<String?, List<MutableSeries<D?>>> preprocessSeries(
+      List<MutableSeries<D?>> seriesList) {
+    Map<String?, List<MutableSeries<D?>>> rendererToSeriesList = super.preprocessSeries(seriesList);
 
     // Check if primary or secondary measure axis is being used.
     for (final series in seriesList) {
@@ -334,7 +334,7 @@ abstract class CartesianChart<D> extends BaseChart<D> {
     });
 
     // Reset stale values from previous draw cycles.
-    domainAxis.resetDomains();
+    domainAxis!.resetDomains();
     _primaryMeasureAxis.resetDomains();
     _secondaryMeasureAxis.resetDomains();
 
@@ -342,10 +342,10 @@ abstract class CartesianChart<D> extends BaseChart<D> {
       axis.resetDomains();
     });
 
-    final reverseAxisDirection = context != null && context.isRtl;
+    final reverseAxisDirection = context != null && context!.isRtl;
 
     if (vertical) {
-      domainAxis
+      domainAxis!
         ..axisOrientation = AxisOrientation.bottom
         ..reverseOutputRange = reverseAxisDirection;
 
@@ -369,7 +369,7 @@ abstract class CartesianChart<D> extends BaseChart<D> {
           ..reverseOutputRange = flipVerticalAxisOutput;
       });
     } else {
-      domainAxis
+      domainAxis!
         ..axisOrientation = (reverseAxisDirection
             ? AxisOrientation.right
             : AxisOrientation.left)
@@ -393,9 +393,9 @@ abstract class CartesianChart<D> extends BaseChart<D> {
     // Have each renderer configure the axes with their domain and measure
     // values.
     rendererToSeriesList
-        .forEach((String rendererId, List<MutableSeries<D>> seriesList) {
-      getSeriesRenderer(rendererId).configureDomainAxes(seriesList);
-      getSeriesRenderer(rendererId).configureMeasureAxes(seriesList);
+        .forEach((String? rendererId, List<MutableSeries<D?>> seriesList) {
+      getSeriesRenderer(rendererId)!.configureDomainAxes(seriesList);
+      getSeriesRenderer(rendererId)!.configureMeasureAxes(seriesList);
     });
 
     return rendererToSeriesList;
@@ -404,7 +404,7 @@ abstract class CartesianChart<D> extends BaseChart<D> {
   @override
   void onSkipLayout() {
     // Update ticks only when skipping layout.
-    domainAxis.updateTicks();
+    domainAxis!.updateTicks();
 
     if (_usePrimaryMeasureAxis) {
       _primaryMeasureAxis.updateTicks();
@@ -422,7 +422,7 @@ abstract class CartesianChart<D> extends BaseChart<D> {
   }
 
   @override
-  void onPostLayout(Map<String, List<MutableSeries<D>>> rendererToSeriesList) {
+  void onPostLayout(Map<String?, List<MutableSeries<D?>>> rendererToSeriesList) {
     fireOnAxisConfigured();
 
     super.onPostLayout(rendererToSeriesList);
@@ -430,23 +430,23 @@ abstract class CartesianChart<D> extends BaseChart<D> {
 
   /// Returns a list of datum details from selection model of [type].
   @override
-  List<DatumDetails<D>> getDatumDetails(SelectionModelType type) {
-    final entries = <DatumDetails<D>>[];
+  List<DatumDetails<D?>?> getDatumDetails(SelectionModelType type) {
+    final List<DatumDetails<D?>?> entries = <DatumDetails<D>?>[];
 
     getSelectionModel(type).selectedDatum.forEach((seriesDatum) {
-      final series = seriesDatum.series;
+      final series = seriesDatum.series!;
       final datum = seriesDatum.datum;
       final datumIndex = seriesDatum.index;
 
-      final domain = series.domainFn(datumIndex);
+      final domain = series.domainFn!(datumIndex);
       final domainFormatterFn = series.domainFormatterFn;
-      final measure = series.measureFn(datumIndex);
-      final measureFormatterFn = series.measureFormatterFn;
-      final measureOffset = series.measureOffsetFn(datumIndex);
-      final rawMeasure = series.rawMeasureFn(datumIndex);
-      final color = series.colorFn(datumIndex);
+      final measure = series.measureFn!(datumIndex);
+      final  measureFormatterFn = series.measureFormatterFn;
+      final measureOffset = series.measureOffsetFn!(datumIndex);
+      final rawMeasure = series.rawMeasureFn!(datumIndex);
+      final color = series.colorFn!(datumIndex);
 
-      final renderer = getSeriesRenderer(series.getAttr(rendererIdKey));
+      final renderer = getSeriesRenderer(series.getAttr(rendererIdKey))!;
 
       final datumDetails = renderer.addPositionToDetailsForSeriesDatum(
           DatumDetails(

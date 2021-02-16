@@ -34,7 +34,7 @@ import 'package:test/test.dart';
 /// Datum/Row for the chart.
 class MyRow {
   final String campaign;
-  final int clickCount;
+  final int? clickCount;
   MyRow(this.campaign, this.clickCount);
 }
 
@@ -49,24 +49,24 @@ class MockChart extends Mock implements CartesianChart {}
 class FakeBarRenderer<D> extends BarRenderer<D> {
   int paintBarCallCount = 0;
 
-  factory FakeBarRenderer({BarRendererConfig config, String rendererId}) {
+  factory FakeBarRenderer({required BarRendererConfig config, String? rendererId}) {
     return FakeBarRenderer._internal(config: config, rendererId: rendererId);
   }
 
-  FakeBarRenderer._internal({BarRendererConfig config, String rendererId})
+  FakeBarRenderer._internal({required BarRendererConfig config, String? rendererId})
       : super.internal(config: config, rendererId: rendererId);
 
   @override
-  void paintBar(ChartCanvas canvas, double animationPercent,
-      Iterable<BarRendererElement<D>> barElements) {
+  void paintBar(ChartCanvas canvas, double? animationPercent,
+      Iterable<BarRendererElement<D>?> barElements) {
     paintBarCallCount += 1;
   }
 }
 
 void main() {
   BarRenderer renderer;
-  List<MutableSeries<String>> seriesList;
-  List<MutableSeries<String>> groupedStackedSeriesList;
+  late List<MutableSeries<String>> seriesList;
+  late List<MutableSeries<String>> groupedStackedSeriesList;
 
   /////////////////////////////////////////
   // Convenience methods for creating mocks.
@@ -84,13 +84,13 @@ void main() {
     return renderer;
   }
 
-  BarRenderer makeRenderer({BarRendererConfig config}) {
+  BarRenderer makeRenderer({BarRendererConfig? config}) {
     final renderer = BarRenderer(config: config);
     _configureBaseRenderer(renderer, true);
     return renderer;
   }
 
-  FakeBarRenderer makeFakeRenderer({BarRendererConfig config}) {
+  FakeBarRenderer makeFakeRenderer({required BarRendererConfig config}) {
     final renderer = FakeBarRenderer(config: config);
     _configureBaseRenderer(renderer, true);
     return renderer;
@@ -140,77 +140,77 @@ void main() {
     ];
 
     seriesList = [
-      MutableSeries<String>(Series<MyRow, String>(
+      MutableSeries<String>(Series<MyRow?, String>(
           id: 'Desktop',
           colorFn: (_, __) => MaterialPalette.blue.shadeDefault,
-          domainFn: (MyRow row, _) => row.campaign,
-          measureFn: (MyRow row, _) => row.clickCount,
-          measureOffsetFn: (MyRow row, _) => 0,
+          domainFn: (MyRow? row, _) => row!.campaign,
+          measureFn: (MyRow? row, _) => row!.clickCount,
+          measureOffsetFn: (MyRow? row, _) => 0,
           data: myFakeDesktopAData)),
-      MutableSeries<String>(Series<MyRow, String>(
+      MutableSeries<String>(Series<MyRow?, String>(
           id: 'Tablet',
           colorFn: (_, __) => MaterialPalette.red.shadeDefault,
-          domainFn: (MyRow row, _) => row.campaign,
-          measureFn: (MyRow row, _) => row.clickCount,
-          measureOffsetFn: (MyRow row, _) => 0,
+          domainFn: (MyRow? row, _) => row!.campaign,
+          measureFn: (MyRow? row, _) => row!.clickCount,
+          measureOffsetFn: (MyRow? row, _) => 0,
           data: myFakeTabletAData)),
-      MutableSeries<String>(Series<MyRow, String>(
+      MutableSeries<String>(Series<MyRow?, String>(
           id: 'Mobile',
           colorFn: (_, __) => MaterialPalette.green.shadeDefault,
-          domainFn: (MyRow row, _) => row.campaign,
-          measureFn: (MyRow row, _) => row.clickCount,
-          measureOffsetFn: (MyRow row, _) => 0,
+          domainFn: (MyRow? row, _) => row!.campaign,
+          measureFn: (MyRow? row, _) => row!.clickCount,
+          measureOffsetFn: (MyRow? row, _) => 0,
           data: myFakeMobileAData))
     ];
 
     groupedStackedSeriesList = [
-      MutableSeries<String>(Series<MyRow, String>(
+      MutableSeries<String>(Series<MyRow?, String>(
           id: 'Desktop A',
           seriesCategory: 'A',
           colorFn: (_, __) => MaterialPalette.blue.shadeDefault,
-          domainFn: (MyRow row, _) => row.campaign,
-          measureFn: (MyRow row, _) => row.clickCount,
-          measureOffsetFn: (MyRow row, _) => 0,
+          domainFn: (MyRow? row, _) => row!.campaign,
+          measureFn: (MyRow? row, _) => row!.clickCount,
+          measureOffsetFn: (MyRow? row, _) => 0,
           data: myFakeDesktopAData)),
-      MutableSeries<String>(Series<MyRow, String>(
+      MutableSeries<String>(Series<MyRow?, String>(
           id: 'Tablet A',
           seriesCategory: 'A',
           colorFn: (_, __) => MaterialPalette.red.shadeDefault,
-          domainFn: (MyRow row, _) => row.campaign,
-          measureFn: (MyRow row, _) => row.clickCount,
-          measureOffsetFn: (MyRow row, _) => 0,
+          domainFn: (MyRow? row, _) => row!.campaign,
+          measureFn: (MyRow? row, _) => row!.clickCount,
+          measureOffsetFn: (MyRow? row, _) => 0,
           data: myFakeTabletAData)),
-      MutableSeries<String>(Series<MyRow, String>(
+      MutableSeries<String>(Series<MyRow?, String>(
           id: 'Mobile A',
           seriesCategory: 'A',
           colorFn: (_, __) => MaterialPalette.green.shadeDefault,
-          domainFn: (MyRow row, _) => row.campaign,
-          measureFn: (MyRow row, _) => row.clickCount,
-          measureOffsetFn: (MyRow row, _) => 0,
+          domainFn: (MyRow? row, _) => row!.campaign,
+          measureFn: (MyRow? row, _) => row!.clickCount,
+          measureOffsetFn: (MyRow? row, _) => 0,
           data: myFakeMobileAData)),
-      MutableSeries<String>(Series<MyRow, String>(
+      MutableSeries<String>(Series<MyRow?, String>(
           id: 'Desktop B',
           seriesCategory: 'B',
           colorFn: (_, __) => MaterialPalette.blue.shadeDefault,
-          domainFn: (MyRow row, _) => row.campaign,
-          measureFn: (MyRow row, _) => row.clickCount,
-          measureOffsetFn: (MyRow row, _) => 0,
+          domainFn: (MyRow? row, _) => row!.campaign,
+          measureFn: (MyRow? row, _) => row!.clickCount,
+          measureOffsetFn: (MyRow? row, _) => 0,
           data: myFakeDesktopBData)),
-      MutableSeries<String>(Series<MyRow, String>(
+      MutableSeries<String>(Series<MyRow?, String>(
           id: 'Tablet B',
           seriesCategory: 'B',
           colorFn: (_, __) => MaterialPalette.red.shadeDefault,
-          domainFn: (MyRow row, _) => row.campaign,
-          measureFn: (MyRow row, _) => row.clickCount,
-          measureOffsetFn: (MyRow row, _) => 0,
+          domainFn: (MyRow? row, _) => row!.campaign,
+          measureFn: (MyRow? row, _) => row!.clickCount,
+          measureOffsetFn: (MyRow? row, _) => 0,
           data: myFakeTabletBData)),
-      MutableSeries<String>(Series<MyRow, String>(
+      MutableSeries<String>(Series<MyRow?, String>(
           id: 'Mobile B',
           seriesCategory: 'B',
           colorFn: (_, __) => MaterialPalette.green.shadeDefault,
-          domainFn: (MyRow row, _) => row.campaign,
-          measureFn: (MyRow row, _) => row.clickCount,
-          measureOffsetFn: (MyRow row, _) => 0,
+          domainFn: (MyRow? row, _) => row!.campaign,
+          measureFn: (MyRow? row, _) => row!.clickCount,
+          measureOffsetFn: (MyRow? row, _) => 0,
           data: myFakeMobileBData))
     ];
   });
@@ -232,14 +232,14 @@ void main() {
       expect(series.getAttr(barGroupWeightKey), equals(1 / 3));
       expect(series.getAttr(stackKeyKey), equals('__defaultKey__'));
 
-      var elementsList = series.getAttr(barElementsKey);
+      var elementsList = series.getAttr(barElementsKey)!;
       expect(elementsList.length, equals(4));
 
       var element = elementsList[0];
       expect(element.barStackIndex, equals(0));
       expect(element.measureOffset, equals(0));
       expect(element.measureOffsetPlusMeasure, equals(null));
-      expect(series.measureOffsetFn(0), equals(0));
+      expect(series.measureOffsetFn!(0), equals(0));
 
       // Validate Tablet series.
       series = seriesList[1];
@@ -249,14 +249,14 @@ void main() {
       expect(series.getAttr(barGroupWeightKey), equals(1 / 3));
       expect(series.getAttr(stackKeyKey), equals('__defaultKey__'));
 
-      elementsList = series.getAttr(barElementsKey);
+      elementsList = series.getAttr(barElementsKey)!;
       expect(elementsList.length, equals(4));
 
       element = elementsList[0];
       expect(element.barStackIndex, equals(0));
       expect(element.measureOffset, equals(0));
       expect(element.measureOffsetPlusMeasure, equals(null));
-      expect(series.measureOffsetFn(0), equals(0));
+      expect(series.measureOffsetFn!(0), equals(0));
 
       // Validate Mobile series.
       series = seriesList[2];
@@ -266,14 +266,14 @@ void main() {
       expect(series.getAttr(barGroupWeightKey), equals(1 / 3));
       expect(series.getAttr(stackKeyKey), equals('__defaultKey__'));
 
-      elementsList = series.getAttr(barElementsKey);
+      elementsList = series.getAttr(barElementsKey)!;
       expect(elementsList.length, equals(4));
 
       element = elementsList[0];
       expect(element.barStackIndex, equals(0));
       expect(element.measureOffset, equals(0));
       expect(element.measureOffsetPlusMeasure, equals(null));
-      expect(series.measureOffsetFn(0), equals(0));
+      expect(series.measureOffsetFn!(0), equals(0));
     });
 
     test('with grouped stacked bars', () {
@@ -293,14 +293,14 @@ void main() {
       expect(series.getAttr(barGroupWeightKey), equals(0.5));
       expect(series.getAttr(stackKeyKey), equals('A'));
 
-      var elementsList = series.getAttr(barElementsKey);
+      var elementsList = series.getAttr(barElementsKey)!;
       expect(elementsList.length, equals(4));
 
       var element = elementsList[0];
       expect(element.barStackIndex, equals(2));
       expect(element.measureOffset, equals(10));
       expect(element.measureOffsetPlusMeasure, equals(15));
-      expect(series.measureOffsetFn(0), equals(10));
+      expect(series.measureOffsetFn!(0), equals(10));
 
       // Validate Tablet A series.
       series = groupedStackedSeriesList[1];
@@ -310,14 +310,14 @@ void main() {
       expect(series.getAttr(barGroupWeightKey), equals(0.5));
       expect(series.getAttr(stackKeyKey), equals('A'));
 
-      elementsList = series.getAttr(barElementsKey);
+      elementsList = series.getAttr(barElementsKey)!;
       expect(elementsList.length, equals(4));
 
       element = elementsList[0];
       expect(element.barStackIndex, equals(1));
       expect(element.measureOffset, equals(5));
       expect(element.measureOffsetPlusMeasure, equals(10));
-      expect(series.measureOffsetFn(0), equals(5));
+      expect(series.measureOffsetFn!(0), equals(5));
 
       // Validate Mobile A series.
       series = groupedStackedSeriesList[2];
@@ -327,14 +327,14 @@ void main() {
       expect(series.getAttr(barGroupWeightKey), equals(0.5));
       expect(series.getAttr(stackKeyKey), equals('A'));
 
-      elementsList = series.getAttr(barElementsKey);
+      elementsList = series.getAttr(barElementsKey)!;
       expect(elementsList.length, equals(4));
 
       element = elementsList[0];
       expect(element.barStackIndex, equals(0));
       expect(element.measureOffset, equals(0));
       expect(element.measureOffsetPlusMeasure, equals(5));
-      expect(series.measureOffsetFn(0), equals(0));
+      expect(series.measureOffsetFn!(0), equals(0));
 
       // Validate Desktop B series.
       series = groupedStackedSeriesList[3];
@@ -344,14 +344,14 @@ void main() {
       expect(series.getAttr(barGroupWeightKey), equals(0.5));
       expect(series.getAttr(stackKeyKey), equals('B'));
 
-      elementsList = series.getAttr(barElementsKey);
+      elementsList = series.getAttr(barElementsKey)!;
       expect(elementsList.length, equals(4));
 
       element = elementsList[0];
       expect(element.barStackIndex, equals(2));
       expect(element.measureOffset, equals(10));
       expect(element.measureOffsetPlusMeasure, equals(15));
-      expect(series.measureOffsetFn(0), equals(10));
+      expect(series.measureOffsetFn!(0), equals(10));
 
       // Validate Tablet B series.
       series = groupedStackedSeriesList[4];
@@ -361,14 +361,14 @@ void main() {
       expect(series.getAttr(barGroupWeightKey), equals(0.5));
       expect(series.getAttr(stackKeyKey), equals('B'));
 
-      elementsList = series.getAttr(barElementsKey);
+      elementsList = series.getAttr(barElementsKey)!;
       expect(elementsList.length, equals(4));
 
       element = elementsList[0];
       expect(element.barStackIndex, equals(1));
       expect(element.measureOffset, equals(5));
       expect(element.measureOffsetPlusMeasure, equals(10));
-      expect(series.measureOffsetFn(0), equals(5));
+      expect(series.measureOffsetFn!(0), equals(5));
 
       // Validate Mobile B series.
       series = groupedStackedSeriesList[5];
@@ -378,14 +378,14 @@ void main() {
       expect(series.getAttr(barGroupWeightKey), equals(0.5));
       expect(series.getAttr(stackKeyKey), equals('B'));
 
-      elementsList = series.getAttr(barElementsKey);
+      elementsList = series.getAttr(barElementsKey)!;
       expect(elementsList.length, equals(4));
 
       element = elementsList[0];
       expect(element.barStackIndex, equals(0));
       expect(element.measureOffset, equals(0));
       expect(element.measureOffsetPlusMeasure, equals(5));
-      expect(series.measureOffsetFn(0), equals(0));
+      expect(series.measureOffsetFn!(0), equals(0));
     });
 
     test('with stacked bars', () {
@@ -404,14 +404,14 @@ void main() {
       expect(series.getAttr(barGroupWeightKey), equals(1));
       expect(series.getAttr(stackKeyKey), equals('__defaultKey__'));
 
-      var elementsList = series.getAttr(barElementsKey);
+      var elementsList = series.getAttr(barElementsKey)!;
       expect(elementsList.length, equals(4));
 
       var element = elementsList[0];
       expect(element.barStackIndex, equals(2));
       expect(element.measureOffset, equals(10));
       expect(element.measureOffsetPlusMeasure, equals(15));
-      expect(series.measureOffsetFn(0), equals(10));
+      expect(series.measureOffsetFn!(0), equals(10));
 
       // Validate Tablet series.
       series = seriesList[1];
@@ -421,14 +421,14 @@ void main() {
       expect(series.getAttr(barGroupWeightKey), equals(1));
       expect(series.getAttr(stackKeyKey), equals('__defaultKey__'));
 
-      elementsList = series.getAttr(barElementsKey);
+      elementsList = series.getAttr(barElementsKey)!;
       expect(elementsList.length, equals(4));
 
       element = elementsList[0];
       expect(element.barStackIndex, equals(1));
       expect(element.measureOffset, equals(5));
       expect(element.measureOffsetPlusMeasure, equals(10));
-      expect(series.measureOffsetFn(0), equals(5));
+      expect(series.measureOffsetFn!(0), equals(5));
 
       // Validate Mobile series.
       series = seriesList[2];
@@ -438,25 +438,25 @@ void main() {
       expect(series.getAttr(barGroupWeightKey), equals(1));
       expect(series.getAttr(stackKeyKey), equals('__defaultKey__'));
 
-      elementsList = series.getAttr(barElementsKey);
+      elementsList = series.getAttr(barElementsKey)!;
       expect(elementsList.length, equals(4));
 
       element = elementsList[0];
       expect(element.barStackIndex, equals(0));
       expect(element.measureOffset, equals(0));
       expect(element.measureOffsetPlusMeasure, equals(5));
-      expect(series.measureOffsetFn(0), equals(0));
+      expect(series.measureOffsetFn!(0), equals(0));
     });
 
     test('with stacked bars containing zero and null', () {
       // Set up some nulls and zeros in the data.
-      seriesList[2].data[0] = MyRow('MyCampaign1', null);
-      seriesList[2].data[2] = MyRow('MyCampaign3', 0);
+      seriesList[2].data![0] = MyRow('MyCampaign1', null);
+      seriesList[2].data![2] = MyRow('MyCampaign3', 0);
 
-      seriesList[1].data[1] = MyRow('MyCampaign2', null);
-      seriesList[1].data[3] = MyRow('MyOtherCampaign', 0);
+      seriesList[1].data![1] = MyRow('MyCampaign2', null);
+      seriesList[1].data![3] = MyRow('MyOtherCampaign', 0);
 
-      seriesList[0].data[2] = MyRow('MyCampaign3', 0);
+      seriesList[0].data![2] = MyRow('MyCampaign3', 0);
 
       renderer = makeRenderer(
           config: BarRendererConfig(groupingType: BarGroupingType.stacked));
@@ -467,80 +467,80 @@ void main() {
 
       // Validate Desktop series.
       var series = seriesList[0];
-      var elementsList = series.getAttr(barElementsKey);
+      var elementsList = series.getAttr(barElementsKey)!;
 
       var element = elementsList[0];
       expect(element.barStackIndex, equals(2));
       expect(element.measureOffset, equals(5));
       expect(element.measureOffsetPlusMeasure, equals(10));
-      expect(series.measureOffsetFn(0), equals(5));
+      expect(series.measureOffsetFn!(0), equals(5));
 
       element = elementsList[1];
       expect(element.measureOffset, equals(25));
       expect(element.measureOffsetPlusMeasure, equals(50));
-      expect(series.measureOffsetFn(1), equals(25));
+      expect(series.measureOffsetFn!(1), equals(25));
 
       element = elementsList[2];
       expect(element.measureOffset, equals(100));
       expect(element.measureOffsetPlusMeasure, equals(100));
-      expect(series.measureOffsetFn(2), equals(100));
+      expect(series.measureOffsetFn!(2), equals(100));
 
       element = elementsList[3];
       expect(element.measureOffset, equals(75));
       expect(element.measureOffsetPlusMeasure, equals(150));
-      expect(series.measureOffsetFn(3), equals(75));
+      expect(series.measureOffsetFn!(3), equals(75));
 
       // Validate Tablet series.
       series = seriesList[1];
 
-      elementsList = series.getAttr(barElementsKey);
+      elementsList = series.getAttr(barElementsKey)!;
       expect(elementsList.length, equals(4));
 
       element = elementsList[0];
       expect(element.barStackIndex, equals(1));
       expect(element.measureOffset, equals(0));
       expect(element.measureOffsetPlusMeasure, equals(5));
-      expect(series.measureOffsetFn(0), equals(0));
+      expect(series.measureOffsetFn!(0), equals(0));
 
       element = elementsList[1];
       expect(element.measureOffset, equals(25));
       expect(element.measureOffsetPlusMeasure, equals(25));
-      expect(series.measureOffsetFn(1), equals(25));
+      expect(series.measureOffsetFn!(1), equals(25));
 
       element = elementsList[2];
       expect(element.measureOffset, equals(0));
       expect(element.measureOffsetPlusMeasure, equals(100));
-      expect(series.measureOffsetFn(2), equals(0));
+      expect(series.measureOffsetFn!(2), equals(0));
 
       element = elementsList[3];
       expect(element.measureOffset, equals(75));
       expect(element.measureOffsetPlusMeasure, equals(75));
-      expect(series.measureOffsetFn(3), equals(75));
+      expect(series.measureOffsetFn!(3), equals(75));
 
       // Validate Mobile series.
       series = seriesList[2];
-      elementsList = series.getAttr(barElementsKey);
+      elementsList = series.getAttr(barElementsKey)!;
 
       element = elementsList[0];
       expect(element.barStackIndex, equals(0));
       expect(element.measureOffset, equals(0));
       expect(element.measureOffsetPlusMeasure, equals(0));
-      expect(series.measureOffsetFn(0), equals(0));
+      expect(series.measureOffsetFn!(0), equals(0));
 
       element = elementsList[1];
       expect(element.measureOffset, equals(0));
       expect(element.measureOffsetPlusMeasure, equals(25));
-      expect(series.measureOffsetFn(1), equals(0));
+      expect(series.measureOffsetFn!(1), equals(0));
 
       element = elementsList[2];
       expect(element.measureOffset, equals(0));
       expect(element.measureOffsetPlusMeasure, equals(0));
-      expect(series.measureOffsetFn(2), equals(0));
+      expect(series.measureOffsetFn!(2), equals(0));
 
       element = elementsList[3];
       expect(element.measureOffset, equals(0));
       expect(element.measureOffsetPlusMeasure, equals(75));
-      expect(series.measureOffsetFn(3), equals(0));
+      expect(series.measureOffsetFn!(3), equals(0));
     });
   });
 
@@ -566,14 +566,14 @@ void main() {
       expect(series.getAttr(barGroupWeightKey), equals(0.5));
       expect(series.getAttr(stackKeyKey), equals('__defaultKey__'));
 
-      var elementsList = series.getAttr(barElementsKey);
+      var elementsList = series.getAttr(barElementsKey)!;
       expect(elementsList.length, equals(4));
 
       var element = elementsList[0];
       expect(element.barStackIndex, equals(0));
       expect(element.measureOffset, equals(0));
       expect(element.measureOffsetPlusMeasure, equals(null));
-      expect(series.measureOffsetFn(0), equals(0));
+      expect(series.measureOffsetFn!(0), equals(0));
 
       // Validate Tablet series.
       series = seriesList[1];
@@ -583,14 +583,14 @@ void main() {
       expect(series.getAttr(barGroupWeightKey), equals(1 / 3));
       expect(series.getAttr(stackKeyKey), equals('__defaultKey__'));
 
-      elementsList = series.getAttr(barElementsKey);
+      elementsList = series.getAttr(barElementsKey)!;
       expect(elementsList.length, equals(4));
 
       element = elementsList[0];
       expect(element.barStackIndex, equals(0));
       expect(element.measureOffset, equals(0));
       expect(element.measureOffsetPlusMeasure, equals(null));
-      expect(series.measureOffsetFn(0), equals(0));
+      expect(series.measureOffsetFn!(0), equals(0));
 
       // Validate Mobile series.
       series = seriesList[2];
@@ -600,14 +600,14 @@ void main() {
       expect(series.getAttr(barGroupWeightKey), equals(1 / 6));
       expect(series.getAttr(stackKeyKey), equals('__defaultKey__'));
 
-      elementsList = series.getAttr(barElementsKey);
+      elementsList = series.getAttr(barElementsKey)!;
       expect(elementsList.length, equals(4));
 
       element = elementsList[0];
       expect(element.barStackIndex, equals(0));
       expect(element.measureOffset, equals(0));
       expect(element.measureOffsetPlusMeasure, equals(null));
-      expect(series.measureOffsetFn(0), equals(0));
+      expect(series.measureOffsetFn!(0), equals(0));
     });
 
     test('with grouped stacked bars', () {
@@ -632,14 +632,14 @@ void main() {
       expect(series.getAttr(barGroupWeightKey), equals(2 / 3));
       expect(series.getAttr(stackKeyKey), equals('A'));
 
-      var elementsList = series.getAttr(barElementsKey);
+      var elementsList = series.getAttr(barElementsKey)!;
       expect(elementsList.length, equals(4));
 
       var element = elementsList[0];
       expect(element.barStackIndex, equals(2));
       expect(element.measureOffset, equals(10));
       expect(element.measureOffsetPlusMeasure, equals(15));
-      expect(series.measureOffsetFn(0), equals(10));
+      expect(series.measureOffsetFn!(0), equals(10));
 
       // Validate Tablet A series.
       series = groupedStackedSeriesList[1];
@@ -649,14 +649,14 @@ void main() {
       expect(series.getAttr(barGroupWeightKey), equals(2 / 3));
       expect(series.getAttr(stackKeyKey), equals('A'));
 
-      elementsList = series.getAttr(barElementsKey);
+      elementsList = series.getAttr(barElementsKey)!;
       expect(elementsList.length, equals(4));
 
       element = elementsList[0];
       expect(element.barStackIndex, equals(1));
       expect(element.measureOffset, equals(5));
       expect(element.measureOffsetPlusMeasure, equals(10));
-      expect(series.measureOffsetFn(0), equals(5));
+      expect(series.measureOffsetFn!(0), equals(5));
 
       // Validate Mobile A series.
       series = groupedStackedSeriesList[2];
@@ -666,14 +666,14 @@ void main() {
       expect(series.getAttr(barGroupWeightKey), equals(2 / 3));
       expect(series.getAttr(stackKeyKey), equals('A'));
 
-      elementsList = series.getAttr(barElementsKey);
+      elementsList = series.getAttr(barElementsKey)!;
       expect(elementsList.length, equals(4));
 
       element = elementsList[0];
       expect(element.barStackIndex, equals(0));
       expect(element.measureOffset, equals(0));
       expect(element.measureOffsetPlusMeasure, equals(5));
-      expect(series.measureOffsetFn(0), equals(0));
+      expect(series.measureOffsetFn!(0), equals(0));
 
       // Validate Desktop B series.
       series = groupedStackedSeriesList[3];
@@ -683,14 +683,14 @@ void main() {
       expect(series.getAttr(barGroupWeightKey), equals(1 / 3));
       expect(series.getAttr(stackKeyKey), equals('B'));
 
-      elementsList = series.getAttr(barElementsKey);
+      elementsList = series.getAttr(barElementsKey)!;
       expect(elementsList.length, equals(4));
 
       element = elementsList[0];
       expect(element.barStackIndex, equals(2));
       expect(element.measureOffset, equals(10));
       expect(element.measureOffsetPlusMeasure, equals(15));
-      expect(series.measureOffsetFn(0), equals(10));
+      expect(series.measureOffsetFn!(0), equals(10));
 
       // Validate Tablet B series.
       series = groupedStackedSeriesList[4];
@@ -700,14 +700,14 @@ void main() {
       expect(series.getAttr(barGroupWeightKey), equals(1 / 3));
       expect(series.getAttr(stackKeyKey), equals('B'));
 
-      elementsList = series.getAttr(barElementsKey);
+      elementsList = series.getAttr(barElementsKey)!;
       expect(elementsList.length, equals(4));
 
       element = elementsList[0];
       expect(element.barStackIndex, equals(1));
       expect(element.measureOffset, equals(5));
       expect(element.measureOffsetPlusMeasure, equals(10));
-      expect(series.measureOffsetFn(0), equals(5));
+      expect(series.measureOffsetFn!(0), equals(5));
 
       // Validate Mobile B series.
       series = groupedStackedSeriesList[5];
@@ -717,14 +717,14 @@ void main() {
       expect(series.getAttr(barGroupWeightKey), equals(1 / 3));
       expect(series.getAttr(stackKeyKey), equals('B'));
 
-      elementsList = series.getAttr(barElementsKey);
+      elementsList = series.getAttr(barElementsKey)!;
       expect(elementsList.length, equals(4));
 
       element = elementsList[0];
       expect(element.barStackIndex, equals(0));
       expect(element.measureOffset, equals(0));
       expect(element.measureOffsetPlusMeasure, equals(5));
-      expect(series.measureOffsetFn(0), equals(0));
+      expect(series.measureOffsetFn!(0), equals(0));
     });
 
     test('with stacked bars - weightPattern not used', () {
@@ -747,14 +747,14 @@ void main() {
       expect(series.getAttr(barGroupWeightKey), equals(1));
       expect(series.getAttr(stackKeyKey), equals('__defaultKey__'));
 
-      var elementsList = series.getAttr(barElementsKey);
+      var elementsList = series.getAttr(barElementsKey)!;
       expect(elementsList.length, equals(4));
 
       var element = elementsList[0];
       expect(element.barStackIndex, equals(2));
       expect(element.measureOffset, equals(10));
       expect(element.measureOffsetPlusMeasure, equals(15));
-      expect(series.measureOffsetFn(0), equals(10));
+      expect(series.measureOffsetFn!(0), equals(10));
 
       // Validate Tablet series.
       series = seriesList[1];
@@ -764,14 +764,14 @@ void main() {
       expect(series.getAttr(barGroupWeightKey), equals(1));
       expect(series.getAttr(stackKeyKey), equals('__defaultKey__'));
 
-      elementsList = series.getAttr(barElementsKey);
+      elementsList = series.getAttr(barElementsKey)!;
       expect(elementsList.length, equals(4));
 
       element = elementsList[0];
       expect(element.barStackIndex, equals(1));
       expect(element.measureOffset, equals(5));
       expect(element.measureOffsetPlusMeasure, equals(10));
-      expect(series.measureOffsetFn(0), equals(5));
+      expect(series.measureOffsetFn!(0), equals(5));
 
       // Validate Mobile series.
       series = seriesList[2];
@@ -781,14 +781,14 @@ void main() {
       expect(series.getAttr(barGroupWeightKey), equals(1));
       expect(series.getAttr(stackKeyKey), equals('__defaultKey__'));
 
-      elementsList = series.getAttr(barElementsKey);
+      elementsList = series.getAttr(barElementsKey)!;
       expect(elementsList.length, equals(4));
 
       element = elementsList[0];
       expect(element.barStackIndex, equals(0));
       expect(element.measureOffset, equals(0));
       expect(element.measureOffsetPlusMeasure, equals(5));
-      expect(series.measureOffsetFn(0), equals(0));
+      expect(series.measureOffsetFn!(0), equals(0));
     });
   });
 
@@ -810,10 +810,10 @@ void main() {
 
         final color = Color.fromHex(code: '#000000');
 
-        final series = MutableSeries<String>(Series<MyRow, String>(
+        final series = MutableSeries<String>(Series<MyRow?, String>(
             id: 'Desktop',
-            domainFn: (MyRow row, _) => row.campaign,
-            measureFn: (MyRow row, _) => row.clickCount,
+            domainFn: (MyRow? row, _) => row!.campaign,
+            measureFn: (MyRow? row, _) => row!.clickCount,
             measureOffsetFn: (_, __) => 0,
             colorFn: (_, __) => color,
             fillColorFn: (_, __) => color,

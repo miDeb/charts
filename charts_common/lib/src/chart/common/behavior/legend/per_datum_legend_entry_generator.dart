@@ -26,23 +26,23 @@ import 'legend_entry_generator.dart';
 ///
 /// [D] the domain class type for the datum.
 class PerDatumLegendEntryGenerator<D> implements LegendEntryGenerator<D> {
-  TextStyleSpec entryTextStyle;
-  MeasureFormatter measureFormatter;
-  MeasureFormatter secondaryMeasureFormatter;
-  bool showOverlaySeries;
+  TextStyleSpec? entryTextStyle;
+  MeasureFormatter? measureFormatter;
+  MeasureFormatter? secondaryMeasureFormatter;
+  bool? showOverlaySeries;
 
   /// Option for showing measures when there is no selection.
-  LegendDefaultMeasure legendDefaultMeasure;
+  LegendDefaultMeasure? legendDefaultMeasure;
 
   @override
-  List<LegendEntry<D>> getLegendEntries(List<MutableSeries<D>> seriesList) {
+  List<LegendEntry<D>> getLegendEntries(List<MutableSeries<D>>? seriesList) {
     final legendEntries = <LegendEntry<D>>[];
 
-    final series = seriesList[0];
-    for (var i = 0; i < series.data.length; i++) {
-      legendEntries.add(LegendEntry<D>(series, series.domainFn(i).toString(),
-          color: series.colorFn(i),
-          datum: series.data[i],
+    final series = seriesList![0];
+    for (var i = 0; i < series.data!.length; i++) {
+      legendEntries.add(LegendEntry<D>(series, series.domainFn!(i).toString(),
+          color: series.colorFn!(i),
+          datum: series.data![i],
           datumIndex: i,
           textStyle: entryTextStyle));
     }
@@ -56,34 +56,34 @@ class PerDatumLegendEntryGenerator<D> implements LegendEntryGenerator<D> {
   }
 
   @override
-  void updateLegendEntries(List<LegendEntry<D>> legendEntries,
-      SelectionModel<D> selectionModel, List<MutableSeries<D>> seriesList) {
-    if (selectionModel.hasAnySelection) {
+  void updateLegendEntries(List<LegendEntry<D>>? legendEntries,
+      SelectionModel<D>? selectionModel, List<MutableSeries<D>>? seriesList) {
+    if (selectionModel!.hasAnySelection) {
       _updateFromSelection(legendEntries, selectionModel);
     } else {
       // Update with measures only if showing measure on no selection.
       if (legendDefaultMeasure != LegendDefaultMeasure.none) {
         _updateFromSeriesList(legendEntries, seriesList);
       } else {
-        _resetLegendEntryMeasures(legendEntries);
+        _resetLegendEntryMeasures(legendEntries!);
       }
     }
   }
 
   /// Update legend entries with measures of the selected datum
   void _updateFromSelection(
-      List<LegendEntry<D>> legendEntries, SelectionModel<D> selectionModel) {
+      List<LegendEntry<D>>? legendEntries, SelectionModel<D>? selectionModel) {
     // Given that each legend entry only has one datum associated with it, any
     // option for [legendDefaultMeasure] essentially boils down to just showing
     // the measure value.
     if (legendDefaultMeasure != LegendDefaultMeasure.none) {
-      for (var entry in legendEntries) {
+      for (var entry in legendEntries!) {
         final series = entry.series;
-        final measure = series.measureFn(entry.datumIndex);
+        final measure = series.measureFn!(entry.datumIndex)!;
         entry.value = measure.toDouble();
         entry.formattedValue = _getFormattedMeasureValue(series, measure);
 
-        entry.isSelected = selectionModel.selectedSeries
+        entry.isSelected = selectionModel!.selectedSeries
             .any((selectedSeries) => series.id == selectedSeries.id);
       }
     }
@@ -103,14 +103,14 @@ class PerDatumLegendEntryGenerator<D> implements LegendEntryGenerator<D> {
   /// selection. The type of calculation is based on the [legendDefaultMeasure]
   /// value.
   void _updateFromSeriesList(
-      List<LegendEntry<D>> legendEntries, List<MutableSeries<D>> seriesList) {
+      List<LegendEntry<D>>? legendEntries, List<MutableSeries<D>>? seriesList) {
     // Given that each legend entry only has one datum associated with it, any
     // option for [legendDefaultMeasure] essentially boils down to just showing
     // the measure value.
     if (legendDefaultMeasure != LegendDefaultMeasure.none) {
-      for (var entry in legendEntries) {
+      for (var entry in legendEntries!) {
         final series = entry.series;
-        final measure = series.measureFn(entry.datumIndex);
+        final measure = series.measureFn!(entry.datumIndex)!;
         entry.value = measure.toDouble();
         entry.formattedValue = _getFormattedMeasureValue(series, measure);
         entry.isSelected = false;
@@ -122,8 +122,8 @@ class PerDatumLegendEntryGenerator<D> implements LegendEntryGenerator<D> {
   /// function for the series.
   String _getFormattedMeasureValue(ImmutableSeries series, num measure) {
     return (series.getAttr(measureAxisIdKey) == Axis.secondaryMeasureAxisId)
-        ? secondaryMeasureFormatter(measure)
-        : measureFormatter(measure);
+        ? secondaryMeasureFormatter!(measure)
+        : measureFormatter!(measure);
   }
 
   @override

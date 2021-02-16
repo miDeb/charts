@@ -42,11 +42,11 @@ import 'tick_spec.dart' show TickSpec;
 
 /// Generic [AxisSpec] specialized for Timeseries charts.
 @immutable
-class DateTimeAxisSpec extends AxisSpec<DateTime> {
+class DateTimeAxisSpec extends AxisSpec<DateTime?> {
   /// Sets viewport for this Axis.
   ///
   /// If pan / zoom behaviors are set, this is the initial viewport.
-  final DateTimeExtents viewport;
+  final DateTimeExtents? viewport;
 
   /// Creates a [AxisSpec] that specialized for timeseries charts.
   ///
@@ -60,10 +60,10 @@ class DateTimeAxisSpec extends AxisSpec<DateTime> {
   /// [showAxisLine] override to force the axis to draw the axis
   ///     line.
   const DateTimeAxisSpec({
-    RenderSpec<DateTime> renderSpec,
-    DateTimeTickProviderSpec tickProviderSpec,
-    DateTimeTickFormatterSpec tickFormatterSpec,
-    bool showAxisLine,
+    RenderSpec<DateTime>? renderSpec,
+    DateTimeTickProviderSpec? tickProviderSpec,
+    DateTimeTickFormatterSpec? tickFormatterSpec,
+    bool? showAxisLine,
     this.viewport,
   }) : super(
             renderSpec: renderSpec,
@@ -72,16 +72,16 @@ class DateTimeAxisSpec extends AxisSpec<DateTime> {
             showAxisLine: showAxisLine);
 
   @override
-  void configure(Axis<DateTime> axis, ChartContext context,
-      GraphicsFactory graphicsFactory) {
+  void configure(Axis<DateTime?> axis, ChartContext? context,
+      GraphicsFactory? graphicsFactory) {
     super.configure(axis, context, graphicsFactory);
 
     if (axis is DateTimeAxis && viewport != null) {
-      axis.setScaleViewport(viewport);
+      axis.setScaleViewport(viewport!);
     }
   }
 
-  Axis<DateTime> createAxis() {
+  Axis<DateTime>? createAxis() {
     assert(false, 'Call createDateTimeAxis() to create a DateTimeAxis.');
     return null;
   }
@@ -104,7 +104,7 @@ class DateTimeAxisSpec extends AxisSpec<DateTime> {
   }
 }
 
-abstract class DateTimeTickProviderSpec extends TickProviderSpec<DateTime> {}
+abstract class DateTimeTickProviderSpec extends TickProviderSpec<DateTime?> {}
 
 abstract class DateTimeTickFormatterSpec extends TickFormatterSpec<DateTime> {}
 
@@ -122,13 +122,13 @@ class AutoDateTimeTickProviderSpec implements DateTimeTickProviderSpec {
   const AutoDateTimeTickProviderSpec({this.includeTime = true});
 
   @override
-  AutoAdjustingDateTimeTickProvider createTickProvider(ChartContext context) {
+  AutoAdjustingDateTimeTickProvider createTickProvider(ChartContext? context) {
     if (includeTime) {
       return AutoAdjustingDateTimeTickProvider.createDefault(
-          context.dateTimeFactory);
+          context!.dateTimeFactory);
     } else {
       return AutoAdjustingDateTimeTickProvider.createWithoutTime(
-          context.dateTimeFactory);
+          context!.dateTimeFactory);
     }
   }
 
@@ -143,7 +143,7 @@ class AutoDateTimeTickProviderSpec implements DateTimeTickProviderSpec {
 /// [TickProviderSpec] that sets up time ticks with days increments only.
 @immutable
 class DayTickProviderSpec implements DateTimeTickProviderSpec {
-  final List<int> increments;
+  final List<int>? increments;
 
   const DayTickProviderSpec({this.increments});
 
@@ -153,9 +153,9 @@ class DayTickProviderSpec implements DateTimeTickProviderSpec {
   /// [increments] specify the number of day increments that can be chosen from
   /// when searching for the appropriate tick intervals.
   @override
-  AutoAdjustingDateTimeTickProvider createTickProvider(ChartContext context) {
+  AutoAdjustingDateTimeTickProvider createTickProvider(ChartContext? context) {
     return AutoAdjustingDateTimeTickProvider.createWith([
-      TimeRangeTickProviderImpl(DayTimeStepper(context.dateTimeFactory,
+      TimeRangeTickProviderImpl(DayTimeStepper(context!.dateTimeFactory,
           allowedTickIncrements: increments))
     ]);
   }
@@ -177,7 +177,7 @@ class DateTimeEndPointsTickProviderSpec implements DateTimeTickProviderSpec {
   /// Creates a [TickProviderSpec] that dynamically chooses time ticks at the
   /// two end points of the axis range
   @override
-  EndPointsTickProvider<DateTime> createTickProvider(ChartContext context) {
+  EndPointsTickProvider<DateTime> createTickProvider(ChartContext? context) {
     return EndPointsTickProvider<DateTime>();
   }
 
@@ -193,7 +193,7 @@ class StaticDateTimeTickProviderSpec implements DateTimeTickProviderSpec {
   const StaticDateTimeTickProviderSpec(this.tickSpecs);
 
   @override
-  StaticTickProvider<DateTime> createTickProvider(ChartContext context) =>
+  StaticTickProvider<DateTime> createTickProvider(ChartContext? context) =>
       StaticTickProvider<DateTime>(tickSpecs);
 
   @override
@@ -207,9 +207,9 @@ class StaticDateTimeTickProviderSpec implements DateTimeTickProviderSpec {
 /// Formatters for a single level of the [DateTimeTickFormatterSpec].
 @immutable
 class TimeFormatterSpec {
-  final String format;
-  final String transitionFormat;
-  final String noonFormat;
+  final String? format;
+  final String? transitionFormat;
+  final String? noonFormat;
 
   /// Creates a formatter for a particular granularity of data.
   ///
@@ -236,8 +236,8 @@ class TimeFormatterSpec {
   @override
   int get hashCode {
     int hashcode = format?.hashCode ?? 0;
-    hashcode = (hashcode * 37) + transitionFormat?.hashCode ?? 0;
-    hashcode = (hashcode * 37) + noonFormat?.hashCode ?? 0;
+    hashcode = (hashcode * 37) + (transitionFormat?.hashCode ?? 0);
+    hashcode = (hashcode * 37) + (noonFormat?.hashCode ?? 0);
     return hashcode;
   }
 }
@@ -246,8 +246,8 @@ class TimeFormatterSpec {
 /// [DateTimeFormatterFunction].
 @immutable
 class BasicDateTimeTickFormatterSpec implements DateTimeTickFormatterSpec {
-  final DateTimeFormatterFunction formatter;
-  final DateFormat dateFormat;
+  final DateTimeFormatterFunction? formatter;
+  final DateFormat? dateFormat;
 
   const BasicDateTimeTickFormatterSpec(this.formatter) : dateFormat = null;
 
@@ -258,9 +258,9 @@ class BasicDateTimeTickFormatterSpec implements DateTimeTickFormatterSpec {
   /// Otherwise, it will create one with the provided
   /// [DateTimeFormatterFunction].
   @override
-  DateTimeTickFormatter createTickFormatter(ChartContext context) {
+  DateTimeTickFormatter createTickFormatter(ChartContext? context) {
     return DateTimeTickFormatter.uniform(SimpleTimeTickFormatter(
-        formatter: dateFormat != null ? dateFormat.format : formatter));
+        formatter: dateFormat != null ? dateFormat!.format : formatter));
   }
 
   @override
@@ -285,11 +285,11 @@ class BasicDateTimeTickFormatterSpec implements DateTimeTickFormatterSpec {
 /// level.
 @immutable
 class AutoDateTimeTickFormatterSpec implements DateTimeTickFormatterSpec {
-  final TimeFormatterSpec minute;
-  final TimeFormatterSpec hour;
-  final TimeFormatterSpec day;
-  final TimeFormatterSpec month;
-  final TimeFormatterSpec year;
+  final TimeFormatterSpec? minute;
+  final TimeFormatterSpec? hour;
+  final TimeFormatterSpec? day;
+  final TimeFormatterSpec? month;
+  final TimeFormatterSpec? year;
 
   /// Creates a [TickFormatterSpec] that automatically chooses the formatting
   /// given the individual [TimeFormatterSpec] formatters that are set.
@@ -301,44 +301,44 @@ class AutoDateTimeTickFormatterSpec implements DateTimeTickFormatterSpec {
       {this.minute, this.hour, this.day, this.month, this.year});
 
   @override
-  DateTimeTickFormatter createTickFormatter(ChartContext context) {
+  DateTimeTickFormatter createTickFormatter(ChartContext? context) {
     final Map<int, TimeTickFormatter> map = {};
 
     if (minute != null) {
       map[DateTimeTickFormatter.MINUTE] =
-          _makeFormatter(minute, CalendarField.hourOfDay, context);
+          _makeFormatter(minute!, CalendarField.hourOfDay, context);
     }
     if (hour != null) {
       map[DateTimeTickFormatter.HOUR] =
-          _makeFormatter(hour, CalendarField.date, context);
+          _makeFormatter(hour!, CalendarField.date, context);
     }
     if (day != null) {
       map[23 * DateTimeTickFormatter.HOUR] =
-          _makeFormatter(day, CalendarField.month, context);
+          _makeFormatter(day!, CalendarField.month, context);
     }
     if (month != null) {
       map[28 * DateTimeTickFormatter.DAY] =
-          _makeFormatter(month, CalendarField.year, context);
+          _makeFormatter(month!, CalendarField.year, context);
     }
     if (year != null) {
       map[364 * DateTimeTickFormatter.DAY] =
-          _makeFormatter(year, CalendarField.year, context);
+          _makeFormatter(year!, CalendarField.year, context);
     }
 
-    return DateTimeTickFormatter(context.dateTimeFactory, overrides: map);
+    return DateTimeTickFormatter(context!.dateTimeFactory, overrides: map);
   }
 
   TimeTickFormatterImpl _makeFormatter(TimeFormatterSpec spec,
-      CalendarField transitionField, ChartContext context) {
+      CalendarField transitionField, ChartContext? context) {
     if (spec.noonFormat != null) {
       return HourTickFormatter(
-          dateTimeFactory: context.dateTimeFactory,
+          dateTimeFactory: context!.dateTimeFactory,
           simpleFormat: spec.format,
           transitionFormat: spec.transitionFormat,
           noonFormat: spec.noonFormat);
     } else {
       return TimeTickFormatterImpl(
-          dateTimeFactory: context.dateTimeFactory,
+          dateTimeFactory: context!.dateTimeFactory,
           simpleFormat: spec.format,
           transitionFormat: spec.transitionFormat,
           transitionField: transitionField);
@@ -358,10 +358,10 @@ class AutoDateTimeTickFormatterSpec implements DateTimeTickFormatterSpec {
   @override
   int get hashCode {
     int hashcode = minute?.hashCode ?? 0;
-    hashcode = (hashcode * 37) + hour?.hashCode ?? 0;
-    hashcode = (hashcode * 37) + day?.hashCode ?? 0;
-    hashcode = (hashcode * 37) + month?.hashCode ?? 0;
-    hashcode = (hashcode * 37) + year?.hashCode ?? 0;
+    hashcode = (hashcode * 37) + (hour?.hashCode ?? 0);
+    hashcode = (hashcode * 37) + (day?.hashCode ?? 0);
+    hashcode = (hashcode * 37) + (month?.hashCode ?? 0);
+    hashcode = (hashcode * 37) + (year?.hashCode ?? 0);
     return hashcode;
   }
 }

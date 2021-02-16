@@ -34,23 +34,23 @@ class SeriesLegend<D> extends Legend<D> {
   final _hiddenSeriesList = Set<String>();
 
   /// List of series IDs that should be hidden by default.
-  List<String> _defaultHiddenSeries;
+  List<String>? _defaultHiddenSeries;
 
   /// Whether or not the series legend should show measures on datum selection.
-  bool _showMeasures;
+  bool? _showMeasures;
 
   SeriesLegend({
-    SelectionModelType selectionModelType,
-    LegendEntryGenerator<D> legendEntryGenerator,
-    MeasureFormatter measureFormatter,
-    MeasureFormatter secondaryMeasureFormatter,
-    bool showMeasures,
-    LegendDefaultMeasure legendDefaultMeasure,
-    TextStyleSpec entryTextStyle,
+    SelectionModelType? selectionModelType,
+    LegendEntryGenerator<D>? legendEntryGenerator,
+    MeasureFormatter? measureFormatter,
+    MeasureFormatter? secondaryMeasureFormatter,
+    bool? showMeasures,
+    LegendDefaultMeasure? legendDefaultMeasure,
+    TextStyleSpec? entryTextStyle,
   }) : super(
             selectionModelType: selectionModelType ?? SelectionModelType.info,
             legendEntryGenerator:
-                legendEntryGenerator ?? PerSeriesLegendEntryGenerator(),
+                (legendEntryGenerator ?? PerSeriesLegendEntryGenerator()) as LegendEntryGenerator<D?>?,
             entryTextStyle: entryTextStyle) {
     // Call the setters that include the setting for default.
     this.showMeasures = showMeasures;
@@ -64,19 +64,19 @@ class SeriesLegend<D> extends Legend<D> {
   ///
   /// This will also reset the current list of hidden series, filling it in with
   /// the new default list.
-  set defaultHiddenSeries(List<String> defaultHiddenSeries) {
+  set defaultHiddenSeries(List<String>? defaultHiddenSeries) {
     _defaultHiddenSeries = defaultHiddenSeries;
 
     _hiddenSeriesList.clear();
 
     if (_defaultHiddenSeries != null) {
-      _defaultHiddenSeries.forEach(hideSeries);
+      _defaultHiddenSeries!.forEach(hideSeries);
     }
   }
 
   /// Gets a list of series IDs that should be hidden by default on first chart
   /// draw.
-  List<String> get defaultHiddenSeries => _defaultHiddenSeries;
+  List<String>? get defaultHiddenSeries => _defaultHiddenSeries;
 
   /// Whether or not the legend should show measures.
   ///
@@ -86,9 +86,9 @@ class SeriesLegend<D> extends Legend<D> {
   /// showing measures when there is no selection.
   ///
   /// If [showMeasure] is set to null, it is changed to the default of false.
-  bool get showMeasures => _showMeasures;
+  bool? get showMeasures => _showMeasures;
 
-  set showMeasures(bool showMeasures) {
+  set showMeasures(bool? showMeasures) {
     _showMeasures = showMeasures ?? false;
   }
 
@@ -99,11 +99,11 @@ class SeriesLegend<D> extends Legend<D> {
   ///
   /// If [legendDefaultMeasure] is set to null, it is changed to the default of
   /// none.
-  LegendDefaultMeasure get legendDefaultMeasure =>
-      legendEntryGenerator.legendDefaultMeasure;
+  LegendDefaultMeasure? get legendDefaultMeasure =>
+      legendEntryGenerator!.legendDefaultMeasure;
 
-  set legendDefaultMeasure(LegendDefaultMeasure legendDefaultMeasure) {
-    legendEntryGenerator.legendDefaultMeasure =
+  set legendDefaultMeasure(LegendDefaultMeasure? legendDefaultMeasure) {
+    legendEntryGenerator!.legendDefaultMeasure =
         legendDefaultMeasure ?? LegendDefaultMeasure.none;
   }
 
@@ -112,8 +112,8 @@ class SeriesLegend<D> extends Legend<D> {
   /// This is optional. The default formatter formats measure values with
   /// NumberFormat.decimalPattern. If the measure value is null, a dash is
   /// returned.
-  set measureFormatter(MeasureFormatter formatter) {
-    legendEntryGenerator.measureFormatter =
+  set measureFormatter(MeasureFormatter? formatter) {
+    legendEntryGenerator!.measureFormatter =
         formatter ?? defaultLegendMeasureFormatter;
   }
 
@@ -122,8 +122,8 @@ class SeriesLegend<D> extends Legend<D> {
   /// This is optional. The default formatter formats measure values with
   /// NumberFormat.decimalPattern. If the measure value is null, a dash is
   /// returned.
-  set secondaryMeasureFormatter(MeasureFormatter formatter) {
-    legendEntryGenerator.secondaryMeasureFormatter =
+  set secondaryMeasureFormatter(MeasureFormatter? formatter) {
+    legendEntryGenerator!.secondaryMeasureFormatter =
         formatter ?? defaultLegendMeasureFormatter;
   }
 

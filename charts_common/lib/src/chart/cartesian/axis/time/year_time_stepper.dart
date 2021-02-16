@@ -28,7 +28,7 @@ class YearTimeStepper extends BaseTimeStepper {
         super(dateTimeFactory);
 
   factory YearTimeStepper(DateTimeFactory dateTimeFactory,
-      {List<int> allowedTickIncrements}) {
+      {List<int>? allowedTickIncrements}) {
     // Set the default increments if null.
     allowedTickIncrements ??= _defaultIncrements;
 
@@ -56,7 +56,7 @@ class YearTimeStepper extends BaseTimeStepper {
   }
 
   @override
-  DateTime getNextStepTime(DateTime time, int tickIncrement) {
-    return dateTimeFactory.createDateTime(time.year + tickIncrement);
+  DateTime getNextStepTime(DateTime? time, int tickIncrement) {
+    return dateTimeFactory.createDateTime(time!.year + tickIncrement);
   }
 }

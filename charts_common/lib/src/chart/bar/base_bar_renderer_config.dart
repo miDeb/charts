@@ -42,24 +42,24 @@ import '../layout/layout_view.dart' show LayoutViewConfig;
 ///   series.
 abstract class BaseBarRendererConfig<D> extends LayoutViewConfig
     implements SeriesRendererConfig<D> {
-  final String customRendererId;
+  final String? customRendererId;
 
   final SymbolRenderer symbolRenderer;
 
   /// Dash pattern for the stroke line around the edges of the bar.
-  final List<int> dashPattern;
+  final List<int>? dashPattern;
 
   /// Defines the way multiple series of bars are rendered per domain.
-  final BarGroupingType groupingType;
+  final BarGroupingType? groupingType;
 
   /// The order to paint this renderer on the canvas.
-  final int layoutPaintOrder;
+  final int? layoutPaintOrder;
 
   final int minBarLengthPx;
 
-  final FillPatternType fillPattern;
+  final FillPatternType? fillPattern;
 
-  final double stackHorizontalSeparator;
+  final double? stackHorizontalSeparator;
 
   /// Stroke width of the target line.
   final double strokeWidthPx;
@@ -80,7 +80,7 @@ abstract class BaseBarRendererConfig<D> extends LayoutViewConfig
   /// this case.
   ///
   /// Not used for stacked bars.
-  final List<int> weightPattern;
+  final List<int>? weightPattern;
 
   final rendererAttributes = RendererAttributes();
 
@@ -93,7 +93,7 @@ abstract class BaseBarRendererConfig<D> extends LayoutViewConfig
       this.fillPattern,
       this.stackHorizontalSeparator,
       this.strokeWidthPx = 0.0,
-      SymbolRenderer symbolRenderer,
+      SymbolRenderer? symbolRenderer,
       this.weightPattern})
       : this.symbolRenderer = symbolRenderer ?? RoundedRectSymbolRenderer();
 

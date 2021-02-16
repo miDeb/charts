@@ -29,19 +29,19 @@ import 'package:test/test.dart';
 
 class FakeRenderer extends BaseSeriesRenderer {
   @override
-  DatumDetails addPositionToDetailsForSeriesDatum(
+  DatumDetails? addPositionToDetailsForSeriesDatum(
       DatumDetails details, SeriesDatum seriesDatum) {
     return null;
   }
 
   @override
-  List<DatumDetails> getNearestDatumDetailPerSeries(
-      Point<double> chartPoint, bool byDomain, Rectangle<int> boundsOverride) {
+  List<DatumDetails>? getNearestDatumDetailPerSeries(
+      Point<double>? chartPoint, bool byDomain, Rectangle<int>? boundsOverride) {
     return null;
   }
 
   @override
-  void paint(ChartCanvas canvas, double animationPercent) {}
+  void paint(ChartCanvas canvas, double? animationPercent) {}
 
   @override
   void update(List<ImmutableSeries> seriesList, bool isAnimating) {}
@@ -60,15 +60,15 @@ class FakeChart extends BaseChart {
 }
 
 void main() {
-  FakeChart _chart;
-  ImmutableSeries _series1;
-  ImmutableSeries _series2;
-  ImmutableSeries _series3;
-  ImmutableSeries _series4;
+  late FakeChart _chart;
+  late ImmutableSeries _series1;
+  late ImmutableSeries _series2;
+  late ImmutableSeries _series3;
+  late ImmutableSeries _series4;
   final infoSelectionType = SelectionModelType.info;
 
   InitialSelection _makeBehavior(SelectionModelType selectionModelType,
-      {List<String> selectedSeries, List<SeriesDatumConfig> selectedData}) {
+      {List<String>? selectedSeries, List<SeriesDatumConfig>? selectedData}) {
     InitialSelection behavior = InitialSelection(
         selectionModelType: selectionModelType,
         selectedSeriesConfig: selectedSeries,
@@ -111,7 +111,7 @@ void main() {
     _makeBehavior(infoSelectionType,
         selectedData: [SeriesDatumConfig('mySeries1', 'C')]);
 
-    _chart.requestOnDraw([_series1, _series2]);
+    _chart.requestOnDraw([_series1 as MutableSeries<dynamic>, _series2 as MutableSeries<dynamic>]);
 
     final model = _chart.getSelectionModel(infoSelectionType);
 
@@ -128,7 +128,7 @@ void main() {
       SeriesDatumConfig('mySeries1', 'D')
     ]);
 
-    _chart.requestOnDraw([_series1, _series2]);
+    _chart.requestOnDraw([_series1 as MutableSeries<dynamic>, _series2 as MutableSeries<dynamic>]);
 
     final model = _chart.getSelectionModel(infoSelectionType);
 
@@ -144,7 +144,7 @@ void main() {
   test('selects initial series', () {
     _makeBehavior(infoSelectionType, selectedSeries: ['mySeries2']);
 
-    _chart.requestOnDraw([_series1, _series2, _series3, _series4]);
+    _chart.requestOnDraw([_series1 as MutableSeries<dynamic>, _series2 as MutableSeries<dynamic>, _series3 as MutableSeries<dynamic>, _series4 as MutableSeries<dynamic>]);
 
     final model = _chart.getSelectionModel(infoSelectionType);
 
@@ -157,7 +157,7 @@ void main() {
     _makeBehavior(infoSelectionType,
         selectedSeries: ['mySeries2', 'mySeries4']);
 
-    _chart.requestOnDraw([_series1, _series2, _series3, _series4]);
+    _chart.requestOnDraw([_series1 as MutableSeries<dynamic>, _series2 as MutableSeries<dynamic>, _series3 as MutableSeries<dynamic>, _series4 as MutableSeries<dynamic>]);
 
     final model = _chart.getSelectionModel(infoSelectionType);
 
@@ -172,7 +172,7 @@ void main() {
         selectedData: [SeriesDatumConfig('mySeries1', 'C')],
         selectedSeries: ['mySeries4']);
 
-    _chart.requestOnDraw([_series1, _series2, _series3, _series4]);
+    _chart.requestOnDraw([_series1 as MutableSeries<dynamic>, _series2 as MutableSeries<dynamic>, _series3 as MutableSeries<dynamic>, _series4 as MutableSeries<dynamic>]);
 
     final model = _chart.getSelectionModel(infoSelectionType);
 
@@ -186,7 +186,7 @@ void main() {
   test('selection model is reset when a new series is drawn', () {
     _makeBehavior(infoSelectionType, selectedSeries: ['mySeries2']);
 
-    _chart.requestOnDraw([_series1, _series2, _series3, _series4]);
+    _chart.requestOnDraw([_series1 as MutableSeries<dynamic>, _series2 as MutableSeries<dynamic>, _series3 as MutableSeries<dynamic>, _series4 as MutableSeries<dynamic>]);
 
     final model = _chart.getSelectionModel(infoSelectionType);
 
