@@ -72,7 +72,7 @@ abstract class CartesianChart<D> extends BaseChart<D?> {
         );
 
   @override
-  void updateCommonChart(common.BaseChart baseChart, BaseChart? oldWidget,
+  void updateCommonChart(common.BaseChart<D?> baseChart, BaseChart? oldWidget,
       BaseChartState<D?> chartState) {
     super.updateCommonChart(baseChart, oldWidget as BaseChart<D>?, chartState);
 

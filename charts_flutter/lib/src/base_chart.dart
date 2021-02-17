@@ -92,7 +92,7 @@ abstract class BaseChart<D> extends StatefulWidget {
   common.BaseChart<D> createCommonChart(BaseChartState<D>? chartState);
 
   /// Updates the [common.BaseChart].
-  void updateCommonChart(common.BaseChart chart, BaseChart<D>? oldWidget,
+  void updateCommonChart(common.BaseChart<D> chart, BaseChart<D>? oldWidget,
       BaseChartState<D> chartState) {
     common.Performance.time('chartsUpdateRenderers');
     // Set default renderer if one was provided.
@@ -122,12 +122,13 @@ abstract class BaseChart<D> extends StatefulWidget {
     _updateBehaviors(chart, chartState);
     common.Performance.timeEnd('chartsUpdateBehaviors');
 
-    _updateSelectionModel(chart as common.BaseChart<D?>, chartState);
+    _updateSelectionModel(chart, chartState);
 
     chart.transition = animate ? animationDuration : Duration.zero;
   }
 
-  void _updateBehaviors(common.BaseChart chart, BaseChartState chartState) {
+  void _updateBehaviors(
+      common.BaseChart<D> chart, BaseChartState<D> chartState) {
     final behaviorList = behaviors != null
         ? new List<ChartBehavior>.from(behaviors!)
         : <ChartBehavior>[];
@@ -156,15 +157,16 @@ abstract class BaseChart<D> extends StatefulWidget {
         final role = addedBehavior.role;
         chartState.addedBehaviorWidgets.remove(addedBehavior);
         chartState.addedCommonBehaviorsByRole.remove(role);
-        chart.removeBehavior(chartState.addedCommonBehaviorsByRole[role]);
+        chart.removeBehavior(chartState.addedCommonBehaviorsByRole[role]
+            as common.ChartBehavior<D>?);
         chartState.markChartDirty();
       }
     }
 
     // Add any remaining/new behaviors.
     behaviorList.forEach((ChartBehavior behaviorWidget) {
-      final commonBehavior = chart.createBehavior(behaviorWidget
-          .createCommonBehavior as common.ChartBehavior<D> Function<D>());
+      final commonBehavior = chart.createBehavior(<D>() =>
+          behaviorWidget.createCommonBehavior<D>() as common.ChartBehavior<D>);
 
       // Assign the chart state to any behavior that needs it.
       if (commonBehavior is ChartStateBehavior) {
