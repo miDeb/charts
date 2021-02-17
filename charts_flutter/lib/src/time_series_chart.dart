@@ -32,7 +32,7 @@ import 'base_chart_state.dart' show BaseChartState;
 import 'selection_model_config.dart' show SelectionModelConfig;
 import 'user_managed_state.dart' show UserManagedState;
 
-class TimeSeriesChart extends CartesianChart<DateTime?> {
+class TimeSeriesChart extends CartesianChart<DateTime> {
   final common.DateTimeFactory? dateTimeFactory;
 
   /// Create a [TimeSeriesChart].
@@ -75,16 +75,16 @@ class TimeSeriesChart extends CartesianChart<DateTime?> {
         );
 
   @override
-  common.TimeSeriesChart createCommonChart(BaseChartState? chartState) {
+  common.TimeSeriesChart createCommonChart(BaseChartState<DateTime>? chartState) {
     // Optionally create primary and secondary measure axes if the chart was
     // configured with them. If no axes were configured, then the chart will
     // use its default types (usually a numeric axis).
     return new common.TimeSeriesChart(
         layoutConfig: layoutConfig?.commonLayoutConfig,
         primaryMeasureAxis:
-            primaryMeasureAxis?.createAxis() as common.NumericAxis,
+            primaryMeasureAxis?.createAxis() as common.NumericAxis?,
         secondaryMeasureAxis:
-            secondaryMeasureAxis?.createAxis() as common.NumericAxis,
+            secondaryMeasureAxis?.createAxis() as common.NumericAxis?,
         disjointMeasureAxes: createDisjointMeasureAxes());
   }
 
