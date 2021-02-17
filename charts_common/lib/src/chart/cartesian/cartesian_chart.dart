@@ -89,7 +89,7 @@ class OrdinalCartesianChart extends CartesianChart<String?> {
   }
 }
 
-abstract class CartesianChart<D> extends BaseChart<D?> {
+abstract class CartesianChart<D> extends BaseChart<D> {
   static final _defaultLayoutConfig = LayoutConfig(
     topSpec: MarginSpec.fromPixel(minPixel: 20),
     bottomSpec: MarginSpec.fromPixel(minPixel: 20),
