@@ -194,7 +194,7 @@ class MutableSelectionModel<D> extends SelectionModel<D> {
   }
 
   /// Remove listener from being notified when this [SelectionModel] changes.
-  void removeSelectionChangedListener(SelectionModelListener<D> listener) {
+  void removeSelectionChangedListener(SelectionModelListener<D>? listener) {
     _changedListeners.remove(listener);
   }
 

@@ -51,7 +51,7 @@ class MutableSeries<D> extends ImmutableSeries<D> {
 
   AccessorFn<Color?>? areaColorFn;
   AccessorFn<Color?>? colorFn;
-  AccessorFn<List<int>>? dashPatternFn;
+  AccessorFn<List<int>?>? dashPatternFn;
   AccessorFn<Color?>? fillColorFn;
   AccessorFn<FillPatternType>? fillPatternFn;
   AccessorFn<Color?>? patternColorFn;
@@ -232,7 +232,7 @@ abstract class ImmutableSeries<D> {
 
   AccessorFn<Color?>? get colorFn;
 
-  AccessorFn<List<int>>? get dashPatternFn;
+  AccessorFn<List<int>?>? get dashPatternFn;
 
   AccessorFn<Color?>? get fillColorFn;
 

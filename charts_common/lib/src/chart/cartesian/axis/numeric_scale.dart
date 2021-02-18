@@ -21,7 +21,7 @@ import 'scale.dart' show MutableScale;
 /// The input represents a continuous numeric domain which maps to a given range
 /// output.  This is used to map the domain's values to the available pixel
 /// range of the chart.
-abstract class NumericScale extends MutableScale<num?> {
+abstract class NumericScale extends MutableScale<num> {
   /// Keeps the scale and translate sane if true (default).
   ///
   /// Setting this to false disables some pan/zoom protections that prevent you

@@ -194,7 +194,7 @@ abstract class BaseTreeMapRenderer<D> extends BaseSeriesRenderer<D> {
           index: element.index!,
           series: element.series,
           datum: node,
-          domain: element.domain,
+          domain: element.domain!,
           measure: element.measure,
           domainDistance: 0.0,
           measureDistance: 0.0,

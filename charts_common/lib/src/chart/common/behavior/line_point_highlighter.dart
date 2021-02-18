@@ -53,7 +53,7 @@ import 'chart_behavior.dart' show ChartBehavior;
 ///
 /// It is used in combination with SelectNearest to update the selection model
 /// and expand selection out to the domain value.
-class LinePointHighlighter<D> implements ChartBehavior<D?> {
+class LinePointHighlighter<D> implements ChartBehavior<D> {
   final SelectionModelType selectionModelType;
 
   /// Default radius of the dots if the series has no radius mapping function.

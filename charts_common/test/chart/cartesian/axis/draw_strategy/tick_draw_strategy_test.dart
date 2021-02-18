@@ -25,10 +25,10 @@ import 'package:charts_common/src/common/line_style.dart';
 import 'package:charts_common/src/common/text_element.dart';
 import 'package:charts_common/src/common/text_measurement.dart';
 import 'package:charts_common/src/common/text_style.dart';
+import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:test/test.dart';
-
-class MockContext extends Mock implements ChartContext {}
+import 'tick_draw_strategy_test.mocks.dart';
 
 /// Implementation of [BaseTickDrawStrategy] that does nothing on draw.
 class BaseTickDrawStrategyImpl<D> extends BaseTickDrawStrategy<D> {
@@ -81,8 +81,8 @@ class FakeTextElement implements TextElement {
   final String text;
   final TextMeasurement measurement;
   TextStyle? textStyle = MockTextStyle();
-  late int maxWidth;
-  late MaxWidthStrategy maxWidthStrategy;
+  late int? maxWidth;
+  late MaxWidthStrategy? maxWidthStrategy;
   TextDirection textDirection;
   double? opacity;
 
@@ -97,13 +97,6 @@ class FakeTextElement implements TextElement {
                 verticalSliceWidth ?? _defaultVerticalSliceWidth);
 }
 
-class MockGraphicsFactory extends Mock implements GraphicsFactory {}
-
-class MockLineStyle extends Mock implements LineStyle {}
-
-class MockTextStyle extends Mock implements TextStyle {}
-
-class MockChartCanvas extends Mock implements ChartCanvas {}
 
 /// Helper function to create [Tick] for testing.
 Tick<String> createTick(String value, double locationPx,
@@ -117,6 +110,7 @@ Tick<String> createTick(String value, double locationPx,
           value, textDirection, horizontalWidth, verticalWidth));
 }
 
+@GenerateMocks([ChartContext, GraphicsFactory, LineStyle, TextStyle, ChartCanvas])
 void main() {
   late GraphicsFactory graphicsFactory;
   late ChartContext chartContext;
@@ -126,7 +120,7 @@ void main() {
     when(graphicsFactory.createLinePaint()).thenReturn(MockLineStyle());
     when(graphicsFactory.createTextPaint()).thenReturn(MockTextStyle());
 
-    chartContext = MockContext();
+    chartContext = MockChartContext();
     when(chartContext.chartContainerIsRtl).thenReturn(false);
     when(chartContext.isRtl).thenReturn(false);
   });

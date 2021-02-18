@@ -39,7 +39,7 @@ class ConcreteChart extends LineChart {
 
   @override
   LifecycleListener? addLifecycleListener(LifecycleListener? listener) {
-    lastListener = listener as LifecycleListener<num?>?;
+    lastListener = listener as LifecycleListener<num>?;
     return super.addLifecycleListener(listener);
   }
 
@@ -75,12 +75,12 @@ void main() {
 
   late ConcreteChart _chart;
 
-  late Series<MyRow?, int?> _series1;
+  late Series<MyRow?, int> _series1;
   final _s1D1 = MyRow(0, 11);
   final _s1D2 = MyRow(1, 12);
   final _s1D3 = MyRow(2, 13);
 
-  late Series<MyRow?, int?> _series2;
+  late Series<MyRow?, int> _series2;
   final _s2D1 = MyRow(3, 21);
   final _s2D2 = MyRow(4, 22);
   final _s2D3 = MyRow(5, 23);
@@ -107,7 +107,7 @@ void main() {
   /// Initializes the [chart], draws the [seriesList], and configures mock axis
   /// layout bounds.
   void _drawSeriesList(
-      ConcreteChart chart, List<Series<MyRow?, int?>> seriesList) {
+      ConcreteChart chart, List<Series<MyRow?, int>> seriesList) {
     _chart.domainAxis!.autoViewport = true;
     _chart.domainAxis!.resetDomains();
 
@@ -132,14 +132,14 @@ void main() {
   setUp(() {
     _chart = _makeChart();
 
-    _series1 = Series<MyRow?, int?>(
+    _series1 = Series<MyRow?, int>(
         id: 's1',
         data: [_s1D1, _s1D2, _s1D3],
         domainFn: (dynamic row, _) => row.campaign,
         measureFn: (dynamic row, _) => row.count,
         colorFn: (_, __) => MaterialPalette.blue.shadeDefault);
 
-    _series2 = Series<MyRow?, int?>(
+    _series2 = Series<MyRow?, int>(
         id: 's2',
         data: [_s2D1, _s2D2, _s2D3],
         domainFn: (dynamic row, _) => row.campaign,

@@ -28,7 +28,7 @@ import '../common/series_renderer.dart' show SeriesRenderer;
 import '../layout/layout_config.dart' show LayoutConfig;
 import '../line/line_renderer.dart' show LineRenderer;
 
-class TimeSeriesChart extends CartesianChart<DateTime?> {
+class TimeSeriesChart extends CartesianChart<DateTime> {
   final DateTimeFactory dateTimeFactory;
 
   TimeSeriesChart(

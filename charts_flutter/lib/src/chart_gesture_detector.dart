@@ -24,6 +24,7 @@ import 'package:flutter/material.dart'
         ScaleUpdateDetails,
         TapDownDetails,
         TapUpDetails;
+import 'package:flutter/rendering.dart';
 
 import 'behaviors/chart_behavior.dart' show GestureType;
 import 'chart_container.dart' show ChartContainer, ChartContainerRenderObject;
@@ -33,20 +34,20 @@ import 'util.dart' show getChartContainerRenderObject;
 const Duration _kLongPressTimeout = const Duration(milliseconds: 500);
 
 class ChartGestureDetector {
-  bool _listeningForLongPress;
+  late bool _listeningForLongPress;
 
   bool _isDragging = false;
 
-  Timer _longPressTimer;
-  Point<double> _lastTapPoint;
-  double _lastScale;
+  Timer? _longPressTimer;
+  late Point<double> _lastTapPoint;
+  late double _lastScale;
 
-  _ContainerResolver _containerResolver;
+  late _ContainerResolver _containerResolver;
 
   makeWidget(BuildContext context, ChartContainer chartContainer,
       Set<GestureType> desiredGestures) {
     _containerResolver =
-        () => getChartContainerRenderObject(context.findRenderObject());
+        () => getChartContainerRenderObject(context.findRenderObject() as RenderBox);
 
     final wantTapDown = desiredGestures.isNotEmpty;
     final wantTap = desiredGestures.contains(GestureType.onTap);

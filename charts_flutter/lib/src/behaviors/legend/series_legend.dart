@@ -39,7 +39,7 @@ import 'legend_layout.dart' show TabularLegendLayout;
 
 /// Series legend behavior for charts.
 @immutable
-class SeriesLegend extends ChartBehavior<common.SeriesLegend> {
+class SeriesLegend<D> extends ChartBehavior<D, common.SeriesLegend<D>> {
   static const defaultBehaviorPosition = common.BehaviorPosition.top;
   static const defaultOutsideJustification =
       common.OutsideJustification.startDrawArea;
@@ -47,17 +47,17 @@ class SeriesLegend extends ChartBehavior<common.SeriesLegend> {
 
   final desiredGestures = new Set<GestureType>();
 
-  final common.SelectionModelType selectionModelType;
+  final common.SelectionModelType? selectionModelType;
 
   /// Builder for creating custom legend content.
-  final LegendContentBuilder contentBuilder;
+  final LegendContentBuilder? contentBuilder;
 
   /// Position of the legend relative to the chart.
-  final common.BehaviorPosition position;
+  final common.BehaviorPosition? position;
 
   /// Justification of the legend relative to the chart
-  final common.OutsideJustification outsideJustification;
-  final common.InsideJustification insideJustification;
+  final common.OutsideJustification? outsideJustification;
+  final common.InsideJustification? insideJustification;
 
   /// Whether or not the legend should show measures.
   ///
@@ -68,27 +68,27 @@ class SeriesLegend extends ChartBehavior<common.SeriesLegend> {
   ///
   /// This flag is used by the [contentBuilder], so a custom content builder
   /// has to choose if it wants to use this flag.
-  final bool showMeasures;
+  final bool? showMeasures;
 
   /// Option to show measures when selection is null.
   ///
   /// By default this is set to none, so no measures are shown when there is
   /// no selection.
-  final common.LegendDefaultMeasure legendDefaultMeasure;
+  final common.LegendDefaultMeasure? legendDefaultMeasure;
 
   /// Formatter for measure value(s) if the measures are shown on the legend.
-  final common.MeasureFormatter measureFormatter;
+  final common.MeasureFormatter? measureFormatter;
 
   /// Formatter for secondary measure value(s) if the measures are shown on the
   /// legend and the series uses the secondary axis.
-  final common.MeasureFormatter secondaryMeasureFormatter;
+  final common.MeasureFormatter? secondaryMeasureFormatter;
 
   /// Styles for legend entry label text.
-  final common.TextStyleSpec entryTextStyle;
+  final common.TextStyleSpec? entryTextStyle;
 
   static const defaultCellPadding = const EdgeInsets.all(8.0);
 
-  final List<String> defaultHiddenSeries;
+  final List<String>? defaultHiddenSeries;
 
   /// Create a new tabular layout legend.
   ///
@@ -131,19 +131,19 @@ class SeriesLegend extends ChartBehavior<common.SeriesLegend> {
   /// [secondaryMeasureFormatter] formats measures if measures are shown for the
   /// series that uses secondary measure axis.
   factory SeriesLegend({
-    common.BehaviorPosition position,
-    common.OutsideJustification outsideJustification,
-    common.InsideJustification insideJustification,
-    bool horizontalFirst,
-    int desiredMaxRows,
-    int desiredMaxColumns,
-    EdgeInsets cellPadding,
-    List<String> defaultHiddenSeries,
-    bool showMeasures,
-    common.LegendDefaultMeasure legendDefaultMeasure,
-    common.MeasureFormatter measureFormatter,
-    common.MeasureFormatter secondaryMeasureFormatter,
-    common.TextStyleSpec entryTextStyle,
+    common.BehaviorPosition? position,
+    common.OutsideJustification? outsideJustification,
+    common.InsideJustification? insideJustification,
+    bool? horizontalFirst,
+    int? desiredMaxRows,
+    int? desiredMaxColumns,
+    EdgeInsets? cellPadding,
+    List<String>? defaultHiddenSeries,
+    bool? showMeasures,
+    common.LegendDefaultMeasure? legendDefaultMeasure,
+    common.MeasureFormatter? measureFormatter,
+    common.MeasureFormatter? secondaryMeasureFormatter,
+    common.TextStyleSpec? entryTextStyle,
   }) {
     // Set defaults if empty.
     position ??= defaultBehaviorPosition;
@@ -210,15 +210,15 @@ class SeriesLegend extends ChartBehavior<common.SeriesLegend> {
   /// series that uses secondary measure axis.
   factory SeriesLegend.customLayout(
     LegendContentBuilder contentBuilder, {
-    common.BehaviorPosition position,
-    common.OutsideJustification outsideJustification,
-    common.InsideJustification insideJustification,
-    List<String> defaultHiddenSeries,
-    bool showMeasures,
-    common.LegendDefaultMeasure legendDefaultMeasure,
-    common.MeasureFormatter measureFormatter,
-    common.MeasureFormatter secondaryMeasureFormatter,
-    common.TextStyleSpec entryTextStyle,
+    common.BehaviorPosition? position,
+    common.OutsideJustification? outsideJustification,
+    common.InsideJustification? insideJustification,
+    List<String>? defaultHiddenSeries,
+    bool? showMeasures,
+    common.LegendDefaultMeasure? legendDefaultMeasure,
+    common.MeasureFormatter? measureFormatter,
+    common.MeasureFormatter? secondaryMeasureFormatter,
+    common.TextStyleSpec? entryTextStyle,
   }) {
     // Set defaults if empty.
     position ??= defaultBehaviorPosition;
@@ -256,7 +256,7 @@ class SeriesLegend extends ChartBehavior<common.SeriesLegend> {
   });
 
   @override
-  common.SeriesLegend<D> createCommonBehavior<D>() =>
+  common.SeriesLegend<D> createCommonBehavior() =>
       new _FlutterSeriesLegend<D>(this);
 
   @override
@@ -324,28 +324,28 @@ class _FlutterSeriesLegend<D> extends common.SeriesLegend<D>
   }
 
   @override
-  common.BehaviorPosition get position => config.position;
+  common.BehaviorPosition? get position => config.position;
 
   @override
   common.OutsideJustification get outsideJustification =>
-      config.outsideJustification;
+      config.outsideJustification!;
 
   @override
   common.InsideJustification get insideJustification =>
-      config.insideJustification;
+      config.insideJustification!;
 
   @override
   Widget build(BuildContext context) {
     final hasSelection =
-        legendState.legendEntries.any((entry) => entry.isSelected);
+        legendState.legendEntries!.any((entry) => entry.isSelected);
 
     // Show measures if [showMeasures] is true and there is a selection or if
     // showing measures when there is no selection.
-    final showMeasures = config.showMeasures &&
+    final showMeasures = config.showMeasures! &&
         (hasSelection ||
             legendDefaultMeasure != common.LegendDefaultMeasure.none);
 
-    return config.contentBuilder
+    return config.contentBuilder!
         .build(context, legendState, this, showMeasures: showMeasures);
   }
 
@@ -377,6 +377,6 @@ class _FlutterSeriesLegend<D> extends common.SeriesLegend<D>
     }
 
     // Redraw the chart to actually hide hidden series.
-    chart.redraw(skipLayout: true, skipAnimation: false);
+    chart!.redraw(skipLayout: true, skipAnimation: false);
   }
 }

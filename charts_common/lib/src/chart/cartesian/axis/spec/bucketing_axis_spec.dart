@@ -87,7 +87,7 @@ class BucketingAxisSpec extends NumericAxisSpec {
 
   @override
   void configure(
-      Axis<num?> axis, ChartContext? context, GraphicsFactory? graphicsFactory) {
+      Axis<num> axis, ChartContext? context, GraphicsFactory? graphicsFactory) {
     super.configure(axis, context, graphicsFactory);
 
     if (axis is NumericAxis && viewport != null) {

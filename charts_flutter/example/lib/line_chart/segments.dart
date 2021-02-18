@@ -32,8 +32,8 @@ import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:flutter/material.dart';
 
 class SegmentsLineChart extends StatelessWidget {
-  final List<charts.Series> seriesList;
-  final bool animate;
+  final List<charts.Series<dynamic, num>> seriesList;
+  final bool? animate;
 
   SegmentsLineChart(this.seriesList, {this.animate});
 
@@ -103,7 +103,7 @@ class SegmentsLineChart extends StatelessWidget {
         // Light shade for even years, dark shade for odd.
         colorFn: (LinearSales sales, _) =>
             sales.year % 2 == 0 ? blue[1] : blue[0],
-        dashPatternFn: (LinearSales sales, _) => sales.dashPattern,
+        dashPatternFn: (LinearSales sales, _) => sales.dashPattern!,
         strokeWidthPxFn: (LinearSales sales, _) => sales.strokeWidthPx,
         domainFn: (LinearSales sales, _) => sales.year,
         measureFn: (LinearSales sales, _) => sales.sales,
@@ -114,7 +114,7 @@ class SegmentsLineChart extends StatelessWidget {
         // Light shade for even years, dark shade for odd.
         colorFn: (LinearSales sales, _) =>
             sales.year % 2 == 0 ? red[1] : red[0],
-        dashPatternFn: (LinearSales sales, _) => sales.dashPattern,
+        dashPatternFn: (LinearSales sales, _) => sales.dashPattern!,
         strokeWidthPxFn: (LinearSales sales, _) => sales.strokeWidthPx,
         domainFn: (LinearSales sales, _) => sales.year,
         measureFn: (LinearSales sales, _) => sales.sales,
@@ -125,7 +125,7 @@ class SegmentsLineChart extends StatelessWidget {
         // Light shade for even years, dark shade for odd.
         colorFn: (LinearSales sales, _) =>
             sales.year % 2 == 0 ? green[1] : green[0],
-        dashPatternFn: (LinearSales sales, _) => sales.dashPattern,
+        dashPatternFn: (LinearSales sales, _) => sales.dashPattern!,
         strokeWidthPxFn: (LinearSales sales, _) => sales.strokeWidthPx,
         domainFn: (LinearSales sales, _) => sales.year,
         measureFn: (LinearSales sales, _) => sales.sales,
@@ -190,7 +190,7 @@ class SegmentsLineChart extends StatelessWidget {
         // Light shade for even years, dark shade for odd.
         colorFn: (LinearSales sales, _) =>
             sales.year % 2 == 0 ? blue[1] : blue[0],
-        dashPatternFn: (LinearSales sales, _) => sales.dashPattern,
+        dashPatternFn: (LinearSales sales, _) => sales.dashPattern!,
         strokeWidthPxFn: (LinearSales sales, _) => sales.strokeWidthPx,
         domainFn: (LinearSales sales, _) => sales.year,
         measureFn: (LinearSales sales, _) => sales.sales,
@@ -201,7 +201,7 @@ class SegmentsLineChart extends StatelessWidget {
         // Light shade for even years, dark shade for odd.
         colorFn: (LinearSales sales, _) =>
             sales.year % 2 == 0 ? red[1] : red[0],
-        dashPatternFn: (LinearSales sales, _) => sales.dashPattern,
+        dashPatternFn: (LinearSales sales, _) => sales.dashPattern!,
         strokeWidthPxFn: (LinearSales sales, _) => sales.strokeWidthPx,
         domainFn: (LinearSales sales, _) => sales.year,
         measureFn: (LinearSales sales, _) => sales.sales,
@@ -212,7 +212,7 @@ class SegmentsLineChart extends StatelessWidget {
         // Light shade for even years, dark shade for odd.
         colorFn: (LinearSales sales, _) =>
             sales.year % 2 == 0 ? green[1] : green[0],
-        dashPatternFn: (LinearSales sales, _) => sales.dashPattern,
+        dashPatternFn: (LinearSales sales, _) => sales.dashPattern!,
         strokeWidthPxFn: (LinearSales sales, _) => sales.strokeWidthPx,
         domainFn: (LinearSales sales, _) => sales.year,
         measureFn: (LinearSales sales, _) => sales.sales,
@@ -226,7 +226,7 @@ class SegmentsLineChart extends StatelessWidget {
 class LinearSales {
   final int year;
   final int sales;
-  final List<int> dashPattern;
+  final List<int>? dashPattern;
   final double strokeWidthPx;
 
   LinearSales(this.year, this.sales, this.dashPattern, this.strokeWidthPx);

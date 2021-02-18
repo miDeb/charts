@@ -36,36 +36,36 @@ import 'chart_behavior.dart' show ChartBehavior, GestureType;
 /// This is typically used for line charts to call out sections of the data
 /// range.
 @immutable
-class RangeAnnotation extends ChartBehavior<common.RangeAnnotation> {
+class RangeAnnotation<D> extends ChartBehavior<D, common.RangeAnnotation<D>> {
   final desiredGestures = new Set<GestureType>();
 
   /// List of annotations to render on the chart.
   final List<common.AnnotationSegment> annotations;
 
   /// Configures where to anchor annotation label text.
-  final common.AnnotationLabelAnchor defaultLabelAnchor;
+  final common.AnnotationLabelAnchor? defaultLabelAnchor;
 
   /// Direction of label text on the annotations.
-  final common.AnnotationLabelDirection defaultLabelDirection;
+  final common.AnnotationLabelDirection? defaultLabelDirection;
 
   /// Configures where to place labels relative to the annotation.
-  final common.AnnotationLabelPosition defaultLabelPosition;
+  final common.AnnotationLabelPosition? defaultLabelPosition;
 
   /// Configures the style of label text.
-  final common.TextStyleSpec defaultLabelStyleSpec;
+  final common.TextStyleSpec? defaultLabelStyleSpec;
 
   /// Default color for annotations.
   final common.Color defaultColor;
 
   /// Whether or not the range of the axis should be extended to include the
   /// annotation start and end values.
-  final bool extendAxis;
+  final bool? extendAxis;
 
   /// Space before and after label text.
-  final int labelPadding;
+  final int? labelPadding;
 
   RangeAnnotation(this.annotations,
-      {common.Color defaultColor,
+      {common.Color? defaultColor,
       this.defaultLabelAnchor,
       this.defaultLabelDirection,
       this.defaultLabelPosition,
@@ -75,7 +75,7 @@ class RangeAnnotation extends ChartBehavior<common.RangeAnnotation> {
       : defaultColor = common.MaterialPalette.gray.shade100;
 
   @override
-  common.RangeAnnotation<D> createCommonBehavior<D>() =>
+  common.RangeAnnotation<D> createCommonBehavior() =>
       new common.RangeAnnotation<D>(annotations,
           defaultColor: defaultColor,
           defaultLabelAnchor: defaultLabelAnchor,

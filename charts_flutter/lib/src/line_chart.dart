@@ -15,15 +15,7 @@
 
 import 'dart:collection' show LinkedHashMap;
 
-import 'package:charts_common/common.dart' as common
-    show
-        AxisSpec,
-        LineChart,
-        NumericAxisSpec,
-        RTLSpec,
-        Series,
-        LineRendererConfig,
-        SeriesRendererConfig;
+import 'package:charts_common/common.dart' as common;
 import 'behaviors/line_point_highlighter.dart' show LinePointHighlighter;
 import 'behaviors/chart_behavior.dart' show ChartBehavior;
 import 'base_chart.dart' show LayoutConfig;
@@ -34,22 +26,22 @@ import 'user_managed_state.dart' show UserManagedState;
 
 class LineChart extends CartesianChart<num> {
   LineChart(
-    List<common.Series> seriesList, {
-    bool animate,
-    Duration animationDuration,
-    common.AxisSpec domainAxis,
-    common.AxisSpec primaryMeasureAxis,
-    common.AxisSpec secondaryMeasureAxis,
-    LinkedHashMap<String, common.NumericAxisSpec> disjointMeasureAxes,
-    common.LineRendererConfig<num> defaultRenderer,
-    List<common.SeriesRendererConfig<num>> customSeriesRenderers,
-    List<ChartBehavior> behaviors,
-    List<SelectionModelConfig<num>> selectionModels,
-    common.RTLSpec rtlSpec,
-    LayoutConfig layoutConfig,
+    List<common.Series<dynamic, num>> seriesList, {
+    bool? animate,
+    Duration? animationDuration,
+    common.AxisSpec? domainAxis,
+    common.AxisSpec? primaryMeasureAxis,
+    common.AxisSpec? secondaryMeasureAxis,
+    LinkedHashMap<String, common.NumericAxisSpec>? disjointMeasureAxes,
+    common.LineRendererConfig<num>? defaultRenderer,
+    List<common.SeriesRendererConfig<num>>? customSeriesRenderers,
+    List<ChartBehavior<num, common.ChartBehavior<num>>>? behaviors,
+    List<SelectionModelConfig<num>>? selectionModels,
+    common.RTLSpec? rtlSpec,
+    LayoutConfig? layoutConfig,
     bool defaultInteractions = true,
-    bool flipVerticalAxis,
-    UserManagedState<num> userManagedState,
+    bool? flipVerticalAxis,
+    UserManagedState<num>? userManagedState,
   }) : super(
           seriesList,
           animate: animate,
@@ -70,19 +62,19 @@ class LineChart extends CartesianChart<num> {
         );
 
   @override
-  common.LineChart createCommonChart(BaseChartState chartState) {
+  common.LineChart createCommonChart(BaseChartState<num>? chartState) {
     // Optionally create primary and secondary measure axes if the chart was
     // configured with them. If no axes were configured, then the chart will
     // use its default types (usually a numeric axis).
     return new common.LineChart(
         layoutConfig: layoutConfig?.commonLayoutConfig,
-        primaryMeasureAxis: primaryMeasureAxis?.createAxis(),
-        secondaryMeasureAxis: secondaryMeasureAxis?.createAxis(),
+        primaryMeasureAxis: primaryMeasureAxis?.createAxis() as common.NumericAxis?,
+        secondaryMeasureAxis: secondaryMeasureAxis?.createAxis() as common.NumericAxis?,
         disjointMeasureAxes: createDisjointMeasureAxes());
   }
 
   @override
-  void addDefaultInteractions(List<ChartBehavior> behaviors) {
+  void addDefaultInteractions(List<ChartBehavior<num, common.ChartBehavior<num>>> behaviors) {
     super.addDefaultInteractions(behaviors);
 
     behaviors.add(new LinePointHighlighter());

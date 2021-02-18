@@ -40,6 +40,8 @@ const styleSegmentsKey =
 const lineStackIndexKey = AttributeKey<int>('LineRenderer.lineStackIndex');
 
 class LineRenderer<D> extends BaseCartesianRenderer<D> {
+  AttributeKey<List<_LineRendererElement<D>>> get styleSegmentsKey =>
+      AttributeKey<List<_LineRendererElement<D>>>('LineRenderer.styleSegments');
   // Configuration used to extend the clipping area to extend the draw bounds.
   static const drawBoundTopExtensionPx = 5;
   static const drawBoundBottomExtensionPx = 5;
@@ -130,7 +132,7 @@ class LineRenderer<D> extends BaseCartesianRenderer<D> {
       final num? Function(int) measureFn = series.measureFn;
       final num? Function(int)? strokeWidthPxFn = series.strokeWidthPxFn;
 
-      series.dashPatternFn ??= (_) => config.dashPattern!;
+      series.dashPatternFn ??= (_) => config.dashPattern;
       final List<int>? Function(int)? dashPatternFn = series.dashPatternFn;
 
       final styleSegments = <_LineRendererElement<D>>[];
@@ -373,7 +375,7 @@ class LineRenderer<D> extends BaseCartesianRenderer<D> {
       // later to display only the relevant parts of data. This ensures that
       // styles that visually depend on the start location, such as dash
       // patterns, are not disrupted by other changes in style.
-      styleSegments.forEach((_LineRendererElement styleSegment) {
+      styleSegments.forEach((_LineRendererElement<D> styleSegment) {
         final styleKey = styleSegment.styleKey;
 
         // If we already have an AnimatingPoint for that index, use it.
@@ -565,7 +567,7 @@ class LineRenderer<D> extends BaseCartesianRenderer<D> {
   /// point positions to animate in from the measure axis.
   List _createLineAndAreaElements(
       ImmutableSeries<D> series,
-      _LineRendererElement styleSegment,
+      _LineRendererElement<D> styleSegment,
       List<_DatumPoint<D>>? previousPointList,
       bool initializeFromZero) {
     final measureAxis = series.getAttr(measureAxisKey) as ImmutableAxis<num>?;
@@ -594,7 +596,7 @@ class LineRenderer<D> extends BaseCartesianRenderer<D> {
     final positionExtent = _createPositionExtent(series, styleSegment);
 
     // Get the line elements we are going to to set up.
-    final List<_LineRendererElement<D?>> lineElements =
+    final List<_LineRendererElement<D>> lineElements =
         <_LineRendererElement<D>>[];
     for (var index = 0; index < lineSegments.length; index++) {
       final linePointList = lineSegments[index];
@@ -603,12 +605,12 @@ class LineRenderer<D> extends BaseCartesianRenderer<D> {
       final lineStyleKey = '${styleKey}__line__${index}';
       _currentKeys.add(lineStyleKey);
 
-      lineElements.add(_LineRendererElement<D?>()
+      lineElements.add(_LineRendererElement<D>()
         ..points = linePointList
         ..color = color
         ..areaColor = areaColor
         ..dashPattern = dashPattern
-        ..domainExtent = domainExtent as _Range<D?>?
+        ..domainExtent = domainExtent
         ..measureAxisPosition = measureAxis!.getLocation(0.0)
         ..positionExtent = positionExtent
         ..strokeWidthPx = strokeWidthPx
@@ -617,7 +619,7 @@ class LineRenderer<D> extends BaseCartesianRenderer<D> {
     }
 
     // Get the area elements we are going to set up.
-    final List<_AreaRendererElement<D?>> areaElements =
+    final List<_AreaRendererElement<D>> areaElements =
         <_AreaRendererElement<D>>[];
     if (config.includeArea) {
       for (var index = 0; index < areaSegments.length; index++) {
@@ -627,11 +629,11 @@ class LineRenderer<D> extends BaseCartesianRenderer<D> {
         final areaStyleKey = '${styleKey}__area_${index}';
         _currentKeys.add(areaStyleKey);
 
-        areaElements.add(_AreaRendererElement<D?>()
+        areaElements.add(_AreaRendererElement<D>()
           ..points = areaPointList
           ..color = color
           ..areaColor = areaColor
-          ..domainExtent = domainExtent as _Range<D?>?
+          ..domainExtent = domainExtent
           ..measureAxisPosition = measureAxis!.getLocation(0.0)
           ..positionExtent = positionExtent
           ..styleKey = areaStyleKey);
@@ -1027,7 +1029,7 @@ class LineRenderer<D> extends BaseCartesianRenderer<D> {
 
   _DatumPoint<D> _getPoint(
       dynamic datum,
-      D? domainValue,
+      D domainValue,
       ImmutableSeries<D> series,
       ImmutableAxis<D?> domainAxis,
       num? measureValue,
@@ -1150,13 +1152,13 @@ class LineRenderer<D> extends BaseCartesianRenderer<D> {
 
 class _DatumPoint<D> extends Point<double> {
   final dynamic datum;
-  final D? domain;
+  final D domain;
   final ImmutableSeries<D>? series;
   final int? index;
 
   _DatumPoint(
       {this.datum,
-      this.domain,
+      required this.domain,
       this.series,
       this.index,
       required double x,
@@ -1176,7 +1178,7 @@ class _DatumPoint<D> extends Point<double> {
 
 /// Rendering information for the line portion of a series.
 class _LineRendererElement<D> {
-  List<_DatumPoint<D?>>? points;
+  List<_DatumPoint<D>>? points;
   Color? color;
   Color? areaColor;
   List<int>? dashPattern;
@@ -1202,8 +1204,8 @@ class _LineRendererElement<D> {
       ..roundEndCaps = roundEndCaps;
   }
 
-  void updateAnimationPercent(_LineRendererElement previous,
-      _LineRendererElement target, double animationPercent) {
+  void updateAnimationPercent(_LineRendererElement<D> previous,
+      _LineRendererElement<D> target, double animationPercent) {
     late Point lastPoint;
 
     int pointIndex;
@@ -1215,10 +1217,10 @@ class _LineRendererElement<D> {
       // TODO: Can this be done in setNewTarget instead?
       _DatumPoint<D?> previousPoint;
       if (previous.points!.length - 1 >= pointIndex) {
-        previousPoint = previous.points![pointIndex] as _DatumPoint<D?>;
+        previousPoint = previous.points![pointIndex];
         lastPoint = previousPoint;
       } else {
-        previousPoint = _DatumPoint<D?>.from(targetPoint as _DatumPoint<D?>,
+        previousPoint = _DatumPoint<D?>.from(targetPoint,
             targetPoint.x, lastPoint.y as double?);
       }
 
@@ -1230,9 +1232,9 @@ class _LineRendererElement<D> {
 
       if (points!.length - 1 >= pointIndex) {
         points![pointIndex] =
-            _DatumPoint<D?>.from(targetPoint as _DatumPoint<D?>, x, y);
+            _DatumPoint<D>.from(targetPoint, x, y);
       } else {
-        points!.add(_DatumPoint<D?>.from(targetPoint as _DatumPoint<D?>, x, y));
+        points!.add(_DatumPoint<D>.from(targetPoint, x, y));
       }
     }
 
@@ -1280,11 +1282,11 @@ class _AnimatedLine<D> {
 
     // Set the target measure value to the axis position for all points.
     // TODO: Animate to the nearest lines in the stack.
-    List<_DatumPoint<D?>> newPoints = <_DatumPoint<D>>[];
+    List<_DatumPoint<D>> newPoints = <_DatumPoint<D>>[];
     for (var index = 0; index < newTarget.points!.length; index++) {
       var targetPoint = newTarget.points![index];
 
-      newPoints.add(_DatumPoint<D?>.from(targetPoint, targetPoint.x,
+      newPoints.add(_DatumPoint<D>.from(targetPoint, targetPoint.x,
           newTarget.measureAxisPosition!.roundToDouble()));
     }
 

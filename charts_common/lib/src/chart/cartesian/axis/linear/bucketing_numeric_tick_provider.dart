@@ -64,13 +64,13 @@ class BucketingNumericTickProvider extends NumericTickProvider {
   }
 
   @override
-  List<Tick<num?>> getTicks({
+  List<Tick<num>> getTicks({
     required ChartContext? context,
     required GraphicsFactory graphicsFactory,
     required NumericScale scale,
-    required TickFormatter<num?>? formatter,
-    required Map<num?, String> formatterValueCache,
-    required TickDrawStrategy? tickDrawStrategy,
+    required TickFormatter<num>? formatter,
+    required Map<num, String> formatterValueCache,
+    required TickDrawStrategy<num>? tickDrawStrategy,
     required AxisOrientation? orientation,
     bool viewportExtensionEnabled = false,
     TickHint<num?>? tickHint,
@@ -84,7 +84,7 @@ class BucketingNumericTickProvider extends NumericTickProvider {
     }
 
     final localFormatter = _BucketingFormatter()
-      ..threshold = _threshold
+      ..threshold = _threshold!
       ..originalFormatter = formatter as SimpleTickFormatterBase<num?>?;
 
     final ticks = super.getTicks(
@@ -100,14 +100,14 @@ class BucketingNumericTickProvider extends NumericTickProvider {
     assert(scale != null);
 
     // Create a tick for the threshold.
-    final thresholdTick = Tick<num?>(
-        value: _threshold,
+    final thresholdTick = Tick<num>(
+        value: _threshold!,
         textElement: graphicsFactory
             .createTextElement(localFormatter.formatValue(_threshold!)),
-        locationPx: _showBucket! ? scale[_threshold] as double? : scale[0] as double?,
+        locationPx: _showBucket! ? scale[_threshold!] as double? : scale[0] as double?,
         labelOffsetPx:
-            _showBucket! ? -0.5 * (scale[_threshold] - scale[0]) : 0.0);
-    tickDrawStrategy!.decorateTicks(<Tick<num?>>[thresholdTick]);
+            _showBucket! ? -0.5 * (scale[_threshold!] - scale[0]) : 0.0);
+    tickDrawStrategy!.decorateTicks(<Tick<num>>[thresholdTick]);
 
     // Filter out ticks that sit below the threshold.
     ticks.removeWhere((Tick<num?> tick) =>

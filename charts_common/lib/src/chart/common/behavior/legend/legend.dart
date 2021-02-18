@@ -49,7 +49,7 @@ import 'legend_entry_generator.dart';
 /// visual content of legends is done on the native platforms. This allows users
 /// to specify customized content for legends using the native platform (ex. for
 /// Flutter, using widgets).
-abstract class Legend<D> implements ChartBehavior<D?>, LayoutView {
+abstract class Legend<D> implements ChartBehavior<D>, LayoutView {
   final SelectionModelType? selectionModelType;
   final LegendState<D?> legendState = LegendState<D>();
   final LegendEntryGenerator<D?>? legendEntryGenerator;

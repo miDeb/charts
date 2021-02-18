@@ -60,7 +60,7 @@ class Series<T, D> {
   final AccessorFn<DomainFormatter<D>?>? domainFormatterFn;
   final AccessorFn<D>? domainLowerBoundFn;
   final AccessorFn<D>? domainUpperBoundFn;
-  final AccessorFn<num> measureFn;
+  final AccessorFn<num?> measureFn;
   final AccessorFn<MeasureFormatter?>? measureFormatterFn;
   final AccessorFn<num?>? measureLowerBoundFn;
   final AccessorFn<num?>? measureUpperBoundFn;
@@ -83,7 +83,7 @@ class Series<T, D> {
   final AccessorFn<Color?>? colorFn;
 
   /// [dashPatternFn] returns the dash pattern for a given data value.
-  final AccessorFn<List<int>>? dashPatternFn;
+  final AccessorFn<List<int>?>? dashPatternFn;
 
   /// [fillColorFn] returns the rendered fill color for a given data value. If
   /// not provided, then [colorFn] will be used as a fallback.
@@ -109,12 +109,12 @@ class Series<T, D> {
       {required String id,
       required List<T> data,
       required TypedAccessorFn<T, D> domainFn,
-      required TypedAccessorFn<T, num> measureFn,
+      required TypedAccessorFn<T, num?> measureFn,
       String? displayName,
       Color? seriesColor,
       TypedAccessorFn<T, Color>? areaColorFn,
       TypedAccessorFn<T, Color>? colorFn,
-      TypedAccessorFn<T, List<int>>? dashPatternFn,
+      TypedAccessorFn<T, List<int>?>? dashPatternFn,
       TypedAccessorFn<T, DomainFormatter<D?>>? domainFormatterFn,
       TypedAccessorFn<T, D>? domainLowerBoundFn,
       TypedAccessorFn<T, D>? domainUpperBoundFn,

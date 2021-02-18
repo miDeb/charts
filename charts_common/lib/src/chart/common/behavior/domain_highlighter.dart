@@ -26,7 +26,7 @@ import 'chart_behavior.dart' show ChartBehavior;
 ///
 /// It is used in combination with SelectNearest to update the selection model
 /// and expand selection out to the domain value.
-class DomainHighlighter<D> implements ChartBehavior<D?> {
+class DomainHighlighter<D> implements ChartBehavior<D> {
   final SelectionModelType selectionModelType;
 
   late BaseChart<D?> _chart;

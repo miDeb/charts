@@ -34,8 +34,8 @@ import 'package:charts_flutter/flutter.dart' as charts;
 /// For datetime axis, the [StaticDateTimeTickProviderSpec] can be used by
 /// passing in a list of ticks defined with [TickSpec] of datetime.
 class StaticallyProvidedTicks extends StatelessWidget {
-  final List<charts.Series> seriesList;
-  final bool animate;
+  final List<charts.Series<dynamic, String>> seriesList;
+  final bool? animate;
 
   StaticallyProvidedTicks(this.seriesList, {this.animate});
 

@@ -43,7 +43,7 @@ class MockNumericScale extends Mock implements NumericScale {}
 ///
 /// Reports alternate rendering after tick count is greater than or equal to
 /// [alternateRenderingAfterTickCount].
-class FakeDrawStrategy extends BaseTickDrawStrategy<num?> {
+class FakeDrawStrategy extends BaseTickDrawStrategy<num> {
   final int collidesAfterTickCount;
   final int alternateRenderingAfterTickCount;
 
@@ -52,7 +52,7 @@ class FakeDrawStrategy extends BaseTickDrawStrategy<num?> {
       : super(null, FakeGraphicsFactory());
 
   @override
-  CollisionReport collides(List<Tick<num?>>? ticks, _) {
+  CollisionReport<num> collides(List<Tick<num>>? ticks, _) {
     final ticksCollide = ticks!.length >= collidesAfterTickCount;
     final alternateTicksUsed = ticks.length >= alternateRenderingAfterTickCount;
 

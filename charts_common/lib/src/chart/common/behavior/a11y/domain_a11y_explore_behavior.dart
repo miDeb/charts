@@ -41,7 +41,7 @@ String domainVocalization<D>(List<SeriesDatum<D>> seriesDatums) {
 }
 
 /// Behavior that generates semantic nodes for each domain.
-class DomainA11yExploreBehavior<D> extends A11yExploreBehavior<D?> {
+class DomainA11yExploreBehavior<D> extends A11yExploreBehavior<D> {
   final VocalizationCallback _vocalizationCallback;
   LifecycleListener<D>? _lifecycleListener;
   late CartesianChart<D> _chart;
@@ -118,7 +118,7 @@ class DomainA11yExploreBehavior<D> extends A11yExploreBehavior<D?> {
   }
 
   @override
-  void attachTo(BaseChart<D?> chart) {
+  void attachTo(BaseChart<D> chart) {
     // Domain selection behavior only works for cartesian charts.
     assert(chart is CartesianChart);
     _chart = (chart as CartesianChart) as CartesianChart<D>;

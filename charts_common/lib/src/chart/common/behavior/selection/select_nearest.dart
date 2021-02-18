@@ -97,7 +97,7 @@ class SelectNearest<D> implements ChartBehavior<D> {
   /// Wait time in milliseconds for when the next event can be called.
   final int? hoverEventDelay;
 
-  BaseChart<D?>? _chart;
+  BaseChart<D>? _chart;
 
   bool _delaySelect = false;
 
@@ -170,15 +170,15 @@ class SelectNearest<D> implements ChartBehavior<D> {
     var details = _chart!.getNearestDatumDetailPerSeries(
         chartPoint, selectAcrossAllSeriesRendererComponents);
 
-    final List<ImmutableSeries<D?>?> seriesList = <ImmutableSeries<D>?>[];
-    List<SeriesDatum<D?>> seriesDatumList = <SeriesDatum<D>>[];
+    final List<ImmutableSeries<D>?> seriesList = <ImmutableSeries<D>?>[];
+    List<SeriesDatum<D>> seriesDatumList = <SeriesDatum<D>>[];
 
     if (details != null && details.isNotEmpty) {
       if (maximumDomainDistancePx == null ||
           details[0].domainDistance! <= maximumDomainDistancePx!) {
         seriesDatumList = expandToDomain!
             ? _expandToDomain(details.first)
-            : [SeriesDatum<D?>(details.first.series, details.first.datum)];
+            : [SeriesDatum<D>(details.first.series, details.first.datum)];
 
         // Filter out points from overlay series.
         seriesDatumList.removeWhere(
@@ -219,14 +219,14 @@ class SelectNearest<D> implements ChartBehavior<D> {
     return false;
   }
 
-  List<SeriesDatum<D?>> _expandToDomain(DatumDetails<D?> nearestDetails) {
+  List<SeriesDatum<D>> _expandToDomain(DatumDetails<D> nearestDetails) {
     // Make sure that the "nearest" datum is at the top of the list.
-    final data = <SeriesDatum<D?>>[
+    final data = <SeriesDatum<D>>[
       SeriesDatum(nearestDetails.series, nearestDetails.datum)
     ];
     final nearestDomain = nearestDetails.domain;
 
-    for (ImmutableSeries<D?> series in _chart!.currentSeriesList!) {
+    for (ImmutableSeries<D> series in _chart!.currentSeriesList!) {
       final D? Function(int) domainFn = series.domainFn;
       final D? Function(int)? domainLowerBoundFn = series.domainLowerBoundFn;
       final D? Function(int)? domainUpperBoundFn = series.domainUpperBoundFn;

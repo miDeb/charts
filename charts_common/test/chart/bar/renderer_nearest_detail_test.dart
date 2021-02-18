@@ -22,12 +22,15 @@ import 'package:charts_common/src/chart/bar/bar_target_line_renderer_config.dart
 import 'package:charts_common/src/chart/bar/base_bar_renderer.dart';
 import 'package:charts_common/src/chart/bar/base_bar_renderer_config.dart';
 import 'package:charts_common/src/chart/cartesian/axis/axis.dart';
+import 'package:charts_common/src/chart/cartesian/axis/time/date_time_axis.dart';
 import 'package:charts_common/src/chart/cartesian/cartesian_chart.dart';
 import 'package:charts_common/src/chart/common/chart_canvas.dart';
 import 'package:charts_common/src/chart/common/chart_context.dart';
 import 'package:charts_common/src/chart/common/processed_series.dart';
 import 'package:charts_common/src/common/color.dart';
 import 'package:charts_common/src/data/series.dart';
+import 'package:mockito/annotations.dart';
+import 'renderer_nearest_detail_test.mocks.dart';
 
 import 'package:mockito/mockito.dart';
 import 'package:test/test.dart';
@@ -48,18 +51,7 @@ class MyDateTimeRow {
 
 // TODO: Test in RTL context as well.
 
-class MockContext extends Mock implements ChartContext {}
-
-class MockChart extends Mock implements CartesianChart {}
-
-class MockOrdinalAxis extends Mock implements OrdinalAxis {}
-
-class MockNumericAxis extends Mock implements Axis<num> {}
-
-class MockDateTimeAxis extends Mock implements Axis<DateTime> {}
-
-class MockCanvas extends Mock implements ChartCanvas {}
-
+@GenerateMocks([ChartContext,CartesianChart,OrdinalAxis,NumericAxis, DateTimeAxis, ChartCanvas])
 void main() {
   final date0 = DateTime(2018, 2, 1);
   final date1 = DateTime(2018, 2, 7);
@@ -70,10 +62,10 @@ void main() {
   /////////////////////////////////////////
   BaseBarRenderer _configureBaseRenderer(
       BaseBarRenderer renderer, bool vertical) {
-    final context = MockContext();
+    final context = MockChartContext();
     when(context.chartContainerIsRtl).thenReturn(false);
     when(context.isRtl).thenReturn(false);
-    final verticalChart = MockChart();
+    final verticalChart = MockCartesianChart();
     when(verticalChart.vertical).thenReturn(vertical);
     when(verticalChart.context).thenReturn(context);
     renderer.onAttach(verticalChart);
@@ -222,7 +214,7 @@ void main() {
       renderer.configureSeries(seriesList);
       renderer.preprocessSeries(seriesList);
       renderer.update(seriesList, false);
-      renderer.paint(MockCanvas(), 1.0);
+      renderer.paint(MockChartCanvas(), 1.0);
 
       // Act
       final details = renderer.getNearestDatumDetailPerSeries(
@@ -252,7 +244,7 @@ void main() {
       renderer.configureSeries(seriesList);
       renderer.preprocessSeries(seriesList);
       renderer.update(seriesList, false);
-      renderer.paint(MockCanvas(), 1.0);
+      renderer.paint(MockChartCanvas(), 1.0);
 
       // Act
       final details = renderer.getNearestDatumDetailPerSeries(
@@ -275,7 +267,7 @@ void main() {
       renderer.configureSeries(seriesList);
       renderer.preprocessSeries(seriesList);
       renderer.update(seriesList, false);
-      renderer.paint(MockCanvas(), 1.0);
+      renderer.paint(MockChartCanvas(), 1.0);
 
       // Act
       final details = renderer.getNearestDatumDetailPerSeries(
@@ -305,7 +297,7 @@ void main() {
       renderer.configureSeries(seriesList);
       renderer.preprocessSeries(seriesList);
       renderer.update(seriesList, false);
-      renderer.paint(MockCanvas(), 1.0);
+      renderer.paint(MockChartCanvas(), 1.0);
 
       // Act
       final details = renderer.getNearestDatumDetailPerSeries(
@@ -330,7 +322,7 @@ void main() {
       renderer.configureSeries(seriesList);
       renderer.preprocessSeries(seriesList);
       renderer.update(seriesList, false);
-      renderer.paint(MockCanvas(), 1.0);
+      renderer.paint(MockChartCanvas(), 1.0);
 
       // Act
       final details = renderer.getNearestDatumDetailPerSeries(
@@ -359,7 +351,7 @@ void main() {
       renderer.configureSeries(seriesList);
       renderer.preprocessSeries(seriesList);
       renderer.update(seriesList, false);
-      renderer.paint(MockCanvas(), 1.0);
+      renderer.paint(MockChartCanvas(), 1.0);
 
       // Act
       final details = renderer.getNearestDatumDetailPerSeries(
@@ -396,7 +388,7 @@ void main() {
       renderer.configureSeries(seriesList);
       renderer.preprocessSeries(seriesList);
       renderer.update(seriesList, false);
-      renderer.paint(MockCanvas(), 1.0);
+      renderer.paint(MockChartCanvas(), 1.0);
 
       // Act
       final details = renderer.getNearestDatumDetailPerSeries(
@@ -436,7 +428,7 @@ void main() {
       renderer.configureSeries(seriesList);
       renderer.preprocessSeries(seriesList);
       renderer.update(seriesList, false);
-      renderer.paint(MockCanvas(), 1.0);
+      renderer.paint(MockChartCanvas(), 1.0);
 
       // Act
       final details = renderer.getNearestDatumDetailPerSeries(
@@ -485,7 +477,7 @@ void main() {
       renderer.configureSeries(seriesList);
       renderer.preprocessSeries(seriesList);
       renderer.update(seriesList, false);
-      renderer.paint(MockCanvas(), 1.0);
+      renderer.paint(MockChartCanvas(), 1.0);
 
       // Act
       final details = renderer.getNearestDatumDetailPerSeries(
@@ -512,7 +504,7 @@ void main() {
       renderer.configureSeries(seriesList);
       renderer.preprocessSeries(seriesList);
       renderer.update(seriesList, false);
-      renderer.paint(MockCanvas(), 1.0);
+      renderer.paint(MockChartCanvas(), 1.0);
 
       // Act
       final details = renderer.getNearestDatumDetailPerSeries(
@@ -548,7 +540,7 @@ void main() {
       renderer.configureSeries(seriesList);
       renderer.preprocessSeries(seriesList);
       renderer.update(seriesList, false);
-      renderer.paint(MockCanvas(), 1.0);
+      renderer.paint(MockChartCanvas(), 1.0);
 
       // Act
       // Note: point is in the axis, over a bar outside of the viewport.
@@ -574,7 +566,7 @@ void main() {
       renderer.configureSeries(seriesList);
       renderer.preprocessSeries(seriesList);
       renderer.update(seriesList, false);
-      renderer.paint(MockCanvas(), 1.0);
+      renderer.paint(MockChartCanvas(), 1.0);
 
       // Act
       final details = renderer.getNearestDatumDetailPerSeries(
@@ -603,7 +595,7 @@ void main() {
       renderer.configureSeries(seriesList);
       renderer.preprocessSeries(seriesList);
       renderer.update(seriesList, false);
-      renderer.paint(MockCanvas(), 1.0);
+      renderer.paint(MockChartCanvas(), 1.0);
 
       // Act
       final details = renderer.getNearestDatumDetailPerSeries(
@@ -640,7 +632,7 @@ void main() {
       renderer.configureSeries(seriesList);
       renderer.preprocessSeries(seriesList);
       renderer.update(seriesList, false);
-      renderer.paint(MockCanvas(), 1.0);
+      renderer.paint(MockChartCanvas(), 1.0);
 
       // Act
       final details = renderer.getNearestDatumDetailPerSeries(
@@ -679,7 +671,7 @@ void main() {
       renderer.configureSeries(seriesList);
       renderer.preprocessSeries(seriesList);
       renderer.update(seriesList, false);
-      renderer.paint(MockCanvas(), 1.0);
+      renderer.paint(MockChartCanvas(), 1.0);
 
       // Act
       final details = renderer.getNearestDatumDetailPerSeries(
@@ -729,7 +721,7 @@ void main() {
       renderer.configureSeries(seriesList);
       renderer.preprocessSeries(seriesList);
       renderer.update(seriesList, false);
-      renderer.paint(MockCanvas(), 1.0);
+      renderer.paint(MockChartCanvas(), 1.0);
 
       // Act
       final details = renderer.getNearestDatumDetailPerSeries(
@@ -758,7 +750,7 @@ void main() {
       renderer.configureSeries(seriesList);
       renderer.preprocessSeries(seriesList);
       renderer.update(seriesList, false);
-      renderer.paint(MockCanvas(), 1.0);
+      renderer.paint(MockChartCanvas(), 1.0);
 
       // Act
       final details = renderer.getNearestDatumDetailPerSeries(
@@ -797,7 +789,7 @@ void main() {
       renderer.configureSeries(seriesList);
       renderer.preprocessSeries(seriesList);
       renderer.update(seriesList, false);
-      renderer.paint(MockCanvas(), 1.0);
+      renderer.paint(MockChartCanvas(), 1.0);
 
       // Act
       final details = renderer.getNearestDatumDetailPerSeries(
@@ -824,7 +816,7 @@ void main() {
       renderer.configureSeries(seriesList);
       renderer.preprocessSeries(seriesList);
       renderer.update(seriesList, false);
-      renderer.paint(MockCanvas(), 1.0);
+      renderer.paint(MockChartCanvas(), 1.0);
 
       // Act
       final details = renderer.getNearestDatumDetailPerSeries(
@@ -861,7 +853,7 @@ void main() {
       renderer.configureSeries(seriesList);
       renderer.preprocessSeries(seriesList);
       renderer.update(seriesList, false);
-      renderer.paint(MockCanvas(), 1.0);
+      renderer.paint(MockChartCanvas(), 1.0);
 
       // Act
       final details = renderer.getNearestDatumDetailPerSeries(
@@ -901,7 +893,7 @@ void main() {
       renderer.configureSeries(seriesList);
       renderer.preprocessSeries(seriesList);
       renderer.update(seriesList, false);
-      renderer.paint(MockCanvas(), 1.0);
+      renderer.paint(MockChartCanvas(), 1.0);
 
       // Act
       final details = renderer.getNearestDatumDetailPerSeries(
@@ -953,7 +945,7 @@ void main() {
       renderer.configureSeries(seriesList);
       renderer.preprocessSeries(seriesList);
       renderer.update(seriesList, false);
-      renderer.paint(MockCanvas(), 1.0);
+      renderer.paint(MockChartCanvas(), 1.0);
 
       // Act
       final details = renderer.getNearestDatumDetailPerSeries(
@@ -989,7 +981,7 @@ void main() {
       renderer.configureSeries(seriesList);
       renderer.preprocessSeries(seriesList);
       renderer.update(seriesList, false);
-      renderer.paint(MockCanvas(), 1.0);
+      renderer.paint(MockChartCanvas(), 1.0);
 
       // Act
       // Note: point is in the axis, over a bar outside of the viewport.
@@ -1015,7 +1007,7 @@ void main() {
       renderer.configureSeries(seriesList);
       renderer.preprocessSeries(seriesList);
       renderer.update(seriesList, false);
-      renderer.paint(MockCanvas(), 1.0);
+      renderer.paint(MockChartCanvas(), 1.0);
 
       // Act
       final details = renderer.getNearestDatumDetailPerSeries(
@@ -1044,7 +1036,7 @@ void main() {
       renderer.configureSeries(seriesList);
       renderer.preprocessSeries(seriesList);
       renderer.update(seriesList, false);
-      renderer.paint(MockCanvas(), 1.0);
+      renderer.paint(MockChartCanvas(), 1.0);
 
       // Act
       final details = renderer.getNearestDatumDetailPerSeries(
@@ -1081,7 +1073,7 @@ void main() {
       renderer.configureSeries(seriesList);
       renderer.preprocessSeries(seriesList);
       renderer.update(seriesList, false);
-      renderer.paint(MockCanvas(), 1.0);
+      renderer.paint(MockChartCanvas(), 1.0);
 
       // Act
       final details = renderer.getNearestDatumDetailPerSeries(
@@ -1120,7 +1112,7 @@ void main() {
       renderer.configureSeries(seriesList);
       renderer.preprocessSeries(seriesList);
       renderer.update(seriesList, false);
-      renderer.paint(MockCanvas(), 1.0);
+      renderer.paint(MockChartCanvas(), 1.0);
 
       // Act
       final details = renderer.getNearestDatumDetailPerSeries(
@@ -1171,7 +1163,7 @@ void main() {
       renderer.configureSeries(seriesList);
       renderer.preprocessSeries(seriesList);
       renderer.update(seriesList, false);
-      renderer.paint(MockCanvas(), 1.0);
+      renderer.paint(MockChartCanvas(), 1.0);
 
       // Act
       final details = renderer.getNearestDatumDetailPerSeries(
@@ -1210,7 +1202,7 @@ void main() {
       renderer.configureSeries(seriesList);
       renderer.preprocessSeries(seriesList);
       renderer.update(seriesList, false);
-      renderer.paint(MockCanvas(), 1.0);
+      renderer.paint(MockChartCanvas(), 1.0);
 
       // Act
       final details = renderer.getNearestDatumDetailPerSeries(
@@ -1239,7 +1231,7 @@ void main() {
       renderer.configureSeries(seriesList);
       renderer.preprocessSeries(seriesList);
       renderer.update(seriesList, false);
-      renderer.paint(MockCanvas(), 1.0);
+      renderer.paint(MockChartCanvas(), 1.0);
 
       // Act
       final details = renderer.getNearestDatumDetailPerSeries(
@@ -1276,7 +1268,7 @@ void main() {
       renderer.configureSeries(seriesList);
       renderer.preprocessSeries(seriesList);
       renderer.update(seriesList, false);
-      renderer.paint(MockCanvas(), 1.0);
+      renderer.paint(MockChartCanvas(), 1.0);
 
       // Act
       final details = renderer.getNearestDatumDetailPerSeries(
@@ -1316,7 +1308,7 @@ void main() {
       renderer.configureSeries(seriesList);
       renderer.preprocessSeries(seriesList);
       renderer.update(seriesList, false);
-      renderer.paint(MockCanvas(), 1.0);
+      renderer.paint(MockChartCanvas(), 1.0);
 
       // Act
       final details = renderer.getNearestDatumDetailPerSeries(
@@ -1368,7 +1360,7 @@ void main() {
       renderer.configureSeries(seriesList);
       renderer.preprocessSeries(seriesList);
       renderer.update(seriesList, false);
-      renderer.paint(MockCanvas(), 1.0);
+      renderer.paint(MockChartCanvas(), 1.0);
 
       // Act
       final details = renderer.getNearestDatumDetailPerSeries(
@@ -1405,7 +1397,7 @@ void main() {
       renderer.configureSeries(seriesList);
       renderer.preprocessSeries(seriesList);
       renderer.update(seriesList, false);
-      renderer.paint(MockCanvas(), 1.0);
+      renderer.paint(MockChartCanvas(), 1.0);
 
       // Act
       // Note: point is in the axis, over a bar outside of the viewport.

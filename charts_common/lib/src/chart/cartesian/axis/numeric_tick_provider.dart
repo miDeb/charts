@@ -44,7 +44,7 @@ import 'tick_provider.dart' show BaseTickProvider, TickHint;
 /// * Alternate rendering is not used to avoid collisions.
 /// * Provide the least amount of domain range covering all data points (while
 /// still selecting "nice" ticks values.
-class NumericTickProvider extends BaseTickProvider<num?> {
+class NumericTickProvider extends BaseTickProvider<num> {
   /// Used to determine the automatic tick count calculation.
   static const MIN_DIPS_BETWEEN_TICKS = 25;
 
@@ -201,13 +201,13 @@ class NumericTickProvider extends BaseTickProvider<num?> {
     }
   }
 
-  List<Tick<num?>> _getTicksFromHint({
+  List<Tick<num>> _getTicksFromHint({
     required ChartContext? context,
     required GraphicsFactory graphicsFactory,
     required NumericScale scale,
-    required TickFormatter<num?> formatter,
-    required Map<num?, String> formatterValueCache,
-    required TickDrawStrategy tickDrawStrategy,
+    required TickFormatter<num> formatter,
+    required Map<num, String> formatterValueCache,
+    required TickDrawStrategy<num> tickDrawStrategy,
     required TickHint<num?> tickHint,
   }) {
     final stepSize =
@@ -236,18 +236,18 @@ class NumericTickProvider extends BaseTickProvider<num?> {
   }
 
   @override
-  List<Tick<num?>>? getTicks({
+  List<Tick<num>>? getTicks({
     required ChartContext? context,
     required GraphicsFactory graphicsFactory,
     required NumericScale scale,
-    required TickFormatter<num?>? formatter,
-    required Map<num?, String> formatterValueCache,
-    required TickDrawStrategy? tickDrawStrategy,
+    required TickFormatter<num>? formatter,
+    required Map<num, String> formatterValueCache,
+    required TickDrawStrategy<num>? tickDrawStrategy,
     required AxisOrientation? orientation,
     bool viewportExtensionEnabled = false,
     TickHint<num?>? tickHint,
   }) {
-    List<Tick<num?>>? ticks;
+    List<Tick<num>>? ticks;
 
     _rangeWidth = scale.rangeWidth;
     _updateDomainExtents(scale.viewportDomain!);
@@ -304,7 +304,7 @@ class NumericTickProvider extends BaseTickProvider<num?> {
           }
 
           // Create ticks from domain values.
-          final List<Tick<num?>> preferredTicks = createTicks(tickValues,
+          final List<Tick<num>> preferredTicks = createTicks(tickValues,
               context: context,
               graphicsFactory: graphicsFactory,
               scale: viewportExtensionEnabled ? mutableScale : scale,
@@ -327,7 +327,7 @@ class NumericTickProvider extends BaseTickProvider<num?> {
           }
 
           ticks = collisionReport.alternateTicksUsed
-              ? collisionReport.ticks as List<Tick<num?>>?
+              ? collisionReport.ticks
               : preferredTicks;
           foundPreferredTicks = !collisionReport.alternateTicksUsed;
           selectedTicksRange = range as double;
@@ -495,7 +495,7 @@ class NumericTickProvider extends BaseTickProvider<num?> {
     return _TickStepInfo(1.0, low.floorToDouble());
   }
 
-  List<double?> _getTickValues(_TickStepInfo steps, int tickCount) {
+  List<double> _getTickValues(_TickStepInfo steps, int tickCount) {
     return [
       // We have our size and start, assign all the tick values to the given array.
       for (int i = 0; i < tickCount; i++)

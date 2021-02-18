@@ -110,7 +110,7 @@ abstract class BaseBarRenderer<D, R extends BaseBarRendererElement,
 
   @override
   void preprocessSeries(List<MutableSeries<D>> seriesList) {
-    int barGroupIndex = 0;
+    int? barGroupIndex = 0;
 
     // Maps used to store the final measure offset of the previous series, for
     // each domain value.
@@ -134,7 +134,7 @@ abstract class BaseBarRenderer<D, R extends BaseBarRendererElement,
       FillPatternType Function(int)? fillPatternFn = series.fillPatternFn;
       num? Function(int)? strokeWidthPxFn = series.strokeWidthPxFn;
 
-      series.dashPatternFn ??= (_) => config.dashPattern!;
+      series.dashPatternFn ??= (_) => config.dashPattern;
 
       // Identifies which stack the series will go in, by default a single
       // stack.
@@ -166,7 +166,7 @@ abstract class BaseBarRenderer<D, R extends BaseBarRendererElement,
         if (fillPatternFn != null) {
           details.fillPattern = fillPatternFn(barIndex);
         } else {
-          details.fillPattern = config.fillPattern!;
+          details.fillPattern = config.fillPattern;
         }
 
         if (strokeWidthPxFn != null) {
@@ -235,7 +235,7 @@ abstract class BaseBarRenderer<D, R extends BaseBarRendererElement,
       series.setAttr(barElementsKey, elements);
 
       if (config.grouped) {
-        barGroupIndex++;
+        barGroupIndex = barGroupIndex! + 1;
       }
     });
 
@@ -344,7 +344,7 @@ abstract class BaseBarRenderer<D, R extends BaseBarRendererElement,
     orderedSeriesList.forEach((final ImmutableSeries<D> series) {
       final domainAxis = series.getAttr(domainAxisKey) as ImmutableAxis<D>?;
       final domainFn = series.domainFn;
-      final measureAxis = series.getAttr(measureAxisKey) as ImmutableAxis<num>;
+      final measureAxis = series.getAttr(measureAxisKey) as ImmutableAxis<num?>;
       final measureFn = series.measureFn;
       final colorFn = series.colorFn;
       final dashPatternFn = series.dashPatternFn;
@@ -413,7 +413,7 @@ abstract class BaseBarRenderer<D, R extends BaseBarRendererElement,
                 domainAxis: domainAxis,
                 domainWidth: domainAxis!.rangeBand!.round(),
                 fillColor: fillColorFn!(barIndex),
-                fillPattern: details.fillPattern!,
+                fillPattern: details.fillPattern,
                 measureValue: 0.0,
                 measureOffsetValue: 0.0,
                 measureAxisPosition: measureAxisPosition,
@@ -458,7 +458,7 @@ abstract class BaseBarRenderer<D, R extends BaseBarRendererElement,
             domainAxis: domainAxis,
             domainWidth: domainAxis!.rangeBand!.round(),
             fillColor: fillColorFn!(barIndex),
-            fillPattern: details.fillPattern!,
+            fillPattern: details.fillPattern,
             measureValue: measureValue,
             measureOffsetValue: details.measureOffset,
             measureAxisPosition: measureAxisPosition,
@@ -493,18 +493,18 @@ abstract class BaseBarRenderer<D, R extends BaseBarRendererElement,
       double? previousBarGroupWeight,
       double? barGroupWeight,
       Color? color,
-      required List<int> dashPattern,
+      List<int>? dashPattern,
       R? details,
       required D domainValue,
       ImmutableAxis<D>? domainAxis,
       int? domainWidth,
       num? measureValue,
       num? measureOffsetValue,
-      ImmutableAxis<num>? measureAxis,
+      ImmutableAxis<num?>? measureAxis,
       required double measureAxisPosition,
       int? numBarGroups,
       Color? fillColor,
-      required FillPatternType fillPattern,
+      FillPatternType? fillPattern,
       required double strokeWidthPx,
       required bool measureIsNull,
       bool? measureIsNegative});
@@ -516,18 +516,18 @@ abstract class BaseBarRenderer<D, R extends BaseBarRendererElement,
       double? previousBarGroupWeight,
       double? barGroupWeight,
       Color? color,
-      required List<int> dashPattern,
+      List<int>? dashPattern,
       R? details,
       D? domainValue,
       ImmutableAxis<D>? domainAxis,
       int? domainWidth,
       num? measureValue,
       num? measureOffsetValue,
-      ImmutableAxis<num>? measureAxis,
+      ImmutableAxis<num?>? measureAxis,
       required double measureAxisPosition,
       int? numBarGroups,
       Color? fillColor,
-      required FillPatternType fillPattern,
+      FillPatternType? fillPattern,
       required double strokeWidthPx,
       required bool measureIsNull,
       bool? measureIsNegative});

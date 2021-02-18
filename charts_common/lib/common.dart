@@ -203,11 +203,6 @@ export 'src/chart/layout/layout_view.dart'
 export 'src/chart/line/line_chart.dart' show LineChart;
 export 'src/chart/line/line_renderer.dart' show LineRenderer;
 export 'src/chart/line/line_renderer_config.dart' show LineRendererConfig;
-export 'src/chart/pie/arc_label_decorator.dart'
-    show ArcLabelDecorator, ArcLabelLeaderLineStyleSpec, ArcLabelPosition;
-export 'src/chart/pie/arc_renderer.dart' show ArcRenderer;
-export 'src/chart/pie/arc_renderer_config.dart' show ArcRendererConfig;
-export 'src/chart/pie/pie_chart.dart' show PieChart;
 export 'src/chart/scatter_plot/comparison_points_decorator.dart'
     show ComparisonPointsDecorator;
 export 'src/chart/scatter_plot/point_renderer.dart'

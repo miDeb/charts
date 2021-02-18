@@ -44,7 +44,7 @@ import 'axis/draw_strategy/small_tick_draw_strategy.dart'
     show SmallTickRendererSpec;
 import 'axis/spec/axis_spec.dart' show AxisSpec;
 
-class NumericCartesianChart extends CartesianChart<num?> {
+class NumericCartesianChart extends CartesianChart<num> {
   NumericCartesianChart(
       {bool? vertical,
       LayoutConfig? layoutConfig,
@@ -89,7 +89,7 @@ class OrdinalCartesianChart extends CartesianChart<String?> {
   }
 }
 
-abstract class CartesianChart<D> extends BaseChart<D?> {
+abstract class CartesianChart<D> extends BaseChart<D> {
   static final _defaultLayoutConfig = LayoutConfig(
     topSpec: MarginSpec.fromPixel(minPixel: 20),
     bottomSpec: MarginSpec.fromPixel(minPixel: 20),
@@ -234,7 +234,7 @@ abstract class CartesianChart<D> extends BaseChart<D?> {
       axis = _secondaryMeasureAxis;
     } else if (axisId == Axis.primaryMeasureAxisId) {
       axis = _primaryMeasureAxis;
-    } else if (_disjointMeasureAxes[axisId!] != null) {
+    } else if (_disjointMeasureAxes[axisId] != null) {
       axis = _disjointMeasureAxes[axisId];
     }
 
@@ -282,8 +282,8 @@ abstract class CartesianChart<D> extends BaseChart<D?> {
   }
 
   @override
-  MutableSeries<D?> makeSeries(Series<dynamic, D?> series) {
-    MutableSeries<D?> s = super.makeSeries(series);
+  MutableSeries<D> makeSeries(Series<dynamic, D> series) {
+    MutableSeries<D> s = super.makeSeries(series);
 
     s.measureOffsetFn ??= (_) => 0;
 
@@ -301,9 +301,9 @@ abstract class CartesianChart<D> extends BaseChart<D?> {
   }
 
   @override
-  Map<String?, List<MutableSeries<D?>>> preprocessSeries(
-      List<MutableSeries<D?>> seriesList) {
-    Map<String?, List<MutableSeries<D?>>> rendererToSeriesList = super.preprocessSeries(seriesList);
+  Map<String?, List<MutableSeries<D>>> preprocessSeries(
+      List<MutableSeries<D>> seriesList) {
+    Map<String?, List<MutableSeries<D>>> rendererToSeriesList = super.preprocessSeries(seriesList);
 
     // Check if primary or secondary measure axis is being used.
     for (final series in seriesList) {
@@ -393,7 +393,7 @@ abstract class CartesianChart<D> extends BaseChart<D?> {
     // Have each renderer configure the axes with their domain and measure
     // values.
     rendererToSeriesList
-        .forEach((String? rendererId, List<MutableSeries<D?>> seriesList) {
+        .forEach((String? rendererId, List<MutableSeries<D>> seriesList) {
       getSeriesRenderer(rendererId)!.configureDomainAxes(seriesList);
       getSeriesRenderer(rendererId)!.configureMeasureAxes(seriesList);
     });
@@ -422,7 +422,7 @@ abstract class CartesianChart<D> extends BaseChart<D?> {
   }
 
   @override
-  void onPostLayout(Map<String?, List<MutableSeries<D?>>> rendererToSeriesList) {
+  void onPostLayout(Map<String?, List<MutableSeries<D>>> rendererToSeriesList) {
     fireOnAxisConfigured();
 
     super.onPostLayout(rendererToSeriesList);
@@ -430,8 +430,8 @@ abstract class CartesianChart<D> extends BaseChart<D?> {
 
   /// Returns a list of datum details from selection model of [type].
   @override
-  List<DatumDetails<D?>?> getDatumDetails(SelectionModelType type) {
-    final List<DatumDetails<D?>?> entries = <DatumDetails<D>?>[];
+  List<DatumDetails<D>?> getDatumDetails(SelectionModelType type) {
+    final List<DatumDetails<D>?> entries = <DatumDetails<D>>[];
 
     getSelectionModel(type)!.selectedDatum.forEach((seriesDatum) {
       final series = seriesDatum.series!;
@@ -449,7 +449,7 @@ abstract class CartesianChart<D> extends BaseChart<D?> {
       final renderer = getSeriesRenderer(series.getAttr(rendererIdKey))!;
 
       final datumDetails = renderer.addPositionToDetailsForSeriesDatum(
-          DatumDetails(
+          DatumDetails<D>(
               datum: datum,
               domain: domain,
               domainFormatter: domainFormatterFn != null

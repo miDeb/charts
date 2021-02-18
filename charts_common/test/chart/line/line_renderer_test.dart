@@ -271,7 +271,7 @@ void main() {
         MutableSeries<int?>(Series<MyRow, int?>(
             id: 'Desktop',
             colorFn: (MyRow row, _) => row!.color,
-            dashPatternFn: (MyRow row, _) => row!.dashPattern!,
+            dashPatternFn: (MyRow row, _) => row!.dashPattern,
             strokeWidthPxFn: (MyRow row, _) => row!.strokeWidthPx,
             domainFn: (dynamic row, _) => row.campaign,
             measureFn: (dynamic row, _) => row.clickCount,

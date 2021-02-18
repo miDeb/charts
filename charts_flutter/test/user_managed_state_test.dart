@@ -13,6 +13,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -27,13 +28,13 @@ void main() {
           new charts.SeriesDatumConfig<String>('Sales', '2016')
         ]);
 
-    charts.SelectionModel<String> currentSelectionModel;
+    charts.SelectionModel<String>? currentSelectionModel;
 
     void selectionChangedListener(charts.SelectionModel<String> model) {
       currentSelectionModel = model;
     }
 
-    final testChart = new TestChart(selectionChangedListener, onTapSelection);
+    final testChart = MaterialApp(home: new TestChart(selectionChangedListener, onTapSelection));
 
     await tester.pumpWidget(testChart);
 
@@ -43,13 +44,13 @@ void main() {
 
     await tester.pump();
 
-    expect(currentSelectionModel.selectedDatum, hasLength(1));
+    expect(currentSelectionModel!.selectedDatum, hasLength(1));
     final selectedDatum =
-        currentSelectionModel.selectedDatum.first.datum as OrdinalSales;
+        currentSelectionModel!.selectedDatum.first.datum as OrdinalSales;
     expect(selectedDatum.year, equals('2016'));
     expect(selectedDatum.sales, equals(100));
-    expect(currentSelectionModel.selectedSeries, hasLength(1));
-    expect(currentSelectionModel.selectedSeries.first.id, equals('Sales'));
+    expect(currentSelectionModel!.selectedSeries, hasLength(1));
+    expect(currentSelectionModel!.selectedSeries.first.id, equals('Sales'));
   });
 }
 

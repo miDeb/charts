@@ -19,29 +19,29 @@ import 'package:flutter/widgets.dart' show hashValues;
 import '../chart_behavior.dart' show ChartBehavior, GestureType;
 
 /// Behavior that generates semantic nodes for each domain.
-class DomainA11yExploreBehavior
-    extends ChartBehavior<common.DomainA11yExploreBehavior> {
+class DomainA11yExploreBehavior<D>
+    extends ChartBehavior<D, common.DomainA11yExploreBehavior<D>> {
   /// Returns a string for a11y vocalization from a list of series datum.
-  final common.VocalizationCallback vocalizationCallback;
+  final common.VocalizationCallback? vocalizationCallback;
 
-  final Set<GestureType> desiredGestures;
+  final Set<GestureType>? desiredGestures;
 
   /// The gesture that activates explore mode. Defaults to long press.
   ///
   /// Turning on explore mode asks this [A11yBehavior] to generate nodes within
   /// this chart.
-  final common.ExploreModeTrigger exploreModeTrigger;
+  final common.ExploreModeTrigger? exploreModeTrigger;
 
   /// Minimum width of the bounding box for the a11y focus.
   ///
   /// Must be 1 or higher because invisible semantic nodes should not be added.
-  final double minimumWidth;
+  final double? minimumWidth;
 
   /// Optionally notify the OS when explore mode is enabled.
-  final String exploreModeEnabledAnnouncement;
+  final String? exploreModeEnabledAnnouncement;
 
   /// Optionally notify the OS when explore mode is disabled.
-  final String exploreModeDisabledAnnouncement;
+  final String? exploreModeDisabledAnnouncement;
 
   DomainA11yExploreBehavior._internal(
       {this.vocalizationCallback,
@@ -52,11 +52,11 @@ class DomainA11yExploreBehavior
       this.exploreModeDisabledAnnouncement});
 
   factory DomainA11yExploreBehavior(
-      {common.VocalizationCallback vocalizationCallback,
-      common.ExploreModeTrigger exploreModeTrigger,
-      double minimumWidth,
-      String exploreModeEnabledAnnouncement,
-      String exploreModeDisabledAnnouncement}) {
+      {common.VocalizationCallback? vocalizationCallback,
+      common.ExploreModeTrigger? exploreModeTrigger,
+      double? minimumWidth,
+      String? exploreModeEnabledAnnouncement,
+      String? exploreModeDisabledAnnouncement}) {
     final desiredGestures = new Set<GestureType>();
     exploreModeTrigger ??= common.ExploreModeTrigger.pressHold;
 
@@ -80,7 +80,7 @@ class DomainA11yExploreBehavior
   }
 
   @override
-  common.DomainA11yExploreBehavior<D> createCommonBehavior<D>() {
+  common.DomainA11yExploreBehavior<D> createCommonBehavior()  {
     return new common.DomainA11yExploreBehavior<D>(
         vocalizationCallback: vocalizationCallback,
         exploreModeTrigger: exploreModeTrigger,

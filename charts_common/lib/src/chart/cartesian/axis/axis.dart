@@ -530,8 +530,8 @@ abstract class Axis<D> extends ImmutableAxis<D> implements LayoutView {
   }
 }
 
-class NumericAxis extends Axis<num?> {
-  NumericAxis({TickProvider<num?>? tickProvider})
+class NumericAxis extends Axis<num> {
+  NumericAxis({TickProvider<num>? tickProvider})
       : super(
           tickProvider: tickProvider ?? NumericTickProvider(),
           tickFormatter: NumericTickFormatter(),

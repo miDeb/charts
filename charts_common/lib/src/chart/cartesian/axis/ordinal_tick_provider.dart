@@ -36,7 +36,7 @@ class OrdinalTickProvider extends BaseTickProvider<String?> {
       required covariant OrdinalScale scale,
       required TickFormatter<String?>? formatter,
       required Map<String?, String> formatterValueCache,
-      required TickDrawStrategy? tickDrawStrategy,
+      required TickDrawStrategy<String?>? tickDrawStrategy,
       required AxisOrientation? orientation,
       bool viewportExtensionEnabled = false,
       TickHint<String?>? tickHint}) {

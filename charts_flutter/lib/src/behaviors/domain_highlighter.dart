@@ -28,7 +28,7 @@ import 'chart_behavior.dart' show ChartBehavior, GestureType;
 /// It is used in combination with SelectNearest to update the selection model
 /// and expand selection out to the domain value.
 @immutable
-class DomainHighlighter extends ChartBehavior<common.DomainHighlighter> {
+class DomainHighlighter<D> extends ChartBehavior<D, common.DomainHighlighter<D>> {
   final desiredGestures = new Set<GestureType>();
 
   final common.SelectionModelType selectionModelType;
@@ -36,7 +36,7 @@ class DomainHighlighter extends ChartBehavior<common.DomainHighlighter> {
   DomainHighlighter([this.selectionModelType = common.SelectionModelType.info]);
 
   @override
-  common.DomainHighlighter<D> createCommonBehavior<D>() =>
+  common.DomainHighlighter<D> createCommonBehavior() =>
       new common.DomainHighlighter<D>(selectionModelType);
 
   @override

@@ -90,7 +90,7 @@ class TreeMapLabelDecorator<D> extends TreeMapRendererDecorator<D> {
 
     // Skips if the label text cannot fit into the rectangle.
     if (labelElement.measurement.verticalSliceWidth! > maxLabelHeight) return;
-    if (labelElement.maxWidth > 0) {
+    if (labelElement.maxWidth! > 0) {
       _drawLabel(canvas, rect, labelElement,
           rtl: rtl, rotate: renderVertically);
     }

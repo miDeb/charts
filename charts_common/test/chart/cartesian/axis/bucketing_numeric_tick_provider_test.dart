@@ -30,10 +30,10 @@ import 'package:charts_common/src/common/graphics_factory.dart';
 import 'package:charts_common/src/common/line_style.dart';
 import 'package:charts_common/src/common/text_style.dart';
 import 'package:charts_common/src/common/text_element.dart';
+import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:test/test.dart';
-
-class MockNumericScale extends Mock implements NumericScale {}
+import 'bucketing_numeric_tick_provider_test.mocks.dart';
 
 /// A fake draw strategy that reports collision and alternate ticks
 ///
@@ -42,7 +42,7 @@ class MockNumericScale extends Mock implements NumericScale {}
 ///
 /// Reports alternate rendering after tick count is greater than or equal to
 /// [alternateRenderingAfterTickCount].
-class FakeDrawStrategy extends BaseTickDrawStrategy<num?> {
+class FakeDrawStrategy extends BaseTickDrawStrategy<num> {
   final int collidesAfterTickCount;
   final int alternateRenderingAfterTickCount;
 
@@ -51,7 +51,7 @@ class FakeDrawStrategy extends BaseTickDrawStrategy<num?> {
       : super(null, FakeGraphicsFactory());
 
   @override
-  CollisionReport collides(List<Tick<num?>>? ticks, _) {
+  CollisionReport<num> collides(List<Tick<num>>? ticks, _) {
     final ticksCollide = ticks!.length >= collidesAfterTickCount;
     final alternateTicksUsed = ticks.length >= alternateRenderingAfterTickCount;
 
@@ -105,6 +105,7 @@ class CelsiusToFahrenheitConverter implements UnitConverter<num, num> {
   num invert(num value) => (value - 32.0) / 1.8;
 }
 
+@GenerateMocks([NumericScale])
 void main() {
   late FakeGraphicsFactory graphicsFactory;
   late MockNumericScale scale;

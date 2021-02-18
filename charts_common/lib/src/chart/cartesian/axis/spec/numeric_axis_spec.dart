@@ -32,7 +32,7 @@ import 'tick_spec.dart' show TickSpec;
 
 /// [AxisSpec] specialized for numeric/continuous axes like the measure axis.
 @immutable
-class NumericAxisSpec extends AxisSpec<num?> {
+class NumericAxisSpec extends AxisSpec<num> {
   /// Sets viewport for this Axis.
   ///
   /// If pan / zoom behaviors are set, this is the initial viewport.
@@ -49,7 +49,7 @@ class NumericAxisSpec extends AxisSpec<num?> {
   ///     formatted.
   /// [showAxisLine] override to force the axis to draw the axis line.
   const NumericAxisSpec({
-    RenderSpec<num?>? renderSpec,
+    RenderSpec<num>? renderSpec,
     NumericTickProviderSpec? tickProviderSpec,
     NumericTickFormatterSpec? tickFormatterSpec,
     bool? showAxisLine,
@@ -79,7 +79,7 @@ class NumericAxisSpec extends AxisSpec<num?> {
 
   @override
   void configure(
-      Axis<num?> axis, ChartContext? context, GraphicsFactory? graphicsFactory) {
+      Axis<num> axis, ChartContext? context, GraphicsFactory? graphicsFactory) {
     super.configure(axis, context, graphicsFactory);
 
     if (axis is NumericAxis && viewport != null) {
@@ -105,9 +105,9 @@ class NumericAxisSpec extends AxisSpec<num?> {
   }
 }
 
-abstract class NumericTickProviderSpec extends TickProviderSpec<num?> {}
+abstract class NumericTickProviderSpec extends TickProviderSpec<num> {}
 
-abstract class NumericTickFormatterSpec extends TickFormatterSpec<num?> {}
+abstract class NumericTickFormatterSpec extends TickFormatterSpec<num> {}
 
 @immutable
 class BasicNumericTickProviderSpec implements NumericTickProviderSpec {

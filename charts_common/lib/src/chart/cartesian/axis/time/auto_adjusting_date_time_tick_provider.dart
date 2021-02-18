@@ -43,7 +43,7 @@ import 'year_time_stepper.dart' show YearTimeStepper;
 ///
 /// Once a tick provider is chosen the selection of ticks is done by the child
 /// tick provider.
-class AutoAdjustingDateTimeTickProvider implements TickProvider<DateTime?> {
+class AutoAdjustingDateTimeTickProvider implements TickProvider<DateTime> {
   /// List of tick providers to be selected from.
   final List<TimeRangeTickProvider> _potentialTickProviders;
 
@@ -89,16 +89,16 @@ class AutoAdjustingDateTimeTickProvider implements TickProvider<DateTime?> {
   /// Generates a list of ticks for the given data which should not collide
   /// unless the range is not large enough.
   @override
-  List<Tick<DateTime?>>? getTicks({
+  List<Tick<DateTime>>? getTicks({
     required ChartContext? context,
     required GraphicsFactory graphicsFactory,
     required DateTimeScale scale,
-    required TickFormatter<DateTime?>? formatter,
-    required Map<DateTime?, String> formatterValueCache,
-    required TickDrawStrategy? tickDrawStrategy,
+    required TickFormatter<DateTime>? formatter,
+    required Map<DateTime, String> formatterValueCache,
+    required TickDrawStrategy<DateTime>? tickDrawStrategy,
     required AxisOrientation? orientation,
     bool viewportExtensionEnabled = false,
-    TickHint<DateTime?>? tickHint,
+    TickHint<DateTime>? tickHint,
   }) {
     List<TimeRangeTickProvider?> tickProviders;
 
@@ -134,7 +134,7 @@ class AutoAdjustingDateTimeTickProvider implements TickProvider<DateTime?> {
   }
 
   /// Find the closest tick provider based on the tick hint.
-  TimeRangeTickProvider? _getClosestTickProvider(TickHint<DateTime?> tickHint) {
+  TimeRangeTickProvider _getClosestTickProvider(TickHint<DateTime> tickHint) {
     final stepSize = ((tickHint.end!.difference(tickHint.start!).inMilliseconds) /
             (tickHint.tickCount! - 1))
         .round();
@@ -151,7 +151,7 @@ class AutoAdjustingDateTimeTickProvider implements TickProvider<DateTime?> {
       }
     }
 
-    return closestTickProvider;
+    return closestTickProvider!;
   }
 
   static TimeRangeTickProvider createYearTickProvider(

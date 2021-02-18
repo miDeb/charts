@@ -23,7 +23,7 @@ import 'date_time_extents.dart' show DateTimeExtents;
 /// [DateTimeScale] is a wrapper for [LinearScale].
 /// [DateTime] values are converted to millisecondsSinceEpoch and passed to the
 /// [LinearScale].
-class DateTimeScale extends MutableScale<DateTime?> {
+class DateTimeScale extends MutableScale<DateTime> {
   final DateTimeFactory dateTimeFactory;
   final LinearScale _linearScale;
 

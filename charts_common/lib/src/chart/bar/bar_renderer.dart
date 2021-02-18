@@ -138,7 +138,7 @@ class BarRenderer<D>
       int? domainWidth,
       num? measureValue,
       num? measureOffsetValue,
-      ImmutableAxis<num>? measureAxis,
+      ImmutableAxis<num?>? measureAxis,
       required double measureAxisPosition,
       int? numBarGroups,
       Color? fillColor,
@@ -182,7 +182,7 @@ class BarRenderer<D>
       int? domainWidth,
       num? measureValue,
       num? measureOffsetValue,
-      ImmutableAxis<num>? measureAxis,
+      ImmutableAxis<num?>? measureAxis,
       double? measureAxisPosition,
       Color? fillColor,
       FillPatternType? fillPattern,
@@ -381,7 +381,7 @@ class BarRenderer<D>
       int domainWidth,
       num? measureValue,
       num measureOffsetValue,
-      ImmutableAxis<num> measureAxis,
+      ImmutableAxis<num?> measureAxis,
       int barGroupIndex,
       double previousBarGroupWeight,
       double? barGroupWeight,
@@ -489,7 +489,7 @@ class BarRendererElement<D> extends BaseBarRendererElement
   BarRendererElement();
 
   BarRendererElement.clone(BarRendererElement other)
-      : series = other.series as ImmutableSeries<D>,
+      : series = other.series as ImmutableSeries<D>?,
         bounds = other.bounds,
         roundPx = other.roundPx,
         index = other.index,

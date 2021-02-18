@@ -17,11 +17,13 @@ import 'package:charts_common/src/chart/cartesian/axis/spec/date_time_axis_spec.
 import 'package:charts_common/src/chart/cartesian/axis/time/date_time_tick_formatter.dart';
 import 'package:charts_common/src/chart/common/chart_context.dart';
 import 'package:intl/intl.dart' show DateFormat;
+import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:test/test.dart';
+import 'basic_date_time_tick_formatter_spec_test.mocks.dart';
 
-class MockContext extends Mock implements ChartContext {}
 
+@GenerateMocks([ChartContext])
 void main() {
   const String tickLabel = '-tick-';
   final DateTime testDate1 = DateTime.utc(1984, 11, 11);
@@ -31,7 +33,7 @@ void main() {
   late BasicDateTimeTickFormatterSpec dateTimeTickSpec;
   late BasicDateTimeTickFormatterSpec dateTimeTickSpecWithDateFormat;
   late DateFormat dateFormat;
-  late MockContext mockContext;
+  late MockChartContext mockContext;
 
   String testFormatter(DateTime dateTime) {
     return tickLabel;
@@ -43,7 +45,7 @@ void main() {
     dateTimeTickSpecWithDateFormat =
         BasicDateTimeTickFormatterSpec.fromDateFormat(dateFormat);
 
-    mockContext = MockContext();
+    mockContext = MockChartContext();
   });
 
   group(BasicDateTimeTickFormatterSpec, () {

@@ -31,7 +31,7 @@ class DatumDetails<D> {
   final int? index;
 
   /// Domain value of [datum].
-  final D? domain;
+  final D domain;
 
   /// Domain lower bound value of [datum]. This may represent an error bound, or
   /// a previous domain value.
@@ -128,7 +128,7 @@ class DatumDetails<D> {
   final double? strokeWidthPx;
 
   /// Optional formatter for [domain].
-  DomainFormatter<D?>? domainFormatter;
+  DomainFormatter<D>? domainFormatter;
 
   /// Optional formatter for [measure].
   MeasureFormatter? measureFormatter;
@@ -136,7 +136,7 @@ class DatumDetails<D> {
   DatumDetails(
       {this.datum,
       this.index,
-      this.domain,
+      required this.domain,
       this.domainFormatter,
       this.domainLowerBound,
       this.domainUpperBound,

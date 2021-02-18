@@ -23,9 +23,9 @@ import 'date_time_extents.dart' show DateTimeExtents;
 import 'date_time_scale.dart' show DateTimeScale;
 import 'date_time_tick_formatter.dart' show DateTimeTickFormatter;
 
-class DateTimeAxis extends Axis<DateTime?> {
+class DateTimeAxis extends Axis<DateTime> {
   DateTimeAxis(DateTimeFactory dateTimeFactory,
-      {TickProvider<DateTime?>? tickProvider, TickFormatter? tickFormatter})
+      {TickProvider<DateTime>? tickProvider, TickFormatter? tickFormatter})
       : super(
           tickProvider: tickProvider ??
               AutoAdjustingDateTimeTickProvider.createDefault(dateTimeFactory),

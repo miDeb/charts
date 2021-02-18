@@ -28,9 +28,9 @@ import 'tick_provider.dart' show BaseTickProvider, TickHint;
 import 'time/date_time_scale.dart' show DateTimeScale;
 
 /// Tick provider that provides ticks at the two end points of the axis range.
-class EndPointsTickProvider<D> extends BaseTickProvider<D?> {
+class EndPointsTickProvider<D> extends BaseTickProvider<D> {
   @override
-  List<Tick<D?>> getTicks({
+  List<Tick<D>> getTicks({
     required ChartContext? context,
     required GraphicsFactory graphicsFactory,
     required MutableScale<D?>? scale,
@@ -41,7 +41,7 @@ class EndPointsTickProvider<D> extends BaseTickProvider<D?> {
     bool viewportExtensionEnabled = false,
     TickHint<D?>? tickHint,
   }) {
-    final List<Tick<D?>> ticks = <Tick<D>>[];
+    final List<Tick<D>> ticks = <Tick<D>>[];
 
     // Check to see if the axis has been configured with some domain values.
     //
@@ -55,12 +55,12 @@ class EndPointsTickProvider<D> extends BaseTickProvider<D?> {
           stepSize: scale.domainStepSize);
 
       ticks.add(Tick(
-          value: start,
+          value: start!,
           textElement: graphicsFactory.createTextElement(labels[0]),
           locationPx: scale[start] as double?));
 
       ticks.add(Tick(
-          value: end,
+          value: end!,
           textElement: graphicsFactory.createTextElement(labels[1]),
           locationPx: scale[end] as double?));
 

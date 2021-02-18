@@ -21,8 +21,8 @@ import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:flutter/material.dart';
 
 class LineLineAnnotationChart extends StatelessWidget {
-  final List<charts.Series> seriesList;
-  final bool animate;
+  final List<charts.Series<dynamic, num>> seriesList;
+  final bool? animate;
 
   LineLineAnnotationChart(this.seriesList, {this.animate});
 
@@ -74,7 +74,7 @@ class LineLineAnnotationChart extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return new charts.LineChart(seriesList, animate: animate, behaviors: [
-      new charts.RangeAnnotation([
+      new charts.RangeAnnotation<num>([
         new charts.LineAnnotationSegment(
             1.0, charts.RangeAnnotationAxisType.domain,
             startLabel: 'Domain 1'),
@@ -91,7 +91,7 @@ class LineLineAnnotationChart extends StatelessWidget {
             startLabel: 'Measure 2 Start',
             endLabel: 'Measure 2 End',
             color: charts.MaterialPalette.gray.shade400),
-      ]),
+      ]) ,
     ]);
   }
 

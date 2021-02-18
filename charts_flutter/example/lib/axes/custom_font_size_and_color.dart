@@ -26,8 +26,8 @@ import 'package:charts_flutter/flutter.dart' as charts;
 /// There are many axis styling options in the SmallTickRenderer allowing you
 /// to customize the font, tick lengths, and offsets.
 class CustomFontSizeAndColor extends StatelessWidget {
-  final List<charts.Series> seriesList;
-  final bool animate;
+  final List<charts.Series<dynamic, String>> seriesList;
+  final bool? animate;
 
   CustomFontSizeAndColor(this.seriesList, {this.animate});
 

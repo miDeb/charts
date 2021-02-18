@@ -65,19 +65,19 @@ class TimeRangeTickProviderImpl extends TimeRangeTickProvider {
   }
 
   @override
-  List<Tick<DateTime?>>? getTicks({
+  List<Tick<DateTime>>? getTicks({
     required ChartContext? context,
     required GraphicsFactory graphicsFactory,
     required DateTimeScale scale,
-    required TickFormatter<DateTime?>? formatter,
-    required Map<DateTime?, String> formatterValueCache,
-    required TickDrawStrategy? tickDrawStrategy,
+    required TickFormatter<DateTime>? formatter,
+    required Map<DateTime, String> formatterValueCache,
+    required TickDrawStrategy<DateTime>? tickDrawStrategy,
     required AxisOrientation? orientation,
     bool viewportExtensionEnabled = false,
-    TickHint<DateTime?>? tickHint,
+    TickHint<DateTime>? tickHint,
   }) {
-    List<Tick<DateTime?>>? currentTicks;
-    final tickValues = <DateTime?>[];
+    List<Tick<DateTime>>? currentTicks;
+    final tickValues = <DateTime>[];
     final timeStepIt = timeStepper.getSteps(scale.viewportDomain)!.iterator;
 
     // Try different tickIncrements and choose the first that has no collisions.
@@ -100,7 +100,7 @@ class TimeRangeTickProviderImpl extends TimeRangeTickProvider {
       tickValues.clear();
       timeStepIt.reset(tickIncrement);
       while (timeStepIt.moveNext()) {
-        tickValues.add(timeStepIt.current);
+        tickValues.add(timeStepIt.current!);
       }
 
       // Create ticks

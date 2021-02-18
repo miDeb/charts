@@ -296,10 +296,10 @@ class BarLabelDecorator<D> extends BarRendererDecorator<D> {
       }
 
       // Only calculate and draw label if there's actually space for the label.
-      if (labelElement.maxWidth < 0 ||
+      if (labelElement.maxWidth! < 0 ||
           (labelElement.maxWidthStrategy == null &&
               labelElement.measurement.horizontalSliceWidth! >
-                  labelElement.maxWidth)) {
+                  labelElement.maxWidth!)) {
         return;
       }
 

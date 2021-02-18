@@ -23,8 +23,8 @@ import 'package:charts_flutter/flutter.dart' as charts;
 /// Example of using a custom primary measure replacing the renderSpec with one
 /// that aligns the text under the tick and left justifies.
 class MeasureAxisLabelAlignment extends StatelessWidget {
-  final List<charts.Series> seriesList;
-  final bool animate;
+  final List<charts.Series<dynamic, String>> seriesList;
+  final bool? animate;
 
   MeasureAxisLabelAlignment(this.seriesList, {this.animate});
 
@@ -69,7 +69,7 @@ class MeasureAxisLabelAlignment extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return new charts.BarChart(
-      seriesList,
+      seriesList ,
       animate: animate,
 
       /// Customize the primary measure axis using a small tick renderer.

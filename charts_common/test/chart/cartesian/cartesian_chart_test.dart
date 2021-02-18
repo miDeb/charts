@@ -20,17 +20,15 @@ import 'package:charts_common/src/chart/cartesian/axis/spec/numeric_axis_spec.da
 import 'package:charts_common/src/chart/common/chart_context.dart';
 import 'package:charts_common/src/chart/time_series/time_series_chart.dart';
 import 'package:charts_common/src/common/graphics_factory.dart';
+import 'package:mockito/annotations.dart';
+import 'cartesian_chart_test.mocks.dart';
 
 import 'package:mockito/mockito.dart';
 import 'package:test/test.dart';
 
-class MockContext extends Mock implements ChartContext {}
-
-class MockGraphicsFactory extends Mock implements GraphicsFactory {}
-
 class FakeNumericChart extends NumericCartesianChart {
   FakeNumericChart() {
-    context = MockContext();
+    context = MockChartContext();
     graphicsFactory = MockGraphicsFactory();
   }
 
@@ -42,7 +40,7 @@ class FakeNumericChart extends NumericCartesianChart {
 
 class FakeOrdinalChart extends OrdinalCartesianChart {
   FakeOrdinalChart() {
-    context = MockContext();
+    context = MockChartContext();
     graphicsFactory = MockGraphicsFactory();
   }
 
@@ -54,7 +52,7 @@ class FakeOrdinalChart extends OrdinalCartesianChart {
 
 class FakeTimeSeries extends TimeSeriesChart {
   FakeTimeSeries() {
-    context = MockContext();
+    context = MockChartContext();
     graphicsFactory = MockGraphicsFactory();
   }
 
@@ -64,6 +62,7 @@ class FakeTimeSeries extends TimeSeriesChart {
   }
 }
 
+@GenerateMocks([ChartContext, GraphicsFactory])
 void main() {
   group('Axis reset with new axis spec', () {
     test('for ordinal chart', () {

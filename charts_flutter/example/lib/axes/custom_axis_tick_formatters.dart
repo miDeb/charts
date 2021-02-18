@@ -22,8 +22,8 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class CustomAxisTickFormatters extends StatelessWidget {
-  final List<charts.Series> seriesList;
-  final bool animate;
+  final List<charts.Series<MyRow, DateTime>> seriesList;
+  final bool? animate;
 
   CustomAxisTickFormatters(this.seriesList, {this.animate});
 

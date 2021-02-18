@@ -54,7 +54,7 @@ class ScatterPlotChart extends NumericCartesianChart {
             disjointMeasureAxes: disjointMeasureAxes);
 
   @override
-  SeriesRenderer<num?> makeDefaultRenderer() {
+  SeriesRenderer<num> makeDefaultRenderer() {
     return PointRenderer<num>()..rendererId = SeriesRenderer.defaultRendererId;
   }
 

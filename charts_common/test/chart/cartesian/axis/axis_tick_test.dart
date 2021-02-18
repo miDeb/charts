@@ -27,8 +27,8 @@ class FakeTextElement implements TextElement {
 
   late TextMeasurement measurement;
   TextStyle? textStyle;
-  late int maxWidth;
-  late MaxWidthStrategy maxWidthStrategy;
+  late int? maxWidth;
+  late MaxWidthStrategy? maxWidthStrategy;
   late TextDirection textDirection;
 
   FakeTextElement(this.text);

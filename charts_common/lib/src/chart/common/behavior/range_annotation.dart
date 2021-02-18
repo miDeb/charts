@@ -48,7 +48,7 @@ import 'chart_behavior.dart' show ChartBehavior;
 /// range.
 ///
 /// TODO: Support labels.
-class RangeAnnotation<D> implements ChartBehavior<D?> {
+class RangeAnnotation<D> implements ChartBehavior<D> {
   static const _defaultLabelAnchor = AnnotationLabelAnchor.end;
   static const _defaultLabelDirection = AnnotationLabelDirection.auto;
   static const _defaultLabelPosition = AnnotationLabelPosition.auto;

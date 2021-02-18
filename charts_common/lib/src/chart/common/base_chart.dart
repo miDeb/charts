@@ -35,7 +35,7 @@ import 'selection_model/selection_model.dart'
 import 'series_datum.dart' show SeriesDatum;
 import 'series_renderer.dart' show SeriesRenderer, rendererIdKey, rendererKey;
 
-typedef BehaviorCreator = ChartBehavior<D> Function<D>();
+typedef BehaviorCreator<D> = ChartBehavior<D> Function();
 
 abstract class BaseChart<D> {
   ChartContext? context;
@@ -69,7 +69,7 @@ abstract class BaseChart<D> {
   Set<String?> _usingRenderers = Set<String?>();
   Map<String?, List<MutableSeries<D>>>? _rendererToSeriesList;
 
-  final Map<String?, SeriesRenderer<D?>> _seriesRenderers = <String?, SeriesRenderer<D>>{};
+  final Map<String?, SeriesRenderer<D>> _seriesRenderers = <String?, SeriesRenderer<D>>{};
 
   /// Map of named chart behaviors attached to this chart.
   final _behaviorRoleMap = <String, ChartBehavior<D>>{};
@@ -164,15 +164,15 @@ abstract class BaseChart<D> {
   // Renderer methods
   //
 
-  set defaultRenderer(SeriesRenderer<D?> renderer) {
+  set defaultRenderer(SeriesRenderer<D> renderer) {
     renderer.rendererId = SeriesRenderer.defaultRendererId;
     addSeriesRenderer(renderer);
   }
 
-  SeriesRenderer<D?> get defaultRenderer =>
+  SeriesRenderer<D> get defaultRenderer =>
       getSeriesRenderer(SeriesRenderer.defaultRendererId)!;
 
-  void addSeriesRenderer(SeriesRenderer renderer) {
+  void addSeriesRenderer(SeriesRenderer<D> renderer) {
     String? rendererId = renderer.rendererId;
 
     SeriesRenderer<D?>? previousRenderer = _seriesRenderers[rendererId];
@@ -183,11 +183,11 @@ abstract class BaseChart<D> {
 
     addView(renderer);
     renderer.onAttach(this);
-    _seriesRenderers[rendererId] = renderer as SeriesRenderer<D?>;
+    _seriesRenderers[rendererId] = renderer;
   }
 
-  SeriesRenderer<D?>? getSeriesRenderer(String? rendererId) {
-    SeriesRenderer<D?>? renderer = _seriesRenderers[rendererId];
+  SeriesRenderer<D>? getSeriesRenderer(String? rendererId) {
+    SeriesRenderer<D>? renderer = _seriesRenderers[rendererId];
 
     // Special case, if we are asking for the default and we haven't made it
     // yet, then make it now.
@@ -219,7 +219,7 @@ abstract class BaseChart<D> {
   /// [selectAcrossAllDrawAreaComponents] specifies whether nearest data
   /// selection should be done across the combined draw area of all components
   /// with series draw areas, or just the chart's primary draw area bounds.
-  List<DatumDetails<D?>> getNearestDatumDetailPerSeries(
+  List<DatumDetails<D>> getNearestDatumDetailPerSeries(
       Point<double>? drawAreaPoint, bool selectAcrossAllDrawAreaComponents) {
     // Optionally grab the combined draw area bounds of all components. If this
     // is disabled, then we expect each series renderer to filter out the event
@@ -227,7 +227,7 @@ abstract class BaseChart<D> {
     final boundsOverride =
         selectAcrossAllDrawAreaComponents ? drawableLayoutAreaBounds : null;
 
-    final List<DatumDetails<D?>> details = <DatumDetails<D>>[];
+    final List<DatumDetails<D>> details = <DatumDetails<D>>[];
     _usingRenderers.forEach((String? rendererId) {
       details.addAll(getSeriesRenderer(rendererId)!
           .getNearestDatumDetailPerSeries(
@@ -311,7 +311,7 @@ abstract class BaseChart<D> {
   ///
   /// This invokes the provides helper with type parameters that match this
   /// chart.
-  ChartBehavior<D> createBehavior(BehaviorCreator creator) => creator<D>();
+  ChartBehavior<D> createBehavior(BehaviorCreator<D> creator) => creator();
 
   /// Attaches a behavior to the chart.
   ///

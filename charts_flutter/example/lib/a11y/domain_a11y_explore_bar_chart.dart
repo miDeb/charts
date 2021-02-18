@@ -38,8 +38,8 @@ import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:flutter/material.dart';
 
 class DomainA11yExploreBarChart extends StatelessWidget {
-  final List<charts.Series> seriesList;
-  final bool animate;
+  final List<charts.Series<dynamic, String>> seriesList;
+  final bool? animate;
 
   DomainA11yExploreBarChart(this.seriesList, {this.animate});
 
@@ -113,7 +113,7 @@ class DomainA11yExploreBarChart extends StatelessWidget {
     buffer.write(seriesDatums.first.datum.year);
 
     for (charts.SeriesDatum seriesDatum in seriesDatums) {
-      final series = seriesDatum.series;
+      final series = seriesDatum.series!;
       final datum = seriesDatum.datum;
 
       buffer.write(' ${series.displayName} '
@@ -140,7 +140,7 @@ class DomainA11yExploreBarChart extends StatelessWidget {
           // with the application.
           defaultInteractions: !MediaQuery.of(context).accessibleNavigation,
           behaviors: [
-            new charts.DomainA11yExploreBehavior(
+            new charts.DomainA11yExploreBehavior<String?>(
               // Callback for generating the message that is vocalized.
               // An example of how to use is in [vocalizeDomainAndMeasures].
               // If none is set, the default only vocalizes the domain value.
