@@ -76,7 +76,8 @@ class BarLaneRenderer extends BarRenderer<String> {
     return BarLaneRenderer._internal(config: config, rendererId: rendererId);
   }
 
-  BarLaneRenderer._internal({required BarLaneRendererConfig config, String? rendererId})
+  BarLaneRenderer._internal(
+      {required BarLaneRendererConfig config, String? rendererId})
       : barRendererDecorator = config.barRendererDecorator,
         super.internal(config: config, rendererId: rendererId);
 
@@ -87,7 +88,7 @@ class BarLaneRenderer extends BarRenderer<String> {
     _allMeasuresForDomainNullMap.clear();
 
     seriesList.forEach((MutableSeries<String> series) {
-      final  domainFn = series.domainFn;
+      final domainFn = series.domainFn;
       final measureFn = series.rawMeasureFn;
 
       final domainValues = Set<String>();
@@ -114,14 +115,16 @@ class BarLaneRenderer extends BarRenderer<String> {
   }
 
   @override
-  void update(List<ImmutableSeries<String>> seriesList, bool isAnimatingThisDraw) {
+  void update(
+      List<ImmutableSeries<String>> seriesList, bool isAnimatingThisDraw) {
     super.update(seriesList, isAnimatingThisDraw);
 
     // Add gray bars to render under every bar stack.
     seriesList.forEach((ImmutableSeries<String> series) {
       Set<String> domainValues = series.getAttr(domainValuesKey) as Set<String>;
 
-      final domainAxis = series.getAttr(domainAxisKey) as ImmutableAxis<String>?;
+      final domainAxis =
+          series.getAttr(domainAxisKey) as ImmutableAxis<String>?;
       final measureAxis = series.getAttr(measureAxisKey) as ImmutableAxis<num>;
       final seriesStackKey = series.getAttr(stackKeyKey);
       final barGroupCount = series.getAttr(barGroupCountKey);
@@ -133,7 +136,8 @@ class BarLaneRenderer extends BarRenderer<String> {
 
       // Create a fake series for [BarLabelDecorator] to use when looking up the
       // index of each datum.
-      final laneSeries = MutableSeries<String>.clone(seriesList[0] as MutableSeries<String>);
+      final laneSeries =
+          MutableSeries<String>.clone(seriesList[0] as MutableSeries<String>);
       laneSeries.data = [];
 
       // Don't render any labels on the swim lanes.
@@ -164,12 +168,12 @@ class BarLaneRenderer extends BarRenderer<String> {
 
         final barKey = barStackMapKey + '0';
 
-        final List<AnimatedBar<String>> barStackList = _barLaneStackMap.putIfAbsent(
-            barStackMapKey, () => <AnimatedBar<String>>[]);
+        final List<AnimatedBar<String>> barStackList = _barLaneStackMap
+            .putIfAbsent(barStackMapKey, () => <AnimatedBar<String>>[]);
 
         // If we already have an AnimatingBar for that index, use it.
-        var animatingBar = barStackList.firstWhereOrNull(
-            (AnimatedBar bar) => bar.key == barKey);
+        var animatingBar = barStackList
+            .firstWhereOrNull((AnimatedBar bar) => bar.key == barKey);
 
         // If we don't have any existing bar element, create a new bar and have
         // it animate in from the domain axis.
@@ -251,7 +255,8 @@ class BarLaneRenderer extends BarRenderer<String> {
       // Create a fake series for [BarLabelDecorator] to use when looking up the
       // index of each datum. We don't care about any other series values for
       // the merged lanes, so just clone the first series.
-      final mergedSeries = MutableSeries<String>.clone(seriesList[0] as MutableSeries<String>);
+      final mergedSeries =
+          MutableSeries<String>.clone(seriesList[0] as MutableSeries<String>);
       mergedSeries.data = [];
 
       // Add a label accessor that returns the empty lane label.
@@ -269,12 +274,12 @@ class BarLaneRenderer extends BarRenderer<String> {
 
           final barKey = barStackMapKey + '0';
 
-          final List<AnimatedBar<String>> barStackList = _barLaneStackMap.putIfAbsent(
-              barStackMapKey, () => <AnimatedBar<String>>[]);
+          final List<AnimatedBar<String>> barStackList = _barLaneStackMap
+              .putIfAbsent(barStackMapKey, () => <AnimatedBar<String>>[]);
 
           // If we already have an AnimatingBar for that index, use it.
-          var animatingBar = barStackList.firstWhereOrNull(
-              (AnimatedBar bar) => bar.key == barKey);
+          var animatingBar = barStackList
+              .firstWhereOrNull((AnimatedBar bar) => bar.key == barKey);
 
           // If we don't have any existing bar element, create a new bar and have
           // it animate in from the domain axis.
@@ -342,7 +347,9 @@ class BarLaneRenderer extends BarRenderer<String> {
   num _getMaxMeasureValue(ImmutableAxis<num> measureAxis) {
     final pos = (chart as CartesianChart).vertical
         ? chart.drawAreaBounds!.top
-        : isRtl ? chart.drawAreaBounds!.left : chart.drawAreaBounds!.right;
+        : isRtl
+            ? chart.drawAreaBounds!.left
+            : chart.drawAreaBounds!.right;
 
     return measureAxis.getDomain(pos.toDouble());
   }
@@ -350,7 +357,8 @@ class BarLaneRenderer extends BarRenderer<String> {
   /// Paints the current bar data on the canvas.
   @override
   void paint(ChartCanvas canvas, double animationPercent) {
-    _barLaneStackMap.forEach((String stackKey, List<AnimatedBar<String>> barStack) {
+    _barLaneStackMap
+        .forEach((String stackKey, List<AnimatedBar<String>> barStack) {
       // Turn this into a list so that the getCurrentBar isn't called more than
       // once for each animationPercent if the barElements are iterated more
       // than once.

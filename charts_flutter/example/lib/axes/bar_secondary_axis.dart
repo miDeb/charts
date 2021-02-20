@@ -98,7 +98,7 @@ class BarChartWithSecondaryAxis extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return new charts.BarChart(
-      seriesList ,
+      seriesList,
       animate: animate,
       barGroupingType: charts.BarGroupingType.grouped,
       // It is important when using both primary and secondary axes to choose

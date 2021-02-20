@@ -131,9 +131,9 @@ class BarErrorDecorator<D> extends BarRendererDecorator<D> {
           }
         } else {
           final startX = measureAxis!.getLocation(
-              measureLowerBoundFn(datumIndex)! + measureOffsetFn!(datumIndex)!)!;
+              measureLowerBoundFn(datumIndex)! + measureOffsetFn!(datumIndex))!;
           final endX = measureAxis.getLocation(
-              measureUpperBoundFn(datumIndex)! + measureOffsetFn(datumIndex)!)!;
+              measureUpperBoundFn(datumIndex)! + measureOffsetFn(datumIndex))!;
 
           if (startX != endX) {
             final barWidth = bounds.bottom - bounds.top;

@@ -88,7 +88,7 @@ class TimeRangeTickProviderImpl extends TimeRangeTickProvider {
     // increment and use that.
     List<int?> allowedTickIncrements;
     if (tickHint != null) {
-      final stepSize = tickHint.end!.difference(tickHint.start!).inMilliseconds;
+      final stepSize = tickHint.end.difference(tickHint.start).inMilliseconds;
       allowedTickIncrements = [_getClosestIncrementFromStepSize(stepSize)];
     } else {
       allowedTickIncrements = timeStepper.allowedTickIncrements;

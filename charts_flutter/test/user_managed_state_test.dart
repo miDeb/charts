@@ -34,7 +34,8 @@ void main() {
       currentSelectionModel = model;
     }
 
-    final testChart = MaterialApp(home: new TestChart(selectionChangedListener, onTapSelection));
+    final testChart = MaterialApp(
+        home: new TestChart(selectionChangedListener, onTapSelection));
 
     await tester.pumpWidget(testChart);
 

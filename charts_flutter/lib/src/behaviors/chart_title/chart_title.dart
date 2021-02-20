@@ -141,20 +141,19 @@ class ChartTitle<D> extends ChartBehavior<D, common.ChartTitle<D>> {
       this.subTitleStyleSpec});
 
   @override
-  common.ChartTitle<D> createCommonBehavior() =>
-      new common.ChartTitle<D>(title,
-          behaviorPosition: behaviorPosition,
-          innerPadding: innerPadding,
-          layoutMinSize: layoutMinSize,
-          layoutPreferredSize: layoutPreferredSize,
-          outerPadding: outerPadding,
-          maxWidthStrategy: maxWidthStrategy,
-          titleDirection: titleDirection,
-          titleOutsideJustification: titleOutsideJustification,
-          titlePadding: titlePadding,
-          titleStyleSpec: titleStyleSpec,
-          subTitle: subTitle,
-          subTitleStyleSpec: subTitleStyleSpec);
+  common.ChartTitle<D> createCommonBehavior() => new common.ChartTitle<D>(title,
+      behaviorPosition: behaviorPosition,
+      innerPadding: innerPadding,
+      layoutMinSize: layoutMinSize,
+      layoutPreferredSize: layoutPreferredSize,
+      outerPadding: outerPadding,
+      maxWidthStrategy: maxWidthStrategy,
+      titleDirection: titleDirection,
+      titleOutsideJustification: titleOutsideJustification,
+      titlePadding: titlePadding,
+      titleStyleSpec: titleStyleSpec,
+      subTitle: subTitle,
+      subTitleStyleSpec: subTitleStyleSpec);
 
   @override
   void updateCommonBehavior(common.ChartTitle commonBehavior) {}

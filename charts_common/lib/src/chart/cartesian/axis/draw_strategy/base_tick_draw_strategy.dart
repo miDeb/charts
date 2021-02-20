@@ -163,7 +163,8 @@ abstract class BaseTickDrawStrategy<D> implements TickDrawStrategy<D> {
   }
 
   @override
-  CollisionReport<D> collides(List<Tick<D>>? ticks, AxisOrientation? orientation) {
+  CollisionReport<D> collides(
+      List<Tick<D>>? ticks, AxisOrientation? orientation) {
     // TODO: Collision analysis for rotated labels are not
     // supported yet.
 
@@ -273,7 +274,7 @@ abstract class BaseTickDrawStrategy<D> implements TickDrawStrategy<D> {
           _calculateWidthForRotatedLabel(
                 labelRotation,
                 _getLabelHeight(labelElements),
-                _getLabelWidth(labelElements)!,
+                _getLabelWidth(labelElements),
               ) +
               labelOffsetFromAxisPx);
     }).round();

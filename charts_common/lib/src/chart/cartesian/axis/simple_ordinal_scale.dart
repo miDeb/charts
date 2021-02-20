@@ -194,8 +194,8 @@ class SimpleOrdinalScale implements OrdinalScale {
   @override
   void setViewportSettings(double? viewportScale, double? viewportTranslatePx) {
     _viewportScale = viewportScale;
-    _viewportTranslatePx =
-        min(0.0, max(rangeWidth * (1.0 - viewportScale!), viewportTranslatePx!));
+    _viewportTranslatePx = min(
+        0.0, max(rangeWidth * (1.0 - viewportScale!), viewportTranslatePx!));
 
     _scaleChanged = true;
   }
@@ -258,7 +258,9 @@ class SimpleOrdinalScale implements OrdinalScale {
 
   @override
   bool isRangeValueWithinViewport(double rangeValue) {
-    return range != null && rangeValue >= range!.min && rangeValue <= range!.max;
+    return range != null &&
+        rangeValue >= range!.min &&
+        rangeValue <= range!.max;
   }
 
   @override

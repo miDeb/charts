@@ -15,8 +15,6 @@
 
 import 'dart:math' show Rectangle;
 
-import 'package:meta/meta.dart' show required;
-
 import '../../common/color.dart' show Color;
 import '../../common/graphics_factory.dart' show GraphicsFactory;
 import '../../common/text_element.dart' show TextDirection, TextElement;
@@ -138,7 +136,6 @@ class BarLabelDecorator<D> extends BarRendererDecorator<D> {
       // Get space available inside and outside the bar.
       final totalPadding = labelPadding * 2;
       final insideBarHeight = bounds.height - totalPadding;
-      final outsideBarHeight = drawBounds!.height - bounds.height - totalPadding;
 
       var calculatedLabelPosition = labelPosition;
       if (calculatedLabelPosition == BarLabelPosition.auto) {
@@ -176,7 +173,8 @@ class BarLabelDecorator<D> extends BarRendererDecorator<D> {
       for (var labelElement in labelElements) {
         // Calculate the start position of label based on [labelAnchor].
         int? labelY;
-        final labelHeight = labelElement.measurement.verticalSliceWidth!.round();
+        final labelHeight =
+            labelElement.measurement.verticalSliceWidth!.round();
         final offsetHeight =
             (labelHeight + _defaultMultiLineLabelPadding) * labelsDrawn;
 
@@ -368,10 +366,10 @@ class BarLabelDecorator<D> extends BarRendererDecorator<D> {
   TextStyle _getTextStyle(
       GraphicsFactory graphicsFactory, TextStyleSpec labelSpec) {
     return graphicsFactory.createTextPaint()
-      ..color = labelSpec?.color ?? Color.black
-      ..fontFamily = labelSpec?.fontFamily
-      ..fontSize = labelSpec?.fontSize ?? 12
-      ..lineHeight = labelSpec?.lineHeight;
+      ..color = labelSpec.color ?? Color.black
+      ..fontFamily = labelSpec.fontFamily
+      ..fontSize = labelSpec.fontSize ?? 12
+      ..lineHeight = labelSpec.lineHeight;
   }
 
   /// Helper function to get datum specific style

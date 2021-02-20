@@ -162,7 +162,8 @@ abstract class BaseChart<D> extends StatefulWidget {
     }
 
     // Add any remaining/new behaviors.
-    behaviorList.forEach((ChartBehavior<D, common.ChartBehavior<D>> behaviorWidget) {
+    behaviorList
+        .forEach((ChartBehavior<D, common.ChartBehavior<D>> behaviorWidget) {
       final commonBehavior =
           chart.createBehavior(behaviorWidget.createCommonBehavior);
 
@@ -180,7 +181,8 @@ abstract class BaseChart<D> extends StatefulWidget {
   }
 
   /// Create the list of default interaction behaviors.
-  void addDefaultInteractions(List<ChartBehavior<D, common.ChartBehavior<D>>> behaviors) {
+  void addDefaultInteractions(
+      List<ChartBehavior<D, common.ChartBehavior<D>>> behaviors) {
     // Update selection model
     behaviors.add(new SelectNearest(
         eventTrigger: common.SelectionTrigger.tap,

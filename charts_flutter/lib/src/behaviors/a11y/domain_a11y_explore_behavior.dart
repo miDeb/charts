@@ -80,7 +80,7 @@ class DomainA11yExploreBehavior<D>
   }
 
   @override
-  common.DomainA11yExploreBehavior<D> createCommonBehavior()  {
+  common.DomainA11yExploreBehavior<D> createCommonBehavior() {
     return new common.DomainA11yExploreBehavior<D>(
         vocalizationCallback: vocalizationCallback,
         exploreModeTrigger: exploreModeTrigger,

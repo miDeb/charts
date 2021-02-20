@@ -51,7 +51,14 @@ class MyDateTimeRow {
 
 // TODO: Test in RTL context as well.
 
-@GenerateMocks([ChartContext,CartesianChart,OrdinalAxis,NumericAxis, DateTimeAxis, ChartCanvas])
+@GenerateMocks([
+  ChartContext,
+  CartesianChart,
+  OrdinalAxis,
+  NumericAxis,
+  DateTimeAxis,
+  ChartCanvas
+])
 void main() {
   final date0 = DateTime(2018, 2, 1);
   final date1 = DateTime(2018, 2, 7);
@@ -77,7 +84,8 @@ void main() {
     return renderer;
   }
 
-  BaseBarRenderer _makeBarRenderer({required bool vertical, BarGroupingType? groupType}) {
+  BaseBarRenderer _makeBarRenderer(
+      {required bool vertical, BarGroupingType? groupType}) {
     final renderer =
         BarRenderer(config: BarRendererConfig(groupingType: groupType));
     _configureBaseRenderer(renderer, vertical);

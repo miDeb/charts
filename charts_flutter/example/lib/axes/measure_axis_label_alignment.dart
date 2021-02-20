@@ -69,7 +69,7 @@ class MeasureAxisLabelAlignment extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return new charts.BarChart(
-      seriesList ,
+      seriesList,
       animate: animate,
 
       /// Customize the primary measure axis using a small tick renderer.

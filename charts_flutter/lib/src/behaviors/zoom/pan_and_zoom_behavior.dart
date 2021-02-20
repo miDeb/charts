@@ -21,7 +21,8 @@ import '../chart_behavior.dart' show ChartBehavior, GestureType;
 import 'pan_behavior.dart' show FlutterPanBehaviorMixin;
 
 @immutable
-class PanAndZoomBehavior<D> extends ChartBehavior<D, common.PanAndZoomBehavior<D>> {
+class PanAndZoomBehavior<D>
+    extends ChartBehavior<D, common.PanAndZoomBehavior<D>> {
   final _desiredGestures = new Set<GestureType>.from([
     GestureType.onDrag,
   ]);

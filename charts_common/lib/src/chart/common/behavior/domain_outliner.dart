@@ -93,15 +93,15 @@ class DomainOutliner<D> implements ChartBehavior<D> {
     _chart = chart;
     chart.addLifecycleListener(_lifecycleListener);
     chart
-        .getSelectionModel(selectionType)
-        !.addSelectionChangedListener(_selectionChange);
+        .getSelectionModel(selectionType)!
+        .addSelectionChangedListener(_selectionChange);
   }
 
   @override
   void removeFrom(BaseChart<D> chart) {
     chart
-        .getSelectionModel(selectionType)
-        !.removeSelectionChangedListener(_selectionChange);
+        .getSelectionModel(selectionType)!
+        .removeSelectionChangedListener(_selectionChange);
     chart.removeLifecycleListener(_lifecycleListener);
   }
 

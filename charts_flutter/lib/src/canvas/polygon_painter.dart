@@ -66,7 +66,8 @@ class PolygonPainter {
       final point = points.first;
       paint!.color = fillColor!;
       paint.style = PaintingStyle.fill;
-      canvas!.drawCircle(new Offset(point.x as double, point.y as double), strokeWidthPx!, paint);
+      canvas!.drawCircle(new Offset(point.x as double, point.y as double),
+          strokeWidthPx!, paint);
     } else {
       if (strokeColor != null && strokeWidthPx != null) {
         paint!.strokeWidth = strokeWidthPx;

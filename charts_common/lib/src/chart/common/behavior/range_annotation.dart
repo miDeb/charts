@@ -231,9 +231,8 @@ class RangeAnnotation<D> implements ChartBehavior<D> {
       // Add line annotation settings.
       final dashPattern =
           annotation is LineAnnotationSegment ? annotation.dashPattern : null;
-      final strokeWidthPx = annotation is LineAnnotationSegment
-          ? annotation.strokeWidthPx ?? defaultLabelStyleSpec
-          : 0.0;
+      final strokeWidthPx =
+          annotation is LineAnnotationSegment ? annotation.strokeWidthPx : 0.0;
 
       final isRange = annotation is RangeAnnotationSegment;
 
@@ -478,7 +477,8 @@ class _RangeAnnotationLayoutView<D> extends LayoutView {
   }
 
   /// Calculates the bounds of the annotation.
-  Rectangle<num>? _getAnnotationBounds(_AnnotationElement<D> annotationElement) {
+  Rectangle<num>? _getAnnotationBounds(
+      _AnnotationElement<D> annotationElement) {
     Rectangle<num>? bounds;
 
     switch (annotationElement.annotation.axisType) {
@@ -513,13 +513,13 @@ class _RangeAnnotationLayoutView<D> extends LayoutView {
       case RangeAnnotationAxisType.domain:
         points.add(Point<num>(
             annotationElement.annotation.startPosition!, _drawAreaBounds!.top));
-        points.add(Point<num>(
-            annotationElement.annotation.endPosition!, _drawAreaBounds!.bottom));
+        points.add(Point<num>(annotationElement.annotation.endPosition!,
+            _drawAreaBounds!.bottom));
         break;
 
       case RangeAnnotationAxisType.measure:
-        points.add(Point<num>(
-            _drawAreaBounds!.left, annotationElement.annotation.startPosition!));
+        points.add(Point<num>(_drawAreaBounds!.left,
+            annotationElement.annotation.startPosition!));
         points.add(Point<num>(
             _drawAreaBounds!.right, annotationElement.annotation.endPosition!));
         break;
@@ -670,7 +670,8 @@ class _RangeAnnotationLayoutView<D> extends LayoutView {
             break;
           case _AnnotationLabelType.middle:
             labelX = bounds!.left +
-                (bounds.width - labelElement.measurement.horizontalSliceWidth!) /
+                (bounds.width -
+                        labelElement.measurement.horizontalSliceWidth!) /
                     2;
             break;
         }
@@ -691,7 +692,8 @@ class _RangeAnnotationLayoutView<D> extends LayoutView {
             break;
           case _AnnotationLabelType.middle:
             labelX = bounds!.left +
-                (bounds.width - labelElement.measurement.horizontalSliceWidth!) /
+                (bounds.width -
+                        labelElement.measurement.horizontalSliceWidth!) /
                     2;
             break;
         }
@@ -1143,9 +1145,9 @@ class _AnnotationElement<D> {
 
     color = getAnimatedColor(previous.color!, target.color!, animationPercent);
 
-    strokeWidthPx =
-        (((target.strokeWidthPx! - previous.strokeWidthPx!) * animationPercent) +
-            previous.strokeWidthPx!);
+    strokeWidthPx = (((target.strokeWidthPx! - previous.strokeWidthPx!) *
+            animationPercent) +
+        previous.strokeWidthPx!);
   }
 }
 

@@ -43,8 +43,8 @@ class DatumLegend<D> extends Legend<D> {
     TextStyleSpec? entryTextStyle,
   }) : super(
             selectionModelType: selectionModelType ?? SelectionModelType.info,
-            legendEntryGenerator:
-                (legendEntryGenerator ?? PerDatumLegendEntryGenerator()) as LegendEntryGenerator<D?>?,
+            legendEntryGenerator: (legendEntryGenerator ??
+                PerDatumLegendEntryGenerator()) as LegendEntryGenerator<D?>?,
             entryTextStyle: entryTextStyle) {
     // Call the setters that include the setting for default.
     this.showMeasures = showMeasures;

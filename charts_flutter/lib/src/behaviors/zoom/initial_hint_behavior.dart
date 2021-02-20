@@ -24,7 +24,8 @@ import '../chart_behavior.dart'
     show ChartBehavior, ChartStateBehavior, GestureType;
 
 @immutable
-class InitialHintBehavior<D> extends ChartBehavior<D, common.InitialHintBehavior<D>> {
+class InitialHintBehavior<D>
+    extends ChartBehavior<D, common.InitialHintBehavior<D>> {
   final desiredGestures = new Set<GestureType>();
 
   final Duration? hintDuration;

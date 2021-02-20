@@ -40,8 +40,7 @@ import '../layout/layout_view.dart' show LayoutViewConfig;
 ///   offsets overlap. Note that bars for each series will be rendered in order,
 ///   such that bars from the last series will be "on top" of bars from previous
 ///   series.
-abstract class BaseBarRendererConfig<D>
-    implements SeriesRendererConfig<D> {
+abstract class BaseBarRendererConfig<D> implements SeriesRendererConfig<D> {
   final String? customRendererId;
 
   final SymbolRenderer symbolRenderer;

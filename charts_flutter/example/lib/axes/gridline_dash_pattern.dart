@@ -74,7 +74,7 @@ class GridlineDashPattern extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return new charts.TimeSeriesChart(seriesList ,
+    return new charts.TimeSeriesChart(seriesList,
         animate: animate,
 
         /// Customize the gridlines to use a dash pattern.

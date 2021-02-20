@@ -49,8 +49,8 @@ class SeriesLegend<D> extends Legend<D> {
     TextStyleSpec? entryTextStyle,
   }) : super(
             selectionModelType: selectionModelType ?? SelectionModelType.info,
-            legendEntryGenerator:
-                (legendEntryGenerator ?? PerSeriesLegendEntryGenerator()) as LegendEntryGenerator<D?>?,
+            legendEntryGenerator: (legendEntryGenerator ??
+                PerSeriesLegendEntryGenerator()) as LegendEntryGenerator<D?>?,
             entryTextStyle: entryTextStyle) {
     // Call the setters that include the setting for default.
     this.showMeasures = showMeasures;

@@ -290,9 +290,9 @@ class NumericTickProvider extends BaseTickProvider<num> {
         if (stepInfo == null) {
           continue;
         }
-        final firstTick = dataToAxisUnitConverter.invert(stepInfo.tickStart)!;
+        final firstTick = dataToAxisUnitConverter.invert(stepInfo.tickStart);
         final lastTick = dataToAxisUnitConverter
-            .invert(stepInfo.tickStart + stepInfo.stepSize * (tickCount - 1))!;
+            .invert(stepInfo.tickStart + stepInfo.stepSize * (tickCount - 1));
         final range = lastTick - firstTick;
         // Calculate ticks if it is a better range or if preferred ticks have
         // not been found yet.
@@ -475,8 +475,8 @@ class NumericTickProvider extends BaseTickProvider<num> {
       final diffTensBase = _getEnclosingPowerOfTen(high - low);
       // Walk the step sizes calculating a starting point and seeing if the high
       // end is included in the range given that step size.
-      for (double? step in _allowedSteps) {
-        final tmpStepSize = _removeRoundingErrors(step! * diffTensBase);
+      for (double step in _allowedSteps) {
+        final tmpStepSize = _removeRoundingErrors(step * diffTensBase);
 
         // If prefer whole number, then don't allow a step that isn't one.
         if (dataIsInWholeNumbers! && (tmpStepSize).round() != tmpStepSize) {
@@ -499,11 +499,13 @@ class NumericTickProvider extends BaseTickProvider<num> {
     return [
       // We have our size and start, assign all the tick values to the given array.
       for (int i = 0; i < tickCount; i++)
-        dataToAxisUnitConverter.invert(
-          _removeRoundingErrors(
-            steps.tickStart + (i * steps.stepSize),
-          ),
-        ).toDouble(),
+        dataToAxisUnitConverter
+            .invert(
+              _removeRoundingErrors(
+                steps.tickStart + (i * steps.stepSize),
+              ),
+            )
+            .toDouble(),
     ];
   }
 

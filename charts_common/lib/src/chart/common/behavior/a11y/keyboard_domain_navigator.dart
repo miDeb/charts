@@ -248,7 +248,8 @@ abstract class KeyboardDomainNavigator<D> implements ChartBehavior<D?> {
       }
     }
 
-    final Map<D?, List<SeriesDatum<D?>>> detailsByDomain = <D?, List<SeriesDatum<D>>>{};
+    final Map<D?, List<SeriesDatum<D?>>> detailsByDomain =
+        <D?, List<SeriesDatum<D>>>{};
     for (DatumDetails<D?>? datumDetails in allSeriesDatum) {
       final domain = datumDetails!.domain;
 

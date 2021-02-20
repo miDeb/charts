@@ -22,8 +22,8 @@ import 'treemap_renderer_config.dart';
 class DiceTreeMapRenderer<D> extends BaseTreeMapRenderer<D?> {
   DiceTreeMapRenderer({String? rendererId, TreeMapRendererConfig? config})
       : super(
-            config:
-                config as TreeMapRendererConfig<D>? ?? TreeMapRendererConfig(tileType: TreeMapTileType.dice),
+            config: config as TreeMapRendererConfig<D>? ??
+                TreeMapRendererConfig(tileType: TreeMapTileType.dice),
             rendererId: rendererId ?? BaseTreeMapRenderer.defaultRendererId);
 
   /// Uses dicing as the tiling algorithm for this tree map.

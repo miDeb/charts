@@ -104,23 +104,24 @@ class BucketingNumericTickProvider extends NumericTickProvider {
         value: _threshold!,
         textElement: graphicsFactory
             .createTextElement(localFormatter.formatValue(_threshold!)),
-        locationPx: _showBucket! ? scale[_threshold!] as double? : scale[0] as double?,
+        locationPx:
+            _showBucket! ? scale[_threshold!] as double? : scale[0] as double?,
         labelOffsetPx:
             _showBucket! ? -0.5 * (scale[_threshold!] - scale[0]) : 0.0);
     tickDrawStrategy!.decorateTicks(<Tick<num>>[thresholdTick]);
 
     // Filter out ticks that sit below the threshold.
     ticks.removeWhere((Tick<num?> tick) =>
-        tick.value! <= thresholdTick.value! && tick.value != 0.0);
+        tick.value! <= thresholdTick.value && tick.value != 0.0);
 
     // Finally, add our threshold tick to the list.
     ticks.add(thresholdTick);
 
     // Make sure they are sorted by increasing value.
     ticks.sort((a, b) {
-      if (a.value! < b.value!) {
+      if (a.value < b.value) {
         return -1;
-      } else if (a.value! > b.value!) {
+      } else if (a.value > b.value) {
         return 1;
       } else {
         return 0;

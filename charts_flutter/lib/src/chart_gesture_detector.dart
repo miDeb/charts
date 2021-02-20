@@ -46,8 +46,8 @@ class ChartGestureDetector {
 
   makeWidget(BuildContext context, ChartContainer chartContainer,
       Set<GestureType> desiredGestures) {
-    _containerResolver =
-        () => getChartContainerRenderObject(context.findRenderObject() as RenderBox);
+    _containerResolver = () =>
+        getChartContainerRenderObject(context.findRenderObject() as RenderBox);
 
     final wantTapDown = desiredGestures.isNotEmpty;
     final wantTap = desiredGestures.contains(GestureType.onTap);

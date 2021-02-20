@@ -231,8 +231,9 @@ class _Line {
     // the intersection.
     final x = (other.yIntercept! - yIntercept!) / (slope! - other.slope!);
 
-    final y = slope! * (other.yIntercept! - yIntercept!) / (slope! - other.slope!) +
-        yIntercept!;
+    final y =
+        slope! * (other.yIntercept! - yIntercept!) / (slope! - other.slope!) +
+            yIntercept!;
 
     return Point<double>(x, y);
   }

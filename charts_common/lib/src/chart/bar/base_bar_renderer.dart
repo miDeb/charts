@@ -17,11 +17,10 @@ import 'dart:collection' show LinkedHashMap, HashSet;
 import 'dart:math' show Point, Rectangle, max;
 
 import 'package:collection/collection.dart' show IterableExtension;
-import 'package:meta/meta.dart' show protected, required;
+import 'package:meta/meta.dart' show protected;
 
 import '../../common/color.dart' show Color;
 import '../../common/math.dart' show clamp;
-import '../../common/symbol_renderer.dart' show RoundedRectSymbolRenderer;
 import '../../data/series.dart' show AttributeKey;
 import '../cartesian/axis/axis.dart'
     show ImmutableAxis, OrdinalAxis, domainAxisKey, measureAxisKey;
@@ -213,7 +212,7 @@ abstract class BaseBarRenderer<D, R extends BaseBarRendererElement,
           // And overwrite the details measure offset.
           details.measureOffset = measureOffset;
           var measureValue = (measure != null ? measure : 0);
-          details.measureOffsetPlusMeasure = measureOffset! + measureValue;
+          details.measureOffsetPlusMeasure = measureOffset + measureValue;
 
           categoryToDetailsMap[stackKey] = details;
         }
@@ -227,7 +226,7 @@ abstract class BaseBarRenderer<D, R extends BaseBarRendererElement,
         // Override the measure offset function to return the measure offset we
         // calculated for each datum. This already includes any measure offset
         // that was configured in the series data.
-        series.measureOffsetFn = (index) => elements[index!].measureOffset!;
+        series.measureOffsetFn = (index) => elements[index].measureOffset!;
       }
 
       series.setAttr(barGroupIndexKey, barGroupIndex);
@@ -644,9 +643,6 @@ abstract class BaseBarRenderer<D, R extends BaseBarRendererElement,
 
       nearest.retainWhere((d) => d.domain == nearestDomain);
     }
-
-    // If we didn't find anything, then keep an empty list.
-    nearest ??= <DatumDetails<D>>[];
 
     // Note: the details are already sorted by domain & measure distance in
     // base chart.

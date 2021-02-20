@@ -106,8 +106,8 @@ class TreeMapLabelDecorator<D> extends TreeMapRendererDecorator<D> {
         ..lineHeight = labelSpec?.lineHeight;
 
   /// Gets datum specific style.
-  TextStyle? _datumStyle(AccessorFn<TextStyleSpec?>? labelStyleFn, int datumIndex,
-      GraphicsFactory graphicsFactory,
+  TextStyle? _datumStyle(AccessorFn<TextStyleSpec?>? labelStyleFn,
+      int datumIndex, GraphicsFactory graphicsFactory,
       {TextStyle? defaultStyle}) {
     final styleSpec = (labelStyleFn != null) ? labelStyleFn(datumIndex) : null;
     return (styleSpec != null)

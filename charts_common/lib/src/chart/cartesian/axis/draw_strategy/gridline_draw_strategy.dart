@@ -127,6 +127,7 @@ class GridlineTickDrawStrategy<D> extends BaseTickDrawStrategy<D> {
       required bool isLast}) {
     Point<num>? lineStart;
     Point<num>? lineEnd;
+    // ignore: missing_enum_constant_in_switch
     switch (orientation) {
       case AxisOrientation.top:
         final x = tick.locationPx!;

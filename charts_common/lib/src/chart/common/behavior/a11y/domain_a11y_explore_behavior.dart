@@ -21,7 +21,8 @@ import '../../../cartesian/axis/axis.dart' show ImmutableAxis, domainAxisKey;
 import '../../../cartesian/cartesian_chart.dart' show CartesianChart;
 import '../../base_chart.dart' show BaseChart, LifecycleListener;
 import '../../processed_series.dart' show MutableSeries;
-import '../../selection_model/selection_model.dart' show MutableSelectionModel, SelectionModelType;
+import '../../selection_model/selection_model.dart'
+    show MutableSelectionModel, SelectionModelType;
 import '../../series_datum.dart' show SeriesDatum;
 import 'a11y_explore_behavior.dart'
     show A11yExploreBehavior, ExploreModeTrigger;
@@ -67,7 +68,8 @@ class DomainA11yExploreBehavior<D> extends A11yExploreBehavior<D> {
     final nodes = <_DomainA11yNode>[];
 
     // Update the selection model when the a11y node has focus.
-    final MutableSelectionModel<D?> selectionModel = _chart.getSelectionModel(SelectionModelType.info)!;
+    final MutableSelectionModel<D?> selectionModel =
+        _chart.getSelectionModel(SelectionModelType.info)!;
 
     final domainSeriesDatum = <D, List<SeriesDatum<D>>>{};
 

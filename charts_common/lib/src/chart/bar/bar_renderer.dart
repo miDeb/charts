@@ -549,7 +549,7 @@ class AnimatedBar<D> extends BaseAnimatedBar<D, BarRendererElement<D>> {
   }
 
   BarRendererElement<D> getCurrentBar(double animationPercent) {
-    final BarRendererElement<D> bar = super.getCurrentBar(animationPercent)!;
+    final BarRendererElement<D> bar = super.getCurrentBar(animationPercent);
 
     // Update with series and datum information to pass to bar decorator.
     bar.series = series!;

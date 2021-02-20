@@ -20,8 +20,7 @@ import '../layout/layout_view.dart' show LayoutViewConfig, LayoutViewPaintOrder;
 import 'line_renderer.dart' show LineRenderer;
 
 /// Configuration for a line renderer.
-class LineRendererConfig<D>
-    implements SeriesRendererConfig<D> {
+class LineRendererConfig<D> implements SeriesRendererConfig<D> {
   final String? customRendererId;
 
   final SymbolRenderer symbolRenderer;

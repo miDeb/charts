@@ -71,7 +71,7 @@ class ChartContainer<D> extends CustomPaint {
 }
 
 /// [RenderCustomPaint] that implements common [ChartContext].
-class ChartContainerRenderObject< D> extends RenderCustomPaint
+class ChartContainerRenderObject<D> extends RenderCustomPaint
     implements common.ChartContext {
   common.BaseChart<D>? _chart;
   List<common.Series<dynamic, D>>? _seriesList;
@@ -118,7 +118,7 @@ class ChartContainerRenderObject< D> extends RenderCustomPaint
         _chart!, config.oldChartWidget, _chartState as BaseChartState<D>);
 
     _rtlSpec = config.rtlSpec ?? const common.RTLSpec();
-    _chartContainerIsRtl = config.rtl ?? false;
+    _chartContainerIsRtl = config.rtl;
 
     common.Performance.timeEnd('chartsConfig');
 

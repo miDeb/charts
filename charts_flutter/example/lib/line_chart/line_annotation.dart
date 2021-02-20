@@ -91,7 +91,7 @@ class LineLineAnnotationChart extends StatelessWidget {
             startLabel: 'Measure 2 Start',
             endLabel: 'Measure 2 End',
             color: charts.MaterialPalette.gray.shade400),
-      ]) ,
+      ]),
     ]);
   }
 

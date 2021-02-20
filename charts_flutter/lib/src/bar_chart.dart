@@ -80,13 +80,16 @@ class BarChart extends CartesianChart<String?> {
     return new common.BarChart(
         vertical: vertical,
         layoutConfig: layoutConfig?.commonLayoutConfig,
-        primaryMeasureAxis: primaryMeasureAxis?.createAxis() as common.NumericAxis?,
-        secondaryMeasureAxis: secondaryMeasureAxis?.createAxis() as common.NumericAxis?,
+        primaryMeasureAxis:
+            primaryMeasureAxis?.createAxis() as common.NumericAxis?,
+        secondaryMeasureAxis:
+            secondaryMeasureAxis?.createAxis() as common.NumericAxis?,
         disjointMeasureAxes: createDisjointMeasureAxes());
   }
 
   @override
-  void addDefaultInteractions(List<ChartBehavior<String?, common.ChartBehavior<String?>>> behaviors) {
+  void addDefaultInteractions(
+      List<ChartBehavior<String?, common.ChartBehavior<String?>>> behaviors) {
     super.addDefaultInteractions(behaviors);
 
     behaviors.add(new DomainHighlighter());

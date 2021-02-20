@@ -160,16 +160,16 @@ class LinePointHighlighter<D> implements ChartBehavior<D> {
 
     chart.addLifecycleListener(_lifecycleListener);
     chart
-        .getSelectionModel(selectionModelType)
-        !.addSelectionChangedListener(_selectionChanged);
+        .getSelectionModel(selectionModelType)!
+        .addSelectionChangedListener(_selectionChanged);
   }
 
   @override
   void removeFrom(BaseChart chart) {
     chart.removeView(_view);
     chart
-        .getSelectionModel(selectionModelType)
-        !.removeSelectionChangedListener(_selectionChanged);
+        .getSelectionModel(selectionModelType)!
+        .removeSelectionChangedListener(_selectionChanged);
     chart.removeLifecycleListener(_lifecycleListener);
   }
 

@@ -80,7 +80,7 @@ class LayoutManagerImpl implements LayoutManager {
       _paintOrderedViews = List<LayoutView>.from(_views);
 
       _paintOrderedViews!.sort((LayoutView v1, LayoutView v2) =>
-          v1.layoutConfig.paintOrder!.compareTo(v2.layoutConfig.paintOrder!));
+          v1.layoutConfig.paintOrder.compareTo(v2.layoutConfig.paintOrder));
 
       _viewsNeedPaintSort = false;
     }
@@ -115,7 +115,7 @@ class LayoutManagerImpl implements LayoutManager {
     final drawableViews =
         _views.where((LayoutView? view) => view!.isSeriesRenderer);
 
-    var componentBounds = drawableViews?.first?.componentBounds;
+    var componentBounds = drawableViews.first?.componentBounds;
 
     if (componentBounds != null) {
       for (LayoutView? view in drawableViews.skip(1)) {
@@ -173,7 +173,7 @@ class LayoutManagerImpl implements LayoutManager {
 
     // Assume the full width and height of the chart is available when measuring
     // for the first time but adjust the maximum if margin spec is set.
-    var measurements = _measure(width!, height,
+    var measurements = _measure(width, height,
         topViews: topViews,
         rightViews: rightViews,
         bottomViews: bottomViews,
@@ -220,12 +220,12 @@ class LayoutManagerImpl implements LayoutManager {
     );
     final drawAreaHeight = max(
       _minDrawHeight,
-      (height! - measurements.bottomHeight! - measurements.topHeight!),
+      (height - measurements.bottomHeight! - measurements.topHeight!),
     );
 
     // Bounds for the draw area.
-    _drawAreaBounds = Rectangle(measurements.leftWidth!, measurements.topHeight!,
-        drawAreaWidth, drawAreaHeight);
+    _drawAreaBounds = Rectangle(measurements.leftWidth!,
+        measurements.topHeight!, drawAreaWidth, drawAreaHeight);
     _drawAreaBoundsOutdated = false;
   }
 
@@ -244,8 +244,8 @@ class LayoutManagerImpl implements LayoutManager {
     final fullBounds = Rectangle(0, 0, width!, height!);
 
     // Layout the margins.
-    LeftMarginLayoutStrategy()
-        .layout(leftViews, _measurements.leftSizes, fullBounds, drawAreaBounds!);
+    LeftMarginLayoutStrategy().layout(
+        leftViews, _measurements.leftSizes, fullBounds, drawAreaBounds!);
     RightMarginLayoutStrategy().layout(
         rightViews, _measurements.rightSizes, fullBounds, drawAreaBounds!);
     BottomMarginLayoutStrategy().layout(
@@ -278,7 +278,7 @@ class LayoutManagerImpl implements LayoutManager {
     _MeasuredSizes? previousMeasurements,
     required bool useMax,
   }) {
-    final maxLeftWidth = config.leftSpec.getMaxPixels(width)!;
+    final maxLeftWidth = config.leftSpec.getMaxPixels(width);
     final maxRightWidth = config.rightSpec.getMaxPixels(width);
     final maxBottomHeight = config.bottomSpec.getMaxPixels(height);
     final maxTopHeight = config.topSpec.getMaxPixels(height);
@@ -292,7 +292,7 @@ class LayoutManagerImpl implements LayoutManager {
 
     // Only adjust the height if we have previous measurements.
     final adjustedHeight = (previousMeasurements != null)
-        ? height! - bottomHeight! - topHeight!
+        ? height - bottomHeight - topHeight
         : height;
 
     var leftSizes = LeftMarginLayoutStrategy().measure(leftViews,

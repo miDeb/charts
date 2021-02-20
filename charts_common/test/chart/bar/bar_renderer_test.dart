@@ -59,7 +59,7 @@ class FakeBarRenderer<D> extends BarRenderer<D> {
   }
 }
 
-@GenerateMocks([ ChartCanvas, ChartContext, CartesianChart])
+@GenerateMocks([ChartCanvas, ChartContext, CartesianChart])
 void main() {
   BarRenderer renderer;
   late List<MutableSeries<String>> seriesList;

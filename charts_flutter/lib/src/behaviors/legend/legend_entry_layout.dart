@@ -137,8 +137,9 @@ class SimpleLegendEntryLayout implements LegendEntryLayout {
     return new TextStyle(
         inherit: true,
         fontFamily: textStyle?.fontFamily,
-        fontSize:
-            textStyle?.fontSize != null ? textStyle!.fontSize!.toDouble() : null,
+        fontSize: textStyle?.fontSize != null
+            ? textStyle!.fontSize!.toDouble()
+            : null,
         color: color);
   }
 }

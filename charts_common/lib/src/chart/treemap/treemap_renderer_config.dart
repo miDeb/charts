@@ -27,8 +27,7 @@ import 'squarified_treemap_renderer.dart';
 import 'treemap_label_decorator.dart';
 
 /// Configuration for a [BaseTreeMapRenderer].
-class TreeMapRendererConfig<D> 
-    implements SeriesRendererConfig<D?> {
+class TreeMapRendererConfig<D> implements SeriesRendererConfig<D?> {
   /// Default padding of a treemap rectangle.
   static const _defaultRectPadding =
       ViewMargin(topPx: 26, leftPx: 4, rightPx: 4, bottomPx: 4);

@@ -97,7 +97,6 @@ class FakeTextElement implements TextElement {
                 verticalSliceWidth ?? _defaultVerticalSliceWidth);
 }
 
-
 /// Helper function to create [Tick] for testing.
 Tick<String> createTick(String value, double locationPx,
     {double? horizontalWidth,
@@ -110,7 +109,8 @@ Tick<String> createTick(String value, double locationPx,
           value, textDirection, horizontalWidth, verticalWidth));
 }
 
-@GenerateMocks([ChartContext, GraphicsFactory, LineStyle, TextStyle, ChartCanvas])
+@GenerateMocks(
+    [ChartContext, GraphicsFactory, LineStyle, TextStyle, ChartCanvas])
 void main() {
   late GraphicsFactory graphicsFactory;
   late ChartContext chartContext;

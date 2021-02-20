@@ -68,13 +68,16 @@ class LineChart extends CartesianChart<num> {
     // use its default types (usually a numeric axis).
     return new common.LineChart(
         layoutConfig: layoutConfig?.commonLayoutConfig,
-        primaryMeasureAxis: primaryMeasureAxis?.createAxis() as common.NumericAxis?,
-        secondaryMeasureAxis: secondaryMeasureAxis?.createAxis() as common.NumericAxis?,
+        primaryMeasureAxis:
+            primaryMeasureAxis?.createAxis() as common.NumericAxis?,
+        secondaryMeasureAxis:
+            secondaryMeasureAxis?.createAxis() as common.NumericAxis?,
         disjointMeasureAxes: createDisjointMeasureAxes());
   }
 
   @override
-  void addDefaultInteractions(List<ChartBehavior<num, common.ChartBehavior<num>>> behaviors) {
+  void addDefaultInteractions(
+      List<ChartBehavior<num, common.ChartBehavior<num>>> behaviors) {
     super.addDefaultInteractions(behaviors);
 
     behaviors.add(new LinePointHighlighter());

@@ -25,7 +25,8 @@ abstract class TickFormatter<D> {
   const TickFormatter();
 
   /// Formats a list of tick values.
-  List<String> format(List<D> tickValues, Map<D, String> cache, {num? stepSize});
+  List<String> format(List<D> tickValues, Map<D, String> cache,
+      {num? stepSize});
 }
 
 abstract class SimpleTickFormatterBase<D> implements TickFormatter<D> {

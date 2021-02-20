@@ -945,7 +945,7 @@ class LineRenderer<D> extends BaseCartesianRenderer<D> {
                     animatingElement.areas)
             .expand<_AnimatedArea<D>>((List<_AnimatedArea<D>>? areas) => areas!)
             .map<_AreaRendererElement<D>?>((_AnimatedArea<D> animatingArea) =>
-                animatingArea?.getCurrentArea(animationPercent))
+                animatingArea.getCurrentArea(animationPercent))
             .forEach((_AreaRendererElement? area) {
           if (area != null) {
             canvas.drawPolygon(
@@ -964,7 +964,7 @@ class LineRenderer<D> extends BaseCartesianRenderer<D> {
             .expand<_AnimatedArea<D>>(
                 (List<_AnimatedArea<D>>? bounds) => bounds!)
             .map<_AreaRendererElement<D>?>((_AnimatedArea<D> animatingBounds) =>
-                animatingBounds?.getCurrentArea(animationPercent))
+                animatingBounds.getCurrentArea(animationPercent))
             .forEach((_AreaRendererElement? bound) {
           if (bound != null) {
             canvas.drawPolygon(
@@ -982,7 +982,7 @@ class LineRenderer<D> extends BaseCartesianRenderer<D> {
                     animatingElement.lines)
             .expand<_AnimatedLine<D>>((List<_AnimatedLine<D>>? lines) => lines!)
             .map<_LineRendererElement<D>?>((_AnimatedLine<D> animatingLine) =>
-                animatingLine?.getCurrentLine(animationPercent))
+                animatingLine.getCurrentLine(animationPercent))
             .forEach((_LineRendererElement? line) {
           if (line != null) {
             canvas.drawLine(
@@ -1220,8 +1220,8 @@ class _LineRendererElement<D> {
         previousPoint = previous.points![pointIndex];
         lastPoint = previousPoint;
       } else {
-        previousPoint = _DatumPoint<D?>.from(targetPoint,
-            targetPoint.x, lastPoint.y as double?);
+        previousPoint = _DatumPoint<D?>.from(
+            targetPoint, targetPoint.x, lastPoint.y as double?);
       }
 
       final x = ((targetPoint.x - previousPoint.x) * animationPercent) +
@@ -1231,8 +1231,7 @@ class _LineRendererElement<D> {
           previousPoint.y;
 
       if (points!.length - 1 >= pointIndex) {
-        points![pointIndex] =
-            _DatumPoint<D>.from(targetPoint, x, y);
+        points![pointIndex] = _DatumPoint<D>.from(targetPoint, x, y);
       } else {
         points!.add(_DatumPoint<D>.from(targetPoint, x, y));
       }

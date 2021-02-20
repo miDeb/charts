@@ -236,7 +236,8 @@ void main() {
       };
 
       // Listen
-      _selectionModel.addSelectionChangedListener(cb as void Function(SelectionModel<String?>));
+      _selectionModel.addSelectionChangedListener(
+          cb as void Function(SelectionModel<String?>));
 
       // Unlisten
       _selectionModel.removeSelectionChangedListener(cb);
@@ -307,7 +308,8 @@ void main() {
       };
 
       // Listen
-      _selectionModel.addSelectionUpdatedListener(cb as void Function(SelectionModel<String?>));
+      _selectionModel.addSelectionUpdatedListener(
+          cb as void Function(SelectionModel<String?>));
 
       // Unlisten
       _selectionModel.removeSelectionUpdatedListener(cb);
@@ -348,7 +350,8 @@ void main() {
       };
 
       // Listen
-      _selectionModel.addSelectionLockChangedListener(cb as void Function(SelectionModel<String?>));
+      _selectionModel.addSelectionLockChangedListener(
+          cb as void Function(SelectionModel<String?>));
 
       // Unlisten
       _selectionModel.removeSelectionLockChangedListener(cb);

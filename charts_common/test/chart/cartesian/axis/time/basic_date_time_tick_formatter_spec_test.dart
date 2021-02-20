@@ -22,7 +22,6 @@ import 'package:mockito/mockito.dart';
 import 'package:test/test.dart';
 import 'basic_date_time_tick_formatter_spec_test.mocks.dart';
 
-
 @GenerateMocks([ChartContext])
 void main() {
   const String tickLabel = '-tick-';

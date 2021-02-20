@@ -205,7 +205,7 @@ abstract class Axis<D> extends ImmutableAxis<D> implements LayoutView {
   /// For bars to be renderer properly the RangeBandConfig must be set and
   /// type must not be RangeBandType.none.
   bool get hasValidBarChartRangeBandConfig =>
-      (mutableScale?.rangeBandConfig?.type ?? RangeBandType.none) !=
+      (mutableScale?.rangeBandConfig.type ?? RangeBandType.none) !=
       RangeBandType.none;
 
   void addDomainValue(D domain) {
@@ -310,9 +310,8 @@ abstract class Axis<D> extends ImmutableAxis<D> implements LayoutView {
     final providedTicks = List.from(_providedTicks ?? []);
 
     for (AxisTicks<D> animatedTick in _axisTicks) {
-      final tick = providedTicks?.firstWhere(
-          (t) => t.value == animatedTick.value,
-          orElse: () => null);
+      final tick = providedTicks
+          .firstWhere((t) => t.value == animatedTick.value, orElse: () => null);
 
       if (tick != null) {
         // Swap out the text element only if the settings are different.
@@ -451,16 +450,16 @@ abstract class Axis<D> extends ImmutableAxis<D> implements LayoutView {
     setOutputRange(maxHeight, 0);
     _updateProvidedTicks();
 
-    return tickDrawStrategy!.measureVerticallyDrawnTicks(
-        _providedTicks, maxWidth, maxHeight);
+    return tickDrawStrategy!
+        .measureVerticallyDrawnTicks(_providedTicks, maxWidth, maxHeight);
   }
 
   ViewMeasuredSizes _measureHorizontalAxis(int maxWidth, int maxHeight) {
     setOutputRange(0, maxWidth);
     _updateProvidedTicks();
 
-    return tickDrawStrategy!.measureHorizontallyDrawnTicks(
-        _providedTicks, maxWidth, maxHeight);
+    return tickDrawStrategy!
+        .measureHorizontallyDrawnTicks(_providedTicks, maxWidth, maxHeight);
   }
 
   /// Layout this component.
@@ -525,7 +524,8 @@ abstract class Axis<D> extends ImmutableAxis<D> implements LayoutView {
     }
 
     if (drawAxisLine!) {
-      tickDrawStrategy!.drawAxisLine(canvas, axisOrientation!, _componentBounds!);
+      tickDrawStrategy!
+          .drawAxisLine(canvas, axisOrientation!, _componentBounds!);
     }
   }
 }
@@ -550,8 +550,7 @@ class OrdinalAxis extends Axis<String?> {
     TickProvider<String?>? tickProvider,
     TickFormatter? tickFormatter,
   }) : super(
-          tickProvider: tickProvider ??
-              const OrdinalTickProvider(),
+          tickProvider: tickProvider ?? const OrdinalTickProvider(),
           tickFormatter: tickFormatter as TickFormatter<String>? ??
               const OrdinalTickFormatter(),
           scale: SimpleOrdinalScale(),
