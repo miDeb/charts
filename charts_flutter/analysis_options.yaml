@@ -1,0 +1,3 @@
+analyzer:
+  errors:
+    missing_enum_constant_in_switch: ignore
