@@ -81,7 +81,7 @@ class FakeTextElement implements TextElement {
   final String text;
   final TextMeasurement measurement;
   TextStyle? textStyle = MockTextStyle();
-  late int? maxWidth;
+  late int maxWidth;
   late MaxWidthStrategy? maxWidthStrategy;
   TextDirection textDirection;
   double? opacity;

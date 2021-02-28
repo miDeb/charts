@@ -26,9 +26,9 @@ abstract class TextElement {
   /// The max width of this [TextElement] during measure and layout.
   ///
   /// If the text exceeds maxWidth, the [maxWidthStrategy] is used.
-  int? get maxWidth;
+  int get maxWidth;
 
-  set maxWidth(int? value);
+  set maxWidth(int value);
 
   /// The strategy to use if this [TextElement] exceeds the [maxWidth].
   MaxWidthStrategy? get maxWidthStrategy;
