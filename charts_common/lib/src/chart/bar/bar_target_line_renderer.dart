@@ -80,8 +80,8 @@ class BarTargetLineRenderer<D> extends BaseBarRenderer<D,
     });
   }
 
-  DatumDetails<D> addPositionToDetailsForSeriesDatum(
-      DatumDetails<D> details, SeriesDatum<D> seriesDatum) {
+  DatumDetails<D?> addPositionToDetailsForSeriesDatum(
+      DatumDetails<D?> details, SeriesDatum<D?> seriesDatum) {
     final series = details.series!;
 
     final domainAxis = series.getAttr(domainAxisKey) as ImmutableAxis<D>;

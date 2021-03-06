@@ -37,7 +37,7 @@ class StaticallyProvidedTicks extends StatelessWidget {
   final List<charts.Series<dynamic, String>> seriesList;
   final bool? animate;
 
-  StaticallyProvidedTicks(this.seriesList, {this.animate});
+  StaticallyProvidedTicks(this.seriesList, {this.animate = false});
 
   factory StaticallyProvidedTicks.withSampleData() {
     return new StaticallyProvidedTicks(

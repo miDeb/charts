@@ -26,7 +26,7 @@ import 'selection_model_config.dart' show SelectionModelConfig;
 import 'user_managed_state.dart' show UserManagedState;
 
 @immutable
-class BarChart extends CartesianChart<String?> {
+class BarChart extends CartesianChart<String> {
   final bool vertical;
   final common.BarRendererDecorator? barRendererDecorator;
 
@@ -41,7 +41,7 @@ class BarChart extends CartesianChart<String?> {
     common.BarGroupingType? barGroupingType,
     common.BarRendererConfig<String>? defaultRenderer,
     List<common.SeriesRendererConfig<String>>? customSeriesRenderers,
-    List<ChartBehavior<String?, common.ChartBehavior<String?>>>? behaviors,
+    List<ChartBehavior<String>>? behaviors,
     List<SelectionModelConfig<String>>? selectionModels,
     common.RTLSpec? rtlSpec,
     this.vertical = true,
@@ -73,7 +73,7 @@ class BarChart extends CartesianChart<String?> {
         );
 
   @override
-  common.BarChart createCommonChart(BaseChartState? chartState) {
+  common.BarChart createCommonChart(BaseChartState<String>? chartState) {
     // Optionally create primary and secondary measure axes if the chart was
     // configured with them. If no axes were configured, then the chart will
     // use its default types (usually a numeric axis).
@@ -89,7 +89,7 @@ class BarChart extends CartesianChart<String?> {
 
   @override
   void addDefaultInteractions(
-      List<ChartBehavior<String?, common.ChartBehavior<String?>>> behaviors) {
+      List<ChartBehavior<String>> behaviors) {
     super.addDefaultInteractions(behaviors);
 
     behaviors.add(new DomainHighlighter());

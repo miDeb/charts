@@ -31,8 +31,8 @@ import '../series_datum.dart' show SeriesDatum, SeriesDatumConfig;
 /// for each datum for a given domain/time, but highlights the closest entry to
 /// match up with highlighting/bolding of the line and legend.
 class SelectionModel<D> {
-  var _selectedDatum = <SeriesDatum<D>>[];
-  List<ImmutableSeries<D>?> _selectedSeries = <ImmutableSeries<D>>[];
+  var _selectedDatum = <SeriesDatum<D?>>[];
+  List<ImmutableSeries<D?>?> _selectedSeries = <ImmutableSeries<D?>>[];
 
   /// Create selection model with the desired selection.
   SelectionModel(
@@ -105,7 +105,7 @@ class SelectionModel<D> {
   /// Returns the selected [SeriesDatum] for this [SelectionModel].
   ///
   /// This is empty by default.
-  List<SeriesDatum<D>> get selectedDatum => List.unmodifiable(_selectedDatum);
+  List<SeriesDatum<D?>> get selectedDatum => List.unmodifiable(_selectedDatum);
 
   /// Returns true if this [SelectionModel] has a selected series.
   bool get hasSeriesSelection => _selectedSeries.isNotEmpty;
@@ -162,13 +162,13 @@ class MutableSelectionModel<D> extends SelectionModel<D> {
 
   /// Updates the selection state. If mouse driven, [datumSelection] should be
   /// ordered by distance from mouse, closest first.
-  bool updateSelection(
-      List<SeriesDatum<D>> datumSelection, List<ImmutableSeries<D>?> seriesList,
+  bool updateSelection(List<SeriesDatum<D?>> datumSelection,
+      List<ImmutableSeries<D?>?> seriesList,
       {bool notifyListeners = true}) {
     if (_locked) return false;
 
-    final List<SeriesDatum<D>> origSelectedDatum = _selectedDatum;
-    final List<ImmutableSeries<D>?> origSelectedSeries = _selectedSeries;
+    final origSelectedDatum = _selectedDatum;
+    final origSelectedSeries = _selectedSeries;
 
     _selectedDatum = datumSelection;
     _selectedSeries = seriesList;

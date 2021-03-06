@@ -218,8 +218,8 @@ abstract class BaseTreeMapRenderer<D> extends BaseSeriesRenderer<D> {
   }
 
   @override
-  DatumDetails<D> addPositionToDetailsForSeriesDatum(
-      DatumDetails<D> details, SeriesDatum<D> seriesDatum) {
+  DatumDetails<D?> addPositionToDetailsForSeriesDatum(
+      DatumDetails<D?> details, SeriesDatum<D?> seriesDatum) {
     final bounds = _rendererElementForTreeNode(seriesDatum.datum).boundingRect!;
     final chartPosition = Point<double>(
         (isRtl ? bounds.left : bounds.right).toDouble(),

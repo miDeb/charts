@@ -34,7 +34,7 @@ class ScatterPlotChart extends CartesianChart<num?> {
     LinkedHashMap<String, common.NumericAxisSpec>? disjointMeasureAxes,
     common.PointRendererConfig<num>? defaultRenderer,
     List<common.SeriesRendererConfig<num>>? customSeriesRenderers,
-    List<ChartBehavior<num?, common.ChartBehavior<num?>>>? behaviors,
+    List<ChartBehavior<num?>>? behaviors,
     List<SelectionModelConfig<num>>? selectionModels,
     common.RTLSpec? rtlSpec,
     LayoutConfig? layoutConfig,

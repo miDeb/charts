@@ -66,7 +66,7 @@ class NumericCartesianChart extends CartesianChart<num> {
   }
 }
 
-class OrdinalCartesianChart extends CartesianChart<String?> {
+class OrdinalCartesianChart extends CartesianChart<String> {
   OrdinalCartesianChart(
       {bool? vertical,
       LayoutConfig? layoutConfig,
@@ -422,8 +422,8 @@ abstract class CartesianChart<D> extends BaseChart<D> {
 
   /// Returns a list of datum details from selection model of [type].
   @override
-  List<DatumDetails<D>?> getDatumDetails(SelectionModelType type) {
-    final List<DatumDetails<D>?> entries = <DatumDetails<D>>[];
+  List<DatumDetails<D?>?> getDatumDetails(SelectionModelType type) {
+    final  entries = <DatumDetails<D?>?>[];
 
     getSelectionModel(type)!.selectedDatum.forEach((seriesDatum) {
       final series = seriesDatum.series!;
@@ -441,7 +441,7 @@ abstract class CartesianChart<D> extends BaseChart<D> {
       final renderer = getSeriesRenderer(series.getAttr(rendererIdKey))!;
 
       final datumDetails = renderer.addPositionToDetailsForSeriesDatum(
-          DatumDetails<D>(
+          DatumDetails<D?>(
               datum: datum,
               domain: domain,
               domainFormatter: domainFormatterFn != null

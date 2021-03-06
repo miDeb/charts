@@ -29,7 +29,7 @@ class CustomFontSizeAndColor extends StatelessWidget {
   final List<charts.Series<dynamic, String>> seriesList;
   final bool? animate;
 
-  CustomFontSizeAndColor(this.seriesList, {this.animate});
+  CustomFontSizeAndColor(this.seriesList, {this.animate = false});
 
   factory CustomFontSizeAndColor.withSampleData() {
     return new CustomFontSizeAndColor(

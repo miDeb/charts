@@ -258,13 +258,12 @@ class MockCartesianChart<D> extends _i1.Mock implements _i14.CartesianChart<D> {
               returnValue: <_i18.DatumDetails<D?>?>[])
           as List<_i18.DatumDetails<D?>?>);
   @override
-  List<_i18.DatumDetails<D?>?> getAllDatumDetails(
+  List<_i18.DatumDetails<D>> getAllDatumDetails(
           {bool? includeOverlaySeries = false}) =>
       (super.noSuchMethod(
-              Invocation.method(#getAllDatumDetails, [],
-                  {#includeOverlaySeries: includeOverlaySeries}),
-              returnValue: <_i18.DatumDetails<D?>?>[])
-          as List<_i18.DatumDetails<D?>?>);
+          Invocation.method(#getAllDatumDetails, [],
+              {#includeOverlaySeries: includeOverlaySeries}),
+          returnValue: <_i18.DatumDetails<D>>[]) as List<_i18.DatumDetails<D>>);
   @override
   _i8.ChartBehavior<D> createBehavior(_i20.BehaviorCreator<D>? creator) =>
       (super.noSuchMethod(Invocation.method(#createBehavior, [creator]),
@@ -413,9 +412,13 @@ class MockOrdinalAxis extends _i1.Mock implements _i6.OrdinalAxis {
       .noSuchMethod(Invocation.method(#setRangeBandConfig, [rangeBandConfig]),
           returnValueForMissingStub: null);
   @override
-  String? getDomain(double? location) =>
-      (super.noSuchMethod(Invocation.method(#getDomain, [location]))
-          as String?);
+  void addDomainValue(String? domain) =>
+      super.noSuchMethod(Invocation.method(#addDomainValue, [domain]),
+          returnValueForMissingStub: null);
+  @override
+  String getDomain(double? location) =>
+      (super.noSuchMethod(Invocation.method(#getDomain, [location]),
+          returnValue: '') as String);
   @override
   int compareDomainValueToViewport(String? domain) => (super.noSuchMethod(
       Invocation.method(#compareDomainValueToViewport, [domain]),

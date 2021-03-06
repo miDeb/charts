@@ -34,7 +34,7 @@ import 'arc_renderer_decorator.dart' show ArcRendererDecorator;
 const arcElementsKey =
     AttributeKey<List<ArcRendererElement>>('ArcRenderer.elements');
 
-class ArcRenderer<D> extends BaseSeriesRenderer<D?> {
+class ArcRenderer<D> extends BaseSeriesRenderer<D> {
   // Constant used in the calculation of [centerContentBounds], calculated once
   // to save runtime cost.
   static final _cosPIOver4 = cos(pi / 4);
@@ -49,7 +49,8 @@ class ArcRenderer<D> extends BaseSeriesRenderer<D?> {
   ///
   /// [LinkedHashMap] is used to render the series on the canvas in the same
   /// order as the data was given to the chart.
-  final LinkedHashMap<String, _AnimatedArcList<D?>> _seriesArcMap = LinkedHashMap<String, _AnimatedArcList<D>>();
+  final LinkedHashMap<String, _AnimatedArcList<D?>> _seriesArcMap =
+      LinkedHashMap<String, _AnimatedArcList<D>>();
 
   // Store a list of arcs that exist in the series data.
   //
@@ -72,7 +73,7 @@ class ArcRenderer<D> extends BaseSeriesRenderer<D?> {
             symbolRenderer: config.symbolRenderer);
 
   @override
-  void onAttach(BaseChart<D?> chart) {
+  void onAttach(BaseChart<D> chart) {
     super.onAttach(chart);
     _chart = chart;
   }
@@ -178,7 +179,7 @@ class ArcRenderer<D> extends BaseSeriesRenderer<D?> {
       var arcListKey = series.id;
 
       var arcList =
-          _seriesArcMap.putIfAbsent(arcListKey, () => _AnimatedArcList());
+          _seriesArcMap.putIfAbsent(arcListKey, () => _AnimatedArcList<D?>());
 
       var elementsList = series.getAttr(arcElementsKey);
 
@@ -190,8 +191,8 @@ class ArcRenderer<D> extends BaseSeriesRenderer<D?> {
         var arcKey = '__no_data__';
 
         // If we already have an AnimatingArc for that index, use it.
-        var animatingArc = arcList.arcs.firstWhereOrNull(
-            (_AnimatedArc arc) => arc.key == arcKey);
+        _AnimatedArc<D?>? animatingArc = arcList.arcs
+            .firstWhereOrNull((_AnimatedArc arc) => arc.key == arcKey);
 
         arcList.center = center;
         arcList.radius = radius;
@@ -233,8 +234,8 @@ class ArcRenderer<D> extends BaseSeriesRenderer<D?> {
           var arcKey = '${series.id}__${domainValue.toString()}';
 
           // If we already have an AnimatingArc for that index, use it.
-          var animatingArc = arcList.arcs.firstWhereOrNull(
-              (_AnimatedArc arc) => arc.key == arcKey);
+          var animatingArc = arcList.arcs
+              .firstWhereOrNull((_AnimatedArc arc) => arc.key == arcKey);
 
           arcList.center = center;
           arcList.radius = radius;
@@ -342,8 +343,8 @@ class ArcRenderer<D> extends BaseSeriesRenderer<D?> {
           .map<ArcRendererElement<D?>?>((_AnimatedArc<D?> animatingArc) =>
               animatingArc.getCurrentArc(animationPercent))
           .forEach((ArcRendererElement? arc) {
-        circleSectors
-            .add(CanvasPieSlice(arc!.startAngle, arc.endAngle, fill: arc.color));
+        circleSectors.add(
+            CanvasPieSlice(arc!.startAngle, arc.endAngle, fill: arc.color));
 
         arcElementsList.arcs.add(arc as ArcRendererElement<D?>?);
       });
@@ -467,9 +468,11 @@ class ArcRenderer<D> extends BaseSeriesRenderer<D?> {
   }
 
   @override
-  List<DatumDetails<D?>> getNearestDatumDetailPerSeries(
-      Point<double>? chartPoint, bool byDomain, Rectangle<int>? boundsOverride) {
-    final List<DatumDetails<D?>> nearest = <DatumDetails<D>>[];
+  List<DatumDetails<D>> getNearestDatumDetailPerSeries(
+      Point<double>? chartPoint,
+      bool byDomain,
+      Rectangle<int>? boundsOverride) {
+    final List<DatumDetails<D>> nearest = <DatumDetails<D>>[];
 
     // Was it even in the component bounds?
     if (!isPointWithinBounds(chartPoint, boundsOverride)) {
@@ -508,10 +511,10 @@ class ArcRenderer<D> extends BaseSeriesRenderer<D?> {
         if (innerRadius! <= distance && distance <= radius!) {
           if (arc.currentArcStartAngle! <= chartPointAngle &&
               chartPointAngle <= arc.currentArcEndAngle!) {
-            nearest.add(DatumDetails<D?>(
-              series: arcList.series,
+            nearest.add(DatumDetails<D>(
+              series: arcList.series as ImmutableSeries<D>?,
               datum: arc.datum,
-              domain: arc.domain,
+              domain: arc.domain!,
               domainDistance: 0.0,
               measureDistance: 0.0,
             ));
@@ -672,8 +675,8 @@ class _AnimatedArc<D> {
       return _currentArc;
     }
 
-    _currentArc!.updateAnimationPercent(
-        _previousArc!, _targetArc!, animationPercent);
+    _currentArc!
+        .updateAnimationPercent(_previousArc!, _targetArc!, animationPercent);
 
     return _currentArc;
   }

@@ -44,7 +44,7 @@ import 'chart_behavior.dart' show ChartBehavior, GestureType;
 /// Any previous SelectNearest behavior for that selection model will be
 /// removed.
 @immutable
-class SelectNearest<D> extends ChartBehavior<D, common.SelectNearest<D>> {
+class SelectNearest<D> extends ChartBehavior<D> {
   final Set<GestureType>? desiredGestures;
 
   final common.SelectionModelType? selectionModelType;

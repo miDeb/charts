@@ -25,7 +25,7 @@ class HiddenTicksAndLabelsAxis extends StatelessWidget {
   final List<charts.Series<dynamic, String>> seriesList;
   final bool? animate;
 
-  HiddenTicksAndLabelsAxis(this.seriesList, {this.animate});
+  HiddenTicksAndLabelsAxis(this.seriesList, {this.animate = false});
 
   factory HiddenTicksAndLabelsAxis.withSampleData() {
     return new HiddenTicksAndLabelsAxis(

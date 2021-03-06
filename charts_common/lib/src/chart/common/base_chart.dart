@@ -159,7 +159,7 @@ abstract class BaseChart<D> {
   }
 
   /// Returns a list of datum details from selection model of [type].
-  List<DatumDetails<D>?>? getDatumDetails(SelectionModelType type);
+  List<DatumDetails<D?>?>? getDatumDetails(SelectionModelType type);
 
   //
   // Renderer methods
@@ -220,7 +220,7 @@ abstract class BaseChart<D> {
   /// [selectAcrossAllDrawAreaComponents] specifies whether nearest data
   /// selection should be done across the combined draw area of all components
   /// with series draw areas, or just the chart's primary draw area bounds.
-  List<DatumDetails<D>> getNearestDatumDetailPerSeries(
+  List<DatumDetails<D?>> getNearestDatumDetailPerSeries(
       Point<double>? drawAreaPoint, bool selectAcrossAllDrawAreaComponents) {
     // Optionally grab the combined draw area bounds of all components. If this
     // is disabled, then we expect each series renderer to filter out the event
@@ -228,7 +228,7 @@ abstract class BaseChart<D> {
     final boundsOverride =
         selectAcrossAllDrawAreaComponents ? drawableLayoutAreaBounds : null;
 
-    final List<DatumDetails<D>> details = <DatumDetails<D>>[];
+    final details = <DatumDetails<D?>>[];
     _usingRenderers.forEach((String? rendererId) {
       details.addAll(getSeriesRenderer(rendererId)!
           .getNearestDatumDetailPerSeries(
@@ -257,7 +257,7 @@ abstract class BaseChart<D> {
   /// [selectionModelType] specifies the type of the selection model to use.
   List<DatumDetails<D?>?> getSelectedDatumDetails(
       SelectionModelType selectionModelType) {
-    final List<DatumDetails<D?>?> details = <DatumDetails<D>?>[];
+    final List<DatumDetails<D?>?> details = [];
 
     if (_currentSeriesList == null) {
       return details;
@@ -270,7 +270,7 @@ abstract class BaseChart<D> {
 
     // Pass each selected datum to the appropriate series renderer to get full
     // details appropriate to its series type.
-    for (SeriesDatum<D> seriesDatum in selectionModel.selectedDatum) {
+    for (SeriesDatum<D?> seriesDatum in selectionModel.selectedDatum) {
       final rendererId = seriesDatum.series!.getAttr(rendererIdKey);
       details.add(
           getSeriesRenderer(rendererId)!.getDetailsForSeriesDatum(seriesDatum));
@@ -280,9 +280,9 @@ abstract class BaseChart<D> {
   }
 
   /// Retrieves the datum details for all data on the chart.
-  List<DatumDetails<D?>?> getAllDatumDetails(
+  List<DatumDetails<D?>> getAllDatumDetails(
       {bool includeOverlaySeries = false}) {
-    final List<DatumDetails<D?>?> details = <DatumDetails<D>?>[];
+    final  details = <DatumDetails<D?>>[];
 
     if (_currentSeriesList == null) {
       return details;
@@ -297,7 +297,7 @@ abstract class BaseChart<D> {
 
       for (dynamic datum in series.data) {
         details.add(getSeriesRenderer(rendererId)!
-            .getDetailsForSeriesDatum(SeriesDatum<D>(series, datum)));
+            .getDetailsForSeriesDatum(SeriesDatum<D>(series, datum))!);
       }
     }
 

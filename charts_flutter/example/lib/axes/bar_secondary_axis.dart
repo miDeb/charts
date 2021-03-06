@@ -39,7 +39,7 @@ class BarChartWithSecondaryAxis extends StatelessWidget {
   final List<charts.Series<dynamic, String>> seriesList;
   final bool? animate;
 
-  BarChartWithSecondaryAxis(this.seriesList, {this.animate});
+  BarChartWithSecondaryAxis(this.seriesList, {this.animate = false});
 
   factory BarChartWithSecondaryAxis.withSampleData() {
     return new BarChartWithSecondaryAxis(

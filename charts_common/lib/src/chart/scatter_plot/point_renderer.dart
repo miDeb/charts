@@ -77,8 +77,8 @@ class PointRenderer<D> extends BaseCartesianRenderer<D> {
   /// [LinkedHashMap] is used to render the series on the canvas in the same
   /// order as the data was given to the chart.
   @protected
-  LinkedHashMap<String?, List<AnimatedPoint<D>>?> seriesPointMap =
-      LinkedHashMap<String, List<AnimatedPoint<D>>>();
+  LinkedHashMap<String?, List<AnimatedPoint<D?>>?> seriesPointMap =
+      LinkedHashMap<String, List<AnimatedPoint<D?>>>();
 
   // Store a list of lines that exist in the series data.
   //
@@ -281,9 +281,9 @@ class PointRenderer<D> extends BaseCartesianRenderer<D> {
               0.0,
               measureAxis);
 
-          animatingPoint = AnimatedPoint<D>(
+          animatingPoint = AnimatedPoint<D?>(
               key: pointKey, overlaySeries: series.overlaySeries)
-            ..setNewTarget(PointRendererElement<D>()
+            ..setNewTarget(PointRendererElement<D?>()
               ..index = details.index
               ..color = details.color
               ..fillColor = details.fillColor
@@ -301,7 +301,7 @@ class PointRenderer<D> extends BaseCartesianRenderer<D> {
         _currentKeys.add(pointKey);
 
         // Get the pointElement we are going to setup.
-        final pointElement = PointRendererElement<D>()
+        final pointElement = PointRendererElement<D?>()
           ..index = index
           ..color = details.color
           ..fillColor = details.fillColor
@@ -323,7 +323,7 @@ class PointRenderer<D> extends BaseCartesianRenderer<D> {
         key: (k) => k, value: (k) => seriesPointMap[k]);
 
     // Animate out points that don't exist anymore.
-    seriesPointMap.forEach((String? key, List<AnimatedPoint<D>>? points) {
+    seriesPointMap.forEach((String? key, List<AnimatedPoint<D?>>? points) {
       for (var point in points!) {
         if (_currentKeys.contains(point.key) != true) {
           point.animateOut();
@@ -346,8 +346,8 @@ class PointRenderer<D> extends BaseCartesianRenderer<D> {
     if (animationPercent == 1.0) {
       final keysToRemove = <String?>[];
 
-      seriesPointMap.forEach((String? key, List<AnimatedPoint<D>>? points) {
-        points!.removeWhere((AnimatedPoint<D> point) => point.animatingOut);
+      seriesPointMap.forEach((String? key, List<AnimatedPoint<D?>>? points) {
+        points!.removeWhere((final point) => point.animatingOut);
 
         if (points.isEmpty) {
           keysToRemove.add(key);
@@ -357,9 +357,9 @@ class PointRenderer<D> extends BaseCartesianRenderer<D> {
       keysToRemove.forEach((String? key) => seriesPointMap.remove(key));
     }
 
-    seriesPointMap.forEach((String? key, List<AnimatedPoint<D>>? points) {
+    seriesPointMap.forEach((String? key, List<AnimatedPoint<D?>>? points) {
       points!
-          .map<PointRendererElement<D>?>((AnimatedPoint<D> animatingPoint) =>
+          .map<PointRendererElement<D?>?>((final animatingPoint) =>
               animatingPoint.getCurrentPoint(animationPercent))
           .forEach((PointRendererElement? point) {
         // Decorate the points with decorators that should appear below the main
@@ -420,12 +420,12 @@ class PointRenderer<D> extends BaseCartesianRenderer<D> {
   bool get isRtl => _chart?.context?.isRtl ?? false;
 
   @protected
-  DatumPoint<D> getPoint(
+  DatumPoint<D?> getPoint(
       final datum,
-      D domainValue,
+      D? domainValue,
       D? domainLowerBoundValue,
       D? domainUpperBoundValue,
-      ImmutableSeries<D> series,
+      ImmutableSeries<D?> series,
       ImmutableAxis<D?> domainAxis,
       num measureValue,
       num? measureLowerBoundValue,
@@ -453,7 +453,7 @@ class PointRenderer<D> extends BaseCartesianRenderer<D> {
         ? measureAxis.getLocation(measureUpperBoundValue + measureOffsetValue)
         : null;
 
-    return DatumPoint<D>(
+    return DatumPoint(
         datum: datum,
         domain: domainValue,
         series: series,
@@ -466,24 +466,24 @@ class PointRenderer<D> extends BaseCartesianRenderer<D> {
   }
 
   @override
-  List<DatumDetails<D>> getNearestDatumDetailPerSeries(
+  List<DatumDetails<D?>> getNearestDatumDetailPerSeries(
       Point<double>? chartPoint,
       bool byDomain,
       Rectangle<int>? boundsOverride) {
-    final List<DatumDetails<D>> nearest = <DatumDetails<D>>[];
+    final List<DatumDetails<D?>> nearest = <DatumDetails<D>>[];
 
     // Was it even in the component bounds?
     if (!isPointWithinBounds(chartPoint, boundsOverride)) {
       return nearest;
     }
 
-    seriesPointMap.values.forEach((List<AnimatedPoint<D>>? points) {
-      PointRendererElement<D>? nearestPoint;
+    seriesPointMap.values.forEach((List<AnimatedPoint<D?>>? points) {
+      PointRendererElement<D?>? nearestPoint;
       double? nearestDomainDistance = _maxInitialDistance;
       double? nearestMeasureDistance = _maxInitialDistance;
       double? nearestRelativeDistance = _maxInitialDistance;
 
-      points!.forEach((AnimatedPoint<D> point) {
+      points!.forEach((final point) {
         if (point.overlaySeries!) {
           return;
         }
@@ -530,7 +530,7 @@ class PointRenderer<D> extends BaseCartesianRenderer<D> {
           nearestSymbolRenderer = config.customSymbolRenderers![id!];
         }
 
-        nearest.add(DatumDetails<D>(
+        nearest.add(DatumDetails<D?>(
             datum: nearestPoint!.point.datum,
             domain: nearestPoint!.point.domain,
             series: nearestPoint!.point.series,
@@ -550,7 +550,7 @@ class PointRenderer<D> extends BaseCartesianRenderer<D> {
   /// Returns a struct containing domain, measure, and relative distance between
   /// a datum and a point within the chart.
   _Distances _getDatumDistance(
-      AnimatedPoint<D> point, Point<double> chartPoint) {
+      AnimatedPoint<D?> point, Point<double> chartPoint) {
     final datumPoint = point._currentPoint!.point;
     final radiusPx = point._currentPoint!.radiusPx;
     final boundsLineRadiusPx = point._currentPoint!.boundsLineRadiusPx;
@@ -602,8 +602,8 @@ class PointRenderer<D> extends BaseCartesianRenderer<D> {
     );
   }
 
-  DatumDetails<D> addPositionToDetailsForSeriesDatum(
-      DatumDetails<D> details, SeriesDatum<D?> seriesDatum) {
+  DatumDetails<D?> addPositionToDetailsForSeriesDatum(
+      DatumDetails<D?> details, SeriesDatum<D?> seriesDatum) {
     final series = details.series!;
 
     final domainAxis = series.getAttr(domainAxisKey) as ImmutableAxis<D>;

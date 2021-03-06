@@ -25,7 +25,7 @@ class DashPatternLineChart extends StatelessWidget {
   final List<charts.Series<dynamic, num>> seriesList;
   final bool? animate;
 
-  DashPatternLineChart(this.seriesList, {this.animate});
+  DashPatternLineChart(this.seriesList, {this.animate = false});
 
   /// Creates a [LineChart] with sample data and no transition.
   factory DashPatternLineChart.withSampleData() {

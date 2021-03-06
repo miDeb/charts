@@ -41,7 +41,7 @@ class DomainA11yExploreBarChart extends StatelessWidget {
   final List<charts.Series<dynamic, String>> seriesList;
   final bool? animate;
 
-  DomainA11yExploreBarChart(this.seriesList, {this.animate});
+  DomainA11yExploreBarChart(this.seriesList, {this.animate = false});
 
   /// Creates a [BarChart] with sample data and no transition.
   factory DomainA11yExploreBarChart.withSampleData() {
@@ -140,7 +140,7 @@ class DomainA11yExploreBarChart extends StatelessWidget {
           // with the application.
           defaultInteractions: !MediaQuery.of(context).accessibleNavigation,
           behaviors: [
-            new charts.DomainA11yExploreBehavior<String?>(
+            new charts.DomainA11yExploreBehavior<String>(
               // Callback for generating the message that is vocalized.
               // An example of how to use is in [vocalizeDomainAndMeasures].
               // If none is set, the default only vocalizes the domain value.

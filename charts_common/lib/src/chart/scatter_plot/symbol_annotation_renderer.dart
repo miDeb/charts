@@ -132,12 +132,12 @@ class SymbolAnnotationRenderer<D> extends PointRenderer<D>
   }
 
   @override
-  DatumPoint<D> getPoint(
+  DatumPoint<D?> getPoint(
       final datum,
-      D domainValue,
+      D? domainValue,
       D? domainLowerBoundValue,
       D? domainUpperBoundValue,
-      ImmutableSeries<D> series,
+      ImmutableSeries<D?> series,
       ImmutableAxis<D?> domainAxis,
       num? measureValue,
       num? measureLowerBoundValue,
@@ -165,7 +165,7 @@ class SymbolAnnotationRenderer<D> extends PointRenderer<D>
     final measureUpperBoundPosition =
         domainUpperBoundPosition != null ? measurePosition : null;
 
-    return DatumPoint<D>(
+    return DatumPoint<D?>(
         datum: datum,
         domain: domainValue,
         series: series,
@@ -205,7 +205,7 @@ class SymbolAnnotationRenderer<D> extends PointRenderer<D>
     // Use the domain axis of the attached chart to render the separator lines
     // to keep the same overall style.
     if ((config as SymbolAnnotationRendererConfig).showSeparatorLines) {
-      seriesPointMap.forEach((String? key, List<AnimatedPoint<D>>? points) {
+      seriesPointMap.forEach((String? key, List<AnimatedPoint<D?>>? points) {
         final seriesInfo = _seriesInfo[key!]!;
 
         final y = componentBounds.top + seriesInfo.rowStart;

@@ -39,7 +39,7 @@ import 'legend_layout.dart' show TabularLegendLayout;
 
 /// Series legend behavior for charts.
 @immutable
-class SeriesLegend<D> extends ChartBehavior<D, common.SeriesLegend<D>> {
+class SeriesLegend<D> extends ChartBehavior<D> {
   static const defaultBehaviorPosition = common.BehaviorPosition.top;
   static const defaultOutsideJustification =
       common.OutsideJustification.startDrawArea;
@@ -260,7 +260,7 @@ class SeriesLegend<D> extends ChartBehavior<D, common.SeriesLegend<D>> {
       new _FlutterSeriesLegend<D>(this);
 
   @override
-  void updateCommonBehavior(common.SeriesLegend commonBehavior) {
+  void updateCommonBehavior(common.SeriesLegend<D> commonBehavior) {
     (commonBehavior as _FlutterSeriesLegend).config = this;
   }
 

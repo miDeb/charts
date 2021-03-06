@@ -73,8 +73,8 @@ class BarRenderer<D>
         emptyCategoryUsesSinglePalette: true);
   }
 
-  DatumDetails<D> addPositionToDetailsForSeriesDatum(
-      DatumDetails<D> details, SeriesDatum<D> seriesDatum) {
+  DatumDetails<D?> addPositionToDetailsForSeriesDatum(
+      DatumDetails<D?> details, SeriesDatum<D?> seriesDatum) {
     final series = details.series!;
 
     final domainAxis = series.getAttr(domainAxisKey) as ImmutableAxis<D>;

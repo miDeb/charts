@@ -30,7 +30,7 @@ import 'legend_layout.dart' show TabularLegendLayout;
 /// By default this behavior creates one legend entry per datum in the first
 /// series rendered on the chart.
 @immutable
-class DatumLegend<D> extends ChartBehavior<D, common.DatumLegend<D>> {
+class DatumLegend<D> extends ChartBehavior<D> {
   static const defaultBehaviorPosition = common.BehaviorPosition.top;
   static const defaultOutsideJustification =
       common.OutsideJustification.startDrawArea;
@@ -238,7 +238,7 @@ class DatumLegend<D> extends ChartBehavior<D, common.DatumLegend<D>> {
       new _FlutterDatumLegend<D>(this);
 
   @override
-  void updateCommonBehavior(common.DatumLegend commonBehavior) {
+  void updateCommonBehavior(common.DatumLegend<D> commonBehavior) {
     (commonBehavior as _FlutterDatumLegend).config = this;
   }
 

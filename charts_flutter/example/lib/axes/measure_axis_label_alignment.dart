@@ -26,7 +26,7 @@ class MeasureAxisLabelAlignment extends StatelessWidget {
   final List<charts.Series<dynamic, String>> seriesList;
   final bool? animate;
 
-  MeasureAxisLabelAlignment(this.seriesList, {this.animate});
+  MeasureAxisLabelAlignment(this.seriesList, {this.animate = false});
 
   factory MeasureAxisLabelAlignment.withSampleData() {
     return new MeasureAxisLabelAlignment(

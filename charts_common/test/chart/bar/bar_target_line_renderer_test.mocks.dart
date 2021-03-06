@@ -288,13 +288,12 @@ class MockCartesianChart<D> extends _i1.Mock implements _i17.CartesianChart<D> {
               returnValue: <_i21.DatumDetails<D?>?>[])
           as List<_i21.DatumDetails<D?>?>);
   @override
-  List<_i21.DatumDetails<D?>?> getAllDatumDetails(
+  List<_i21.DatumDetails<D>> getAllDatumDetails(
           {bool? includeOverlaySeries = false}) =>
       (super.noSuchMethod(
-              Invocation.method(#getAllDatumDetails, [],
-                  {#includeOverlaySeries: includeOverlaySeries}),
-              returnValue: <_i21.DatumDetails<D?>?>[])
-          as List<_i21.DatumDetails<D?>?>);
+          Invocation.method(#getAllDatumDetails, [],
+              {#includeOverlaySeries: includeOverlaySeries}),
+          returnValue: <_i21.DatumDetails<D>>[]) as List<_i21.DatumDetails<D>>);
   @override
   _i9.ChartBehavior<D> createBehavior(_i23.BehaviorCreator<D>? creator) =>
       (super.noSuchMethod(Invocation.method(#createBehavior, [creator]),

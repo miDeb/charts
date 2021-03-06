@@ -39,7 +39,7 @@ import '../chart_behavior.dart' show ChartBehavior, GestureType;
 ///   longPressHold - Mouse/Touch for a while on the handle, then drag across
 ///       the data.
 @immutable
-class Slider<D extends num> extends ChartBehavior<D, common.Slider<D>> {
+class Slider<D extends num> extends ChartBehavior<D> {
   final Set<GestureType>? desiredGestures;
 
   /// Type of input event for the slider.
@@ -170,7 +170,7 @@ class Slider<D extends num> extends ChartBehavior<D, common.Slider<D>> {
       style: style);
 
   @override
-  void updateCommonBehavior(common.Slider commonBehavior) {}
+  void updateCommonBehavior(common.Slider<D> commonBehavior) {}
 
   @override
   String get role => 'Slider-${eventTrigger.toString()}';

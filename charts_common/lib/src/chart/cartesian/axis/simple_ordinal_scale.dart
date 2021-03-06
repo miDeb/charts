@@ -129,7 +129,7 @@ class SimpleOrdinalScale implements OrdinalScale {
   }
 
   @override
-  String? reverse(double pixelLocation) {
+  String reverse(double pixelLocation) {
     final index = ((pixelLocation -
             viewportTranslatePx -
             _range!.start -
@@ -155,7 +155,7 @@ class SimpleOrdinalScale implements OrdinalScale {
 
   /// Update the scale to include [domainValue].
   @override
-  void addDomain(String? domainValue) {
+  void addDomain(String domainValue) {
     _domain.add(domainValue);
     _scaleChanged = true;
   }

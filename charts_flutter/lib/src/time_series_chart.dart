@@ -41,7 +41,7 @@ class TimeSeriesChart extends CartesianChart<DateTime> {
     LinkedHashMap<String, common.NumericAxisSpec>? disjointMeasureAxes,
     common.SeriesRendererConfig<DateTime>? defaultRenderer,
     List<common.SeriesRendererConfig<DateTime>>? customSeriesRenderers,
-    List<ChartBehavior<DateTime, common.ChartBehavior<DateTime>>>? behaviors,
+    List<ChartBehavior<DateTime>>? behaviors,
     List<SelectionModelConfig<DateTime>>? selectionModels,
     LayoutConfig? layoutConfig,
     this.dateTimeFactory,
@@ -82,8 +82,7 @@ class TimeSeriesChart extends CartesianChart<DateTime> {
   }
 
   @override
-  void addDefaultInteractions(
-      List<ChartBehavior<DateTime, common.ChartBehavior<DateTime>>> behaviors) {
+  void addDefaultInteractions(List<ChartBehavior<DateTime>> behaviors) {
     super.addDefaultInteractions(behaviors);
 
     behaviors.add(new LinePointHighlighter());

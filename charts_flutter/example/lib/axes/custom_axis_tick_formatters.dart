@@ -25,7 +25,7 @@ class CustomAxisTickFormatters extends StatelessWidget {
   final List<charts.Series<MyRow, DateTime>> seriesList;
   final bool? animate;
 
-  CustomAxisTickFormatters(this.seriesList, {this.animate});
+  CustomAxisTickFormatters(this.seriesList, {this.animate = false});
 
   /// Creates a [TimeSeriesChart] with sample data and no transition.
   factory CustomAxisTickFormatters.withSampleData() {

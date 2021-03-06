@@ -41,8 +41,8 @@ import '../chart_behavior.dart' show ChartBehavior;
 /// chart component. Using the default value of 0 makes the chart focusable in
 /// the natural order of the page, but you have the option to use whatever
 /// fine-tuned order works best.
-abstract class KeyboardDomainNavigator<D> implements ChartBehavior<D?> {
-  late BaseChart<D?> _chart;
+abstract class KeyboardDomainNavigator<D> implements ChartBehavior<D> {
+  late BaseChart<D> _chart;
   LifecycleListener<D>? _lifecycleListener;
 
   /// An ordered list of the available domains.
@@ -60,13 +60,13 @@ abstract class KeyboardDomainNavigator<D> implements ChartBehavior<D?> {
   }
 
   @override
-  void attachTo(BaseChart<D?> chart) {
+  void attachTo(BaseChart<D> chart) {
     _chart = chart;
     chart.addLifecycleListener(_lifecycleListener);
   }
 
   @override
-  void removeFrom(BaseChart<D?> chart) {
+  void removeFrom(BaseChart<D> chart) {
     chart.removeLifecycleListener(_lifecycleListener);
   }
 
@@ -179,15 +179,15 @@ abstract class KeyboardDomainNavigator<D> implements ChartBehavior<D?> {
     } else {
       final datumPairs = _getDatumPairs(domainIndex);
 
-      final List<SeriesDatum<D?>> seriesDatumList = <SeriesDatum<D>>[];
-      final seriesList = <MutableSeries<D?>?>[];
+      final  seriesDatumList = <SeriesDatum<D?>>[];
+      final seriesList = <MutableSeries<D>>[];
 
-      for (SeriesDatum<D?> seriesDatum in datumPairs) {
+      for (final seriesDatum in datumPairs) {
         seriesDatumList
-            .add(SeriesDatum<D?>(seriesDatum.series, seriesDatum.datum));
+            .add(SeriesDatum(seriesDatum.series, seriesDatum.datum));
 
         if (!seriesList.contains(seriesDatum.series)) {
-          seriesList.add(seriesDatum.series as MutableSeries<D?>?);
+          seriesList.add(seriesDatum.series as MutableSeries<D>);
         }
       }
 
@@ -248,10 +248,10 @@ abstract class KeyboardDomainNavigator<D> implements ChartBehavior<D?> {
       }
     }
 
-    final Map<D?, List<SeriesDatum<D?>>> detailsByDomain =
-        <D?, List<SeriesDatum<D>>>{};
-    for (DatumDetails<D?>? datumDetails in allSeriesDatum) {
-      final domain = datumDetails!.domain;
+    final detailsByDomain =
+        <D?, List<SeriesDatum<D?>>>{};
+    for (final datumDetails in allSeriesDatum) {
+      final domain = datumDetails.domain;
 
       if (detailsByDomain[domain] == null) {
         _domains!.add(domain);
@@ -259,13 +259,13 @@ abstract class KeyboardDomainNavigator<D> implements ChartBehavior<D?> {
       }
 
       detailsByDomain[domain]!
-          .add(SeriesDatum<D?>(datumDetails.series, datumDetails.datum));
+          .add(SeriesDatum(datumDetails.series, datumDetails.datum));
     }
 
-    _datumPairs = <int, List<SeriesDatum<D>>>{};
+    _datumPairs = <int, List<SeriesDatum<D?>>>{};
 
     int i = 0;
-    detailsByDomain.forEach((D? key, List<SeriesDatum<D?>> value) {
+    detailsByDomain.forEach((D? key, final value) {
       _datumPairs!.putIfAbsent(i, () => value);
       i++;
     });
@@ -275,7 +275,7 @@ abstract class KeyboardDomainNavigator<D> implements ChartBehavior<D?> {
 
   /// Gets the datum/series pairs for the given domainIndex.
   List<SeriesDatum<D?>> _getDatumPairs(domainIndex) =>
-      _datumPairs![domainIndex] ?? <SeriesDatum<D>>[];
+      _datumPairs![domainIndex] ?? [];
 
   @override
   String get role => 'keyboard-domain-navigator';

@@ -20,7 +20,7 @@ import '../chart_behavior.dart' show ChartBehavior, GestureType;
 
 /// Behavior that generates semantic nodes for each domain.
 class DomainA11yExploreBehavior<D>
-    extends ChartBehavior<D, common.DomainA11yExploreBehavior<D>> {
+    extends ChartBehavior<D> {
   /// Returns a string for a11y vocalization from a list of series datum.
   final common.VocalizationCallback? vocalizationCallback;
 
@@ -90,7 +90,7 @@ class DomainA11yExploreBehavior<D>
   }
 
   @override
-  void updateCommonBehavior(common.DomainA11yExploreBehavior commonBehavior) {}
+  void updateCommonBehavior(common.DomainA11yExploreBehavior<D> commonBehavior) {}
 
   @override
   String get role => 'DomainA11yExplore-${exploreModeTrigger}';

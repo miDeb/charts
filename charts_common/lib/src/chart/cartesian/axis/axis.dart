@@ -544,10 +544,10 @@ class NumericAxis extends Axis<num> {
   }
 }
 
-class OrdinalAxis extends Axis<String?> {
+class OrdinalAxis extends Axis<String> {
   OrdinalAxis({
     TickDrawStrategy? tickDrawStrategy,
-    TickProvider<String?>? tickProvider,
+    TickProvider<String>? tickProvider,
     TickFormatter? tickFormatter,
   }) : super(
           tickProvider: tickProvider ?? const OrdinalTickProvider(),

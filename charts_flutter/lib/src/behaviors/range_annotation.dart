@@ -36,7 +36,7 @@ import 'chart_behavior.dart' show ChartBehavior, GestureType;
 /// This is typically used for line charts to call out sections of the data
 /// range.
 @immutable
-class RangeAnnotation<D> extends ChartBehavior<D, common.RangeAnnotation<D>> {
+class RangeAnnotation<D> extends ChartBehavior<D> {
   final desiredGestures = new Set<GestureType>();
 
   /// List of annotations to render on the chart.
@@ -86,7 +86,7 @@ class RangeAnnotation<D> extends ChartBehavior<D, common.RangeAnnotation<D>> {
           labelPadding: labelPadding);
 
   @override
-  void updateCommonBehavior(common.RangeAnnotation commonBehavior) {}
+  void updateCommonBehavior(common.RangeAnnotation<D> commonBehavior) {}
 
   @override
   String get role => 'RangeAnnotation';

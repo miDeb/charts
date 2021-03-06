@@ -21,7 +21,7 @@ import 'point_renderer.dart' show PointRenderer, pointSymbolRendererIdKey;
 import 'point_renderer_decorator.dart' show PointRendererDecorator;
 
 /// Configuration for a line renderer.
-class PointRendererConfig<D> implements SeriesRendererConfig<D?> {
+class PointRendererConfig<D> implements SeriesRendererConfig<D> {
   final String? customRendererId;
 
   /// The order to paint this renderer on the canvas.

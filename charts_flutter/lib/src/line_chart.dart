@@ -35,7 +35,7 @@ class LineChart extends CartesianChart<num> {
     LinkedHashMap<String, common.NumericAxisSpec>? disjointMeasureAxes,
     common.LineRendererConfig<num>? defaultRenderer,
     List<common.SeriesRendererConfig<num>>? customSeriesRenderers,
-    List<ChartBehavior<num, common.ChartBehavior<num>>>? behaviors,
+    List<ChartBehavior<num>>? behaviors,
     List<SelectionModelConfig<num>>? selectionModels,
     common.RTLSpec? rtlSpec,
     LayoutConfig? layoutConfig,
@@ -77,7 +77,7 @@ class LineChart extends CartesianChart<num> {
 
   @override
   void addDefaultInteractions(
-      List<ChartBehavior<num, common.ChartBehavior<num>>> behaviors) {
+      List<ChartBehavior<num>> behaviors) {
     super.addDefaultInteractions(behaviors);
 
     behaviors.add(new LinePointHighlighter());

@@ -27,7 +27,7 @@ import '../chart_behavior.dart'
     show ChartBehavior, ChartStateBehavior, GestureType;
 
 @immutable
-class PanBehavior<D> extends ChartBehavior<D, common.PanBehavior<D>> {
+class PanBehavior<D> extends ChartBehavior<D> {
   final _desiredGestures = new Set<GestureType>.from([
     GestureType.onDrag,
   ]);

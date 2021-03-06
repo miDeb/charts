@@ -61,7 +61,7 @@ class LineRenderer<D> extends BaseCartesianRenderer<D> {
   ///
   /// [LinkedHashMap] is used to render the series on the canvas in the same
   /// order as the data was given to the chart.
-  final _seriesLineMap = <String, List<_AnimatedElements<D>>?>{};
+  final _seriesLineMap = <String, List<_AnimatedElements<D?>>?>{};
 
   // Store a list of lines that exist in the series data.
   //
@@ -285,7 +285,7 @@ class LineRenderer<D> extends BaseCartesianRenderer<D> {
   /// would be be rendered on top of the old ones, no matter the order of the
   /// new series list.
   void _mergeIntoSeriesMap(List<ImmutableSeries<D>> seriesList) {
-    List<MapEntry<String, List<_AnimatedElements<D>>?>> newLineMap = [];
+    List<MapEntry<String, List<_AnimatedElements<D?>>?>> newLineMap = [];
 
     seriesList.forEach((ImmutableSeries<D> series) {
       final key = series.id;
@@ -326,11 +326,11 @@ class LineRenderer<D> extends BaseCartesianRenderer<D> {
     _currentKeys.clear();
 
     // List of final points for the previous line in a stack.
-    List<List<_DatumPoint<D>>> previousPointList = [];
+    List<List<_DatumPoint<D?>>> previousPointList = [];
 
     // List of initial points for the previous line in a stack, animated in from
     // the measure axis.
-    List<List<_DatumPoint<D>>?> previousInitialPointList = [];
+    List<List<_DatumPoint<D?>>?> previousInitialPointList = [];
 
     _mergeIntoSeriesMap(seriesList);
 
@@ -397,10 +397,10 @@ class LineRenderer<D> extends BaseCartesianRenderer<D> {
           final boundsElementList = lineAndArea[3];
 
           // Create the line elements.
-          final animatingLines = <_AnimatedLine<D>>[];
+          final animatingLines = <_AnimatedLine<D?>>[];
 
           for (var index = 0; index < lineElementList.length; index++) {
-            animatingLines.add(_AnimatedLine<D>(
+            animatingLines.add(_AnimatedLine(
                 key: lineElementList[index].styleKey,
                 overlaySeries: series.overlaySeries)
               ..setNewTarget(lineElementList[index]));
@@ -433,7 +433,7 @@ class LineRenderer<D> extends BaseCartesianRenderer<D> {
             }
           }
 
-          animatingElements = _AnimatedElements<D>()
+          animatingElements = _AnimatedElements<D?>()
             ..styleKey = styleSegment.styleKey
             ..allPoints = allPointList
             ..lines = animatingLines
@@ -460,7 +460,7 @@ class LineRenderer<D> extends BaseCartesianRenderer<D> {
           // than we did in the previous chart draw cycle.
           // TODO: Nicer animations for incoming segments.
           if (index >= animatingElements.lines!.length) {
-            animatingElements.lines!.add(_AnimatedLine<D>(
+            animatingElements.lines!.add(_AnimatedLine<D?>(
                 key: lineElement.styleKey,
                 overlaySeries: series.overlaySeries));
           }
@@ -475,7 +475,7 @@ class LineRenderer<D> extends BaseCartesianRenderer<D> {
             // cycle than we did in the previous chart draw cycle.
             // TODO: Nicer animations for incoming segments.
             if (index >= animatingElements.areas!.length) {
-              animatingElements.areas!.add(_AnimatedArea<D>(
+              animatingElements.areas!.add(_AnimatedArea<D?>(
                   key: areaElement.styleKey,
                   overlaySeries: series.overlaySeries));
             }
@@ -491,7 +491,7 @@ class LineRenderer<D> extends BaseCartesianRenderer<D> {
             // cycle than we did in the previous chart draw cycle.
             // TODO: Nicer animations for incoming segments.
             if (index >= animatingElements.bounds!.length) {
-              animatingElements.bounds!.add(_AnimatedArea<D>(
+              animatingElements.bounds!.add(_AnimatedArea<D?>(
                   key: boundElement.styleKey,
                   overlaySeries: series.overlaySeries));
             }
@@ -508,7 +508,7 @@ class LineRenderer<D> extends BaseCartesianRenderer<D> {
     });
 
     // Animate out lines that don't exist anymore.
-    _seriesLineMap.forEach((String key, List<_AnimatedElements<D>>? elements) {
+    _seriesLineMap.forEach((String key, List<_AnimatedElements<D?>>? elements) {
       for (var element in elements!) {
         if (element.lines != null) {
           for (var line in element.lines!) {
@@ -567,8 +567,8 @@ class LineRenderer<D> extends BaseCartesianRenderer<D> {
   /// point positions to animate in from the measure axis.
   List _createLineAndAreaElements(
       ImmutableSeries<D> series,
-      _LineRendererElement<D> styleSegment,
-      List<_DatumPoint<D>>? previousPointList,
+      _LineRendererElement<D?> styleSegment,
+      List<_DatumPoint<D?>>? previousPointList,
       bool initializeFromZero) {
     final measureAxis = series.getAttr(measureAxisKey) as ImmutableAxis<num>?;
 
@@ -596,8 +596,8 @@ class LineRenderer<D> extends BaseCartesianRenderer<D> {
     final positionExtent = _createPositionExtent(series, styleSegment);
 
     // Get the line elements we are going to to set up.
-    final List<_LineRendererElement<D>> lineElements =
-        <_LineRendererElement<D>>[];
+    final lineElements =
+        <_LineRendererElement<D?>>[];
     for (var index = 0; index < lineSegments.length; index++) {
       final linePointList = lineSegments[index];
 
@@ -605,7 +605,7 @@ class LineRenderer<D> extends BaseCartesianRenderer<D> {
       final lineStyleKey = '${styleKey}__line__${index}';
       _currentKeys.add(lineStyleKey);
 
-      lineElements.add(_LineRendererElement<D>()
+      lineElements.add(_LineRendererElement<D?>()
         ..points = linePointList
         ..color = color
         ..areaColor = areaColor
@@ -619,8 +619,8 @@ class LineRenderer<D> extends BaseCartesianRenderer<D> {
     }
 
     // Get the area elements we are going to set up.
-    final List<_AreaRendererElement<D>> areaElements =
-        <_AreaRendererElement<D>>[];
+    final areaElements =
+        <_AreaRendererElement<D?>>[];
     if (config.includeArea) {
       for (var index = 0; index < areaSegments.length; index++) {
         final areaPointList = areaSegments[index];
@@ -629,7 +629,7 @@ class LineRenderer<D> extends BaseCartesianRenderer<D> {
         final areaStyleKey = '${styleKey}__area_${index}';
         _currentKeys.add(areaStyleKey);
 
-        areaElements.add(_AreaRendererElement<D>()
+        areaElements.add(_AreaRendererElement<D?>()
           ..points = areaPointList
           ..color = color
           ..areaColor = areaColor
@@ -655,7 +655,7 @@ class LineRenderer<D> extends BaseCartesianRenderer<D> {
           ..points = boundsPointList
           ..color = color
           ..areaColor = areaColor
-          ..domainExtent = domainExtent as _Range<D?>?
+          ..domainExtent = domainExtent
           ..measureAxisPosition = measureAxis!.getLocation(0.0)
           ..positionExtent = positionExtent
           ..styleKey = boundsStyleKey);
@@ -672,7 +672,7 @@ class LineRenderer<D> extends BaseCartesianRenderer<D> {
   /// [initializeFromZero] controls whether we generate elements with measure
   /// values of 0, or using series data. This should be true when calculating
   /// point positions to animate in from the measure axis.
-  List<_DatumPoint<D>> _createPointListForSeries(
+  List<_DatumPoint<D?>> _createPointListForSeries(
       ImmutableSeries<D> series, bool initializeFromZero) {
     final domainAxis = series.getAttr(domainAxisKey) as ImmutableAxis<D>?;
     final D Function(int) domainFn = series.domainFn;
@@ -680,7 +680,7 @@ class LineRenderer<D> extends BaseCartesianRenderer<D> {
     final num? Function(int) measureFn = series.measureFn;
     final num? Function(int)? measureOffsetFn = series.measureOffsetFn;
 
-    final pointList = <_DatumPoint<D>>[];
+    final pointList = <_DatumPoint<D?>>[];
 
     // Generate [_DatumPoints]s for the series data.
     for (var index = 0; index < series.data.length; index++) {
@@ -717,14 +717,14 @@ class LineRenderer<D> extends BaseCartesianRenderer<D> {
   /// stack.
   ///
   /// [series] the series that this line represents.
-  List _createLineAndAreaSegmentsForSeries(
-      List<_DatumPoint<D>> pointList,
-      List<_DatumPoint<D>>? previousPointList,
-      ImmutableSeries<D> series,
+  List<List<List<_DatumPoint<D?>>>> _createLineAndAreaSegmentsForSeries(
+      List<_DatumPoint<D?>> pointList,
+      List<_DatumPoint<D?>>? previousPointList,
+      ImmutableSeries<D?> series,
       bool initializeFromZero) {
-    final lineSegments = <List<_DatumPoint<D>>>[];
-    final areaSegments = <List<_DatumPoint<D>>>[];
-    final boundsSegments = <List<_DatumPoint<D>>>[];
+    final lineSegments = <List<_DatumPoint<D?>>>[];
+    final areaSegments = <List<_DatumPoint<D?>>>[];
+    final boundsSegments = <List<_DatumPoint<D?>>>[];
 
     int? startPointIndex;
     int? endPointIndex;
@@ -734,36 +734,6 @@ class LineRenderer<D> extends BaseCartesianRenderer<D> {
         series.measureLowerBoundFn != null;
 
     for (var index = 0; index < pointList.length; index++) {
-      final point = pointList[index];
-
-      if (point.y == null) {
-        if (startPointIndex == null) {
-          continue;
-        }
-
-        lineSegments.add(
-            _createLineSegment(startPointIndex, endPointIndex!, pointList));
-
-        // Isolated data points are handled by the line painter. Do not add an
-        // area segment for them.
-        if (startPointIndex != endPointIndex) {
-          if (config.includeArea) {
-            areaSegments.add(_createAreaSegment(startPointIndex, endPointIndex,
-                pointList, previousPointList, series, initializeFromZero));
-          }
-          if (seriesHasMeasureBounds) {
-            boundsSegments.add(_createBoundsSegment(
-                pointList.sublist(startPointIndex, endPointIndex + 1),
-                series,
-                initializeFromZero));
-          }
-        }
-
-        startPointIndex = null;
-        endPointIndex = null;
-        continue;
-      }
-
       startPointIndex ??= index;
       endPointIndex = index;
     }
@@ -803,8 +773,8 @@ class LineRenderer<D> extends BaseCartesianRenderer<D> {
   /// [end] index of the last point in the segment.
   ///
   /// [pointList] list of all points in the line.
-  List<_DatumPoint<D>> _createLineSegment(
-          int start, int end, List<_DatumPoint<D>> pointList) =>
+  List<_DatumPoint<D?>> _createLineSegment(
+          int start, int end, List<_DatumPoint<D?>> pointList) =>
       pointList.sublist(start, end + 1);
 
   /// Builds a list of data points for an area segment.
@@ -824,18 +794,18 @@ class LineRenderer<D> extends BaseCartesianRenderer<D> {
   /// stack.
   ///
   /// [series] the series that this line represents.
-  List<_DatumPoint<D>> _createAreaSegment(
+  List<_DatumPoint<D?>> _createAreaSegment(
       int start,
       int end,
-      List<_DatumPoint<D>> pointList,
-      List<_DatumPoint<D>>? previousPointList,
-      ImmutableSeries<D> series,
+      List<_DatumPoint<D?>> pointList,
+      List<_DatumPoint<D?>>? previousPointList,
+      ImmutableSeries<D?> series,
       bool initializeFromZero) {
     final domainAxis = series.getAttr(domainAxisKey) as ImmutableAxis<D>?;
-    final D Function(int) domainFn = series.domainFn;
+    final D? Function(int) domainFn = series.domainFn;
     final measureAxis = series.getAttr(measureAxisKey) as ImmutableAxis<num>?;
 
-    final areaPointList = <_DatumPoint<D>>[];
+    final areaPointList = <_DatumPoint<D?>>[];
 
     if (!config.stacked || previousPointList == null) {
       // Start area segments at the bottom of a stack by adding a bottom line
@@ -857,10 +827,10 @@ class LineRenderer<D> extends BaseCartesianRenderer<D> {
     return areaPointList;
   }
 
-  List<_DatumPoint<D>> _createBoundsSegment(List<_DatumPoint<D>> pointList,
-      ImmutableSeries<D> series, bool initializeFromZero) {
+  List<_DatumPoint<D?>> _createBoundsSegment(List<_DatumPoint<D?>> pointList,
+      ImmutableSeries<D?> series, bool initializeFromZero) {
     final measureAxis = series.getAttr(measureAxisKey) as ImmutableAxis<num>?;
-    final areaPointList = <_DatumPoint<D>>[];
+    final areaPointList = <_DatumPoint<D?>>[];
 
     // Add all points for upper bounds.
     areaPointList.addAll(pointList.map((datumPoint) => _DatumPoint.from(
@@ -925,9 +895,9 @@ class LineRenderer<D> extends BaseCartesianRenderer<D> {
       final keysToRemove = <String>[];
 
       _seriesLineMap
-          .forEach((String key, List<_AnimatedElements<D>>? elements) {
+          .forEach((String key, List<_AnimatedElements<D?>>? elements) {
         elements!.removeWhere(
-            (_AnimatedElements<D> element) => element.animatingOut);
+            (element) => element.animatingOut);
 
         if (elements.isEmpty) {
           keysToRemove.add(key);
@@ -937,14 +907,14 @@ class LineRenderer<D> extends BaseCartesianRenderer<D> {
       keysToRemove.forEach(_seriesLineMap.remove);
     }
 
-    _seriesLineMap.forEach((String key, List<_AnimatedElements<D>>? elements) {
+    _seriesLineMap.forEach((String key, List<_AnimatedElements<D?>>? elements) {
       if (config.includeArea) {
         elements!
-            .map<List<_AnimatedArea<D>>?>(
-                (_AnimatedElements<D> animatingElement) =>
+            .map<List<_AnimatedArea<D?>>?>(
+                (animatingElement) =>
                     animatingElement.areas)
-            .expand<_AnimatedArea<D>>((List<_AnimatedArea<D>>? areas) => areas!)
-            .map<_AreaRendererElement<D>?>((_AnimatedArea<D> animatingArea) =>
+            .expand<_AnimatedArea<D?>>(( areas) => areas!)
+            .map<_AreaRendererElement<D?>?>(( animatingArea) =>
                 animatingArea.getCurrentArea(animationPercent))
             .forEach((_AreaRendererElement? area) {
           if (area != null) {
@@ -958,12 +928,12 @@ class LineRenderer<D> extends BaseCartesianRenderer<D> {
 
       if (_hasMeasureBounds) {
         elements!
-            .map<List<_AnimatedArea<D>>?>(
-                (_AnimatedElements<D> animatingElement) =>
+            .map<List<_AnimatedArea<D?>>?>(
+                (animatingElement) =>
                     animatingElement.bounds)
-            .expand<_AnimatedArea<D>>(
-                (List<_AnimatedArea<D>>? bounds) => bounds!)
-            .map<_AreaRendererElement<D>?>((_AnimatedArea<D> animatingBounds) =>
+            .expand<_AnimatedArea<D?>>(
+                ( bounds) => bounds!)
+            .map<_AreaRendererElement<D?>?>(( animatingBounds) =>
                 animatingBounds.getCurrentArea(animationPercent))
             .forEach((_AreaRendererElement? bound) {
           if (bound != null) {
@@ -977,13 +947,13 @@ class LineRenderer<D> extends BaseCartesianRenderer<D> {
 
       if (config.includeLine) {
         elements!
-            .map<List<_AnimatedLine<D>>?>(
-                (_AnimatedElements<D> animatingElement) =>
+            .map<List<_AnimatedLine<D?>>?>(
+                ( animatingElement) =>
                     animatingElement.lines)
-            .expand<_AnimatedLine<D>>((List<_AnimatedLine<D>>? lines) => lines!)
-            .map<_LineRendererElement<D>?>((_AnimatedLine<D> animatingLine) =>
+            .expand<_AnimatedLine<D?>>(( lines) => lines!)
+            .map<_LineRendererElement<D?>?>(( animatingLine) =>
                 animatingLine.getCurrentLine(animationPercent))
-            .forEach((_LineRendererElement? line) {
+            .forEach((line) {
           if (line != null) {
             canvas.drawLine(
                 clipBounds: _getClipBoundsForExtent(line.positionExtent),
@@ -1027,10 +997,10 @@ class LineRenderer<D> extends BaseCartesianRenderer<D> {
 
   bool get isRtl => _chart?.context?.isRtl ?? false;
 
-  _DatumPoint<D> _getPoint(
+  _DatumPoint<D?> _getPoint(
       dynamic datum,
-      D domainValue,
-      ImmutableSeries<D> series,
+      D? domainValue,
+      ImmutableSeries<D?> series,
       ImmutableAxis<D?> domainAxis,
       num? measureValue,
       num? measureOffsetValue,
@@ -1042,7 +1012,7 @@ class LineRenderer<D> extends BaseCartesianRenderer<D> {
         ? measureAxis!.getLocation(measureValue + measureOffsetValue)
         : null;
 
-    return _DatumPoint<D>(
+    return _DatumPoint<D?>(
         datum: datum,
         domain: domainValue,
         series: series,
@@ -1052,29 +1022,29 @@ class LineRenderer<D> extends BaseCartesianRenderer<D> {
   }
 
   @override
-  List<DatumDetails<D>> getNearestDatumDetailPerSeries(
+  List<DatumDetails<D?>> getNearestDatumDetailPerSeries(
       Point<double>? chartPoint,
       bool byDomain,
       Rectangle<int>? boundsOverride) {
-    final nearest = <DatumDetails<D>>[];
+    final nearest = <DatumDetails<D?>>[];
 
     // Was it even in the component bounds?
     if (!isPointWithinBounds(chartPoint, boundsOverride)) {
       return nearest;
     }
 
-    _seriesLineMap.values.forEach((List<_AnimatedElements<D>>? seriesSegments) {
-      _DatumPoint<D>? nearestPoint;
+    _seriesLineMap.values.forEach((List<_AnimatedElements<D?>>? seriesSegments) {
+      _DatumPoint<D?>? nearestPoint;
       double nearestDomainDistance = 10000.0;
       double nearestMeasureDistance = 10000.0;
       double nearestRelativeDistance = 10000.0;
 
-      seriesSegments!.forEach((_AnimatedElements<D> segment) {
+      seriesSegments!.forEach(( segment) {
         if (segment.overlaySeries) {
           return;
         }
 
-        segment.allPoints!.forEach((Point p) {
+        segment.allPoints!.forEach(( p) {
           // Don't look at points not in the drawArea.
           if (p.x < componentBounds.left || p.x > componentBounds.right) {
             return;
@@ -1087,7 +1057,7 @@ class LineRenderer<D> extends BaseCartesianRenderer<D> {
           if (p.y != null) {
             measureDistance = (p.y - chartPoint!.y).abs();
             domainDistance = (p.x - chartPoint.x).abs();
-            relativeDistance = chartPoint.distanceTo(p as Point<double>);
+            relativeDistance = chartPoint.distanceTo(p);
           } else {
             // Null measures have no real position, so make them the farthest
             // away by real distance.
@@ -1100,14 +1070,14 @@ class LineRenderer<D> extends BaseCartesianRenderer<D> {
             if ((domainDistance < nearestDomainDistance) ||
                 ((domainDistance == nearestDomainDistance &&
                     measureDistance < nearestMeasureDistance))) {
-              nearestPoint = p as _DatumPoint<D>?;
+              nearestPoint = p;
               nearestDomainDistance = domainDistance;
               nearestMeasureDistance = measureDistance;
               nearestRelativeDistance = relativeDistance;
             }
           } else {
             if (relativeDistance < nearestRelativeDistance) {
-              nearestPoint = p as _DatumPoint<D>?;
+              nearestPoint = p;
               nearestDomainDistance = domainDistance;
               nearestMeasureDistance = measureDistance;
               nearestRelativeDistance = relativeDistance;
@@ -1118,7 +1088,7 @@ class LineRenderer<D> extends BaseCartesianRenderer<D> {
 
       // Found a point, add it to the list.
       if (nearestPoint != null) {
-        nearest.add(DatumDetails<D>(
+        nearest.add(DatumDetails<D?>(
             chartPosition: Point<double>(nearestPoint!.x, nearestPoint!.y),
             datum: nearestPoint!.datum,
             domain: nearestPoint!.domain,
@@ -1135,8 +1105,8 @@ class LineRenderer<D> extends BaseCartesianRenderer<D> {
     return nearest;
   }
 
-  DatumDetails<D> addPositionToDetailsForSeriesDatum(
-      DatumDetails<D> details, SeriesDatum<D> seriesDatum) {
+  DatumDetails<D?> addPositionToDetailsForSeriesDatum(
+      DatumDetails<D?> details, SeriesDatum<D?> seriesDatum) {
     final series = details.series!;
 
     final domainAxis = series.getAttr(domainAxisKey) as ImmutableAxis<D>;

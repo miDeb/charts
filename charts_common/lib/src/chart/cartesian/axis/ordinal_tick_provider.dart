@@ -26,20 +26,20 @@ import 'tick_formatter.dart' show TickFormatter;
 import 'tick_provider.dart' show BaseTickProvider, TickHint;
 
 /// A strategy for selecting ticks to draw given ordinal domain values.
-class OrdinalTickProvider extends BaseTickProvider<String?> {
+class OrdinalTickProvider extends BaseTickProvider<String> {
   const OrdinalTickProvider();
 
   @override
-  List<Tick<String?>>? getTicks(
+  List<Tick<String>>? getTicks(
       {required ChartContext? context,
       required GraphicsFactory graphicsFactory,
       required covariant OrdinalScale scale,
-      required TickFormatter<String?>? formatter,
-      required Map<String?, String> formatterValueCache,
-      required TickDrawStrategy<String?>? tickDrawStrategy,
+      required TickFormatter<String>? formatter,
+      required Map<String, String> formatterValueCache,
+      required TickDrawStrategy<String>? tickDrawStrategy,
       required AxisOrientation? orientation,
       bool viewportExtensionEnabled = false,
-      TickHint<String?>? tickHint}) {
+      TickHint<String>? tickHint}) {
     return createTicks(scale.domain.domains,
         context: context,
         graphicsFactory: graphicsFactory,

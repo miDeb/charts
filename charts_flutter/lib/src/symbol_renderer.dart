@@ -54,7 +54,7 @@ abstract class CustomSymbolRenderer extends common.SymbolRenderer
   /// Must override this method to build the custom Widget with the given color
   /// as
   @override
-  Widget build(BuildContext context, {Color? color, Size? size, bool? enabled});
+  Widget build(BuildContext context, {Color? color, Size? size, required bool enabled});
 
   @override
   void paint(common.ChartCanvas canvas, Rectangle<num>? bounds,
@@ -75,7 +75,7 @@ abstract class CustomSymbolRenderer extends common.SymbolRenderer
 /// Common interface for [CustomSymbolRenderer] & [SymbolRendererCanvas] for
 /// convenience for [LegendEntryLayout].
 abstract class SymbolRendererBuilder {
-  Widget build(BuildContext context, {Color? color, Size? size, bool? enabled});
+  Widget build(BuildContext context, {Color? color, Size? size, required bool enabled});
 }
 
 /// The Widget which fulfills the guts of [SymbolRendererCanvas] actually

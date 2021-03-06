@@ -45,8 +45,8 @@ class BaseChartState<D> extends State<BaseChart<D>>
 
   bool _configurationChanged = false;
 
-  final autoBehaviorWidgets = <ChartBehavior<D, common.ChartBehavior<D>>>[];
-  final addedBehaviorWidgets = <ChartBehavior<D, common.ChartBehavior<D>>>[];
+  final autoBehaviorWidgets = <ChartBehavior<D>>[];
+  final addedBehaviorWidgets = <ChartBehavior<D>>[];
   final addedCommonBehaviorsByRole = <String, common.ChartBehavior>{};
 
   final addedSelectionChangedListenersByType =

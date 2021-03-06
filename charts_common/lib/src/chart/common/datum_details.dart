@@ -148,7 +148,7 @@ class DatumDetails<D> {
       this.rawMeasure,
       this.rawMeasureLowerBound,
       this.rawMeasureUpperBound,
-      this.series,
+      required this.series,
       this.color,
       this.fillColor,
       this.fillPattern,

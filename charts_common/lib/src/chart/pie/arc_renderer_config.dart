@@ -26,7 +26,7 @@ import 'arc_renderer_decorator.dart' show ArcRendererDecorator;
 
 /// Configuration for an [ArcRenderer].
 class ArcRendererConfig<D> 
-    implements SeriesRendererConfig<D?> {
+    implements SeriesRendererConfig<D> {
   final String? customRendererId;
 
   /// List of decorators applied to rendered arcs.

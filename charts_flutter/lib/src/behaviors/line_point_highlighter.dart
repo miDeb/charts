@@ -34,7 +34,7 @@ import 'chart_behavior.dart' show ChartBehavior, GestureType;
 /// and expand selection out to the domain value.
 @immutable
 class LinePointHighlighter<D>
-    extends ChartBehavior<D, common.LinePointHighlighter<D>> {
+    extends ChartBehavior<D> {
   final desiredGestures = new Set<GestureType>();
 
   final common.SelectionModelType? selectionModelType;
@@ -96,7 +96,7 @@ class LinePointHighlighter<D>
       );
 
   @override
-  void updateCommonBehavior(common.LinePointHighlighter commonBehavior) {}
+  void updateCommonBehavior(common.LinePointHighlighter<D> commonBehavior) {}
 
   @override
   String get role => 'LinePointHighlighter-${selectionModelType.toString()}';

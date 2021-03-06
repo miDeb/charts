@@ -191,7 +191,7 @@ class ArcLabelDecorator<D> extends ArcRendererDecorator<D> {
       }
 
       // Only calculate and draw label if there's actually space for the label.
-      if (labelElement.maxWidth > 0) {
+      if (labelElement.maxWidth! > 0) {
         // Calculate the start position of label based on [labelAnchor].
         if (calculatedLabelPosition == ArcLabelPosition.inside) {
           _drawInsideLabel(canvas!, arcElements, labelElement, centerAngle);
@@ -303,7 +303,7 @@ class ArcLabelDecorator<D> extends ArcRendererDecorator<D> {
       // Shift the label horizontally by the length of the leader line.
       labelX = (labelX + tailX).round();
 
-      labelElement.maxWidth = (labelElement.maxWidth - tailX).round();
+      labelElement.maxWidth = (labelElement.maxWidth! - tailX).round();
     }
 
     canvas!.drawText(labelElement, labelX, labelY);

@@ -30,7 +30,7 @@ class ShortTickLengthAxis extends StatelessWidget {
   final List<charts.Series<dynamic, String>> seriesList;
   final bool? animate;
 
-  ShortTickLengthAxis(this.seriesList, {this.animate});
+  ShortTickLengthAxis(this.seriesList, {this.animate = false});
 
   factory ShortTickLengthAxis.withSampleData() {
     return new ShortTickLengthAxis(

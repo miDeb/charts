@@ -28,7 +28,7 @@ class CustomMeasureTickCount extends StatelessWidget {
   final List<charts.Series<dynamic, DateTime>> seriesList;
   final bool? animate;
 
-  CustomMeasureTickCount(this.seriesList, {this.animate});
+  CustomMeasureTickCount(this.seriesList, {this.animate = false});
 
   /// Creates a [TimeSeriesChart] with sample data and no transition.
   factory CustomMeasureTickCount.withSampleData() {

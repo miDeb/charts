@@ -51,7 +51,7 @@ abstract class CartesianChart<D> extends BaseChart<D> {
     this.disjointMeasureAxes,
     common.SeriesRendererConfig<D>? defaultRenderer,
     List<common.SeriesRendererConfig<D>>? customSeriesRenderers,
-    List<ChartBehavior<D, common.ChartBehavior<D>>>? behaviors,
+    List<ChartBehavior<D>>? behaviors,
     List<SelectionModelConfig<D>>? selectionModels,
     common.RTLSpec? rtlSpec,
     bool defaultInteractions = true,

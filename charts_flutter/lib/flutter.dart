@@ -24,6 +24,11 @@ export 'package:charts_common/common.dart'
         AnnotationLabelAnchor,
         AnnotationLabelDirection,
         AnnotationLabelPosition,
+        ArcLabelDecorator,
+        ArcLabelLeaderLineStyleSpec,
+        ArcLabelPosition,
+        ArcRenderer,
+        ArcRendererConfig,
         AutoDateTimeTickFormatterSpec,
         AutoDateTimeTickProviderSpec,
         Axis,
@@ -181,7 +186,9 @@ export 'src/behaviors/slider/slider.dart' show Slider;
 export 'src/behaviors/zoom/initial_hint_behavior.dart' show InitialHintBehavior;
 export 'src/behaviors/zoom/pan_and_zoom_behavior.dart' show PanAndZoomBehavior;
 export 'src/behaviors/zoom/pan_behavior.dart' show PanBehavior;
+export 'src/combo_chart/combo_chart.dart';
 export 'src/line_chart.dart';
+export 'src/pie_chart.dart';
 export 'src/scatter_plot_chart.dart';
 export 'src/selection_model_config.dart' show SelectionModelConfig;
 export 'src/symbol_renderer.dart' show CustomSymbolRenderer;

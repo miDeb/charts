@@ -585,11 +585,11 @@ abstract class BaseBarRenderer<D, R extends BaseBarRendererElement,
       ChartCanvas canvas, double animationPercent, Iterable<R> barElements);
 
   @override
-  List<DatumDetails<D>> getNearestDatumDetailPerSeries(
+  List<DatumDetails<D?>> getNearestDatumDetailPerSeries(
       Point<double>? chartPoint,
       bool byDomain,
       Rectangle<int>? boundsOverride) {
-    var nearest = <DatumDetails<D>>[];
+    var nearest = <DatumDetails<D?>>[];
 
     // Was it even in the component bounds?
     if (!isPointWithinBounds(chartPoint, boundsOverride)) {
@@ -624,7 +624,7 @@ abstract class BaseBarRenderer<D, R extends BaseBarRendererElement,
       D? nearestDomain;
 
       // TODO: Optimize this with a binary search based on chartX.
-      for (DatumDetails<D> detail in nearest) {
+      for (DatumDetails<D?> detail in nearest) {
         if (byDomain) {
           if (detail.domainDistance! < minDomainDistance! ||
               (detail.domainDistance == minDomainDistance &&
@@ -679,9 +679,9 @@ abstract class BaseBarRenderer<D, R extends BaseBarRendererElement,
 
   // In the case of null [domainValue] return all values to be compared, since
   // we can't use the optimized comparison for [OrdinalAxis].
-  List<DatumDetails<D>> _getVerticalDetailsForDomainValue(
+  List<DatumDetails<D?>> _getVerticalDetailsForDomainValue(
       D? domainValue, Point<double>? chartPoint) {
-    return List<DatumDetails<D>>.from(_getSegmentsForDomainValue(domainValue,
+    return List<DatumDetails<D?>>.from(_getSegmentsForDomainValue(domainValue,
             where: (BaseAnimatedBar<D?, R> bar) => !bar.series!.overlaySeries!)
         .map<DatumDetails<D?>>((BaseAnimatedBar<D?, R> bar) {
       final barBounds = getBoundsForBar(bar.currentBar!);

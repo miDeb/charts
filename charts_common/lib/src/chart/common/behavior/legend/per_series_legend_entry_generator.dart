@@ -76,7 +76,7 @@ class PerSeriesLegendEntryGenerator<D> implements LegendEntryGenerator<D> {
     // Hash set of series ID's that use the secondary measure axis
     final secondaryAxisSeriesIDs = HashSet<String>();
 
-    for (SeriesDatum<D> selectedDatum in selectionModel.selectedDatum) {
+    for (SeriesDatum<D?> selectedDatum in selectionModel.selectedDatum) {
       final series = selectedDatum.series!;
       final seriesId = series.id;
       final measure = series.measureFn(selectedDatum.index!) ?? 0;

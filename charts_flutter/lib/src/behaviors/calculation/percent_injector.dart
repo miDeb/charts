@@ -36,7 +36,7 @@ import '../chart_behavior.dart' show ChartBehavior, GestureType;
 /// then this behavior must be added after the [Legend] to ensure that it
 /// calculates values after series have been potentially removed from the list.
 @immutable
-class PercentInjector<D> extends ChartBehavior<D, common.PercentInjector<D>> {
+class PercentInjector<D> extends ChartBehavior<D> {
   final desiredGestures = new Set<GestureType>();
 
   /// The type of data total to be calculated.
@@ -57,7 +57,7 @@ class PercentInjector<D> extends ChartBehavior<D, common.PercentInjector<D>> {
       new common.PercentInjector<D>(totalType: totalType);
 
   @override
-  void updateCommonBehavior(common.PercentInjector commonBehavior) {}
+  void updateCommonBehavior(common.PercentInjector<D> commonBehavior) {}
 
   @override
   String get role => 'PercentInjector';

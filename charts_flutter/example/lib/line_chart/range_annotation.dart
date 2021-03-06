@@ -24,7 +24,7 @@ class LineRangeAnnotationChart extends StatelessWidget {
   final List<charts.Series<dynamic, num>> seriesList;
   final bool? animate;
 
-  LineRangeAnnotationChart(this.seriesList, {this.animate});
+  LineRangeAnnotationChart(this.seriesList, {this.animate = false});
 
   /// Creates a [LineChart] with sample data and range annotations.
   ///

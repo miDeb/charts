@@ -111,22 +111,22 @@ abstract class SeriesRenderer<D> extends LayoutView {
   /// outside the box. If not specified, then each series renderer on the chart
   /// will use its own component bounds for filtering out selection events
   /// (usually the chart draw area).
-  List<DatumDetails<D>>? getNearestDatumDetailPerSeries(
+  List<DatumDetails<D?>>? getNearestDatumDetailPerSeries(
       Point<double>? chartPoint, bool byDomain, Rectangle<int>? boundsOverride);
 
   /// Get an expanded set of processed [DatumDetails] for a given [SeriesDatum].
   ///
   /// This is typically called by chart behaviors that need to get full details
   /// on selected data.
-  DatumDetails<D>? getDetailsForSeriesDatum(SeriesDatum<D> seriesDatum);
+  DatumDetails<D?>? getDetailsForSeriesDatum(SeriesDatum<D?> seriesDatum);
 
   /// Adds chart position data to [details].
   ///
   /// This is a helper function intended to be called from
   /// [getDetailsForSeriesDatum]. Every concrete [SeriesRenderer] needs to
   /// implement custom logic for setting location data.
-  DatumDetails<D>? addPositionToDetailsForSeriesDatum(
-      DatumDetails<D> details, SeriesDatum<D> seriesDatum);
+  DatumDetails<D?>? addPositionToDetailsForSeriesDatum(
+      DatumDetails<D?> details, SeriesDatum<D?> seriesDatum);
 }
 
 /// Concrete base class for [SeriesRenderer]s that implements common
@@ -320,7 +320,7 @@ abstract class BaseSeriesRenderer<D> implements SeriesRenderer<D> {
   void configureMeasureAxes(List<MutableSeries<D>> seriesList) {}
 
   @override
-  DatumDetails<D>? getDetailsForSeriesDatum(SeriesDatum<D> seriesDatum) {
+  DatumDetails<D?>? getDetailsForSeriesDatum(SeriesDatum<D?> seriesDatum) {
     // Generate details relevant to every type of series renderer. Position
     // details are left as an exercise for every renderer that extends this
     // class.
@@ -378,7 +378,7 @@ abstract class BaseSeriesRenderer<D> implements SeriesRenderer<D> {
     var strokeWidthPx = strokeWidthPxFn != null ? strokeWidthPxFn(index) : null;
     strokeWidthPx = strokeWidthPx?.toDouble();
 
-    final details = DatumDetails<D>(
+    final details = DatumDetails<D?>(
         datum: seriesDatum.datum,
         index: seriesDatum.index,
         domain: domainValue,

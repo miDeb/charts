@@ -27,12 +27,12 @@ import '../base_chart_state.dart' show BaseChartState;
 
 /// Flutter wrapper for chart behaviors.
 @immutable
-abstract class ChartBehavior<D, B extends common.ChartBehavior<D>> {
+abstract class ChartBehavior<D> {
   Set<GestureType>? get desiredGestures;
 
-  B createCommonBehavior();
+  common.ChartBehavior<D> createCommonBehavior();
 
-  void updateCommonBehavior(B commonBehavior);
+  void updateCommonBehavior(covariant common.ChartBehavior<D> commonBehavior);
 
   String get role;
 }

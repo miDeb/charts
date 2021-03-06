@@ -170,15 +170,15 @@ class SelectNearest<D> implements ChartBehavior<D> {
     var details = _chart!.getNearestDatumDetailPerSeries(
         chartPoint, selectAcrossAllSeriesRendererComponents);
 
-    final List<ImmutableSeries<D>?> seriesList = <ImmutableSeries<D>?>[];
-    List<SeriesDatum<D>> seriesDatumList = <SeriesDatum<D>>[];
+    final seriesList = <ImmutableSeries<D?>?>[];
+    var seriesDatumList = <SeriesDatum<D?>>[];
 
     if (details != null && details.isNotEmpty) {
       if (maximumDomainDistancePx == null ||
           details[0].domainDistance! <= maximumDomainDistancePx!) {
         seriesDatumList = expandToDomain!
             ? _expandToDomain(details.first)
-            : [SeriesDatum<D>(details.first.series, details.first.datum)];
+            : [SeriesDatum(details.first.series, details.first.datum)];
 
         // Filter out points from overlay series.
         seriesDatumList.removeWhere(
@@ -219,9 +219,9 @@ class SelectNearest<D> implements ChartBehavior<D> {
     return false;
   }
 
-  List<SeriesDatum<D>> _expandToDomain(DatumDetails<D> nearestDetails) {
+  List<SeriesDatum<D?>> _expandToDomain(DatumDetails<D?> nearestDetails) {
     // Make sure that the "nearest" datum is at the top of the list.
-    final data = <SeriesDatum<D>>[
+    final data = <SeriesDatum<D?>>[
       SeriesDatum(nearestDetails.series, nearestDetails.datum)
     ];
     final nearestDomain = nearestDetails.domain;
