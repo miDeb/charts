@@ -17,7 +17,6 @@ import 'package:meta/meta.dart' show protected;
 
 import '../../../cartesian/cartesian_chart.dart' show CartesianChart;
 import '../../base_chart.dart' show BaseChart, LifecycleListener;
-import '../../datum_details.dart' show DatumDetails;
 import '../../processed_series.dart' show MutableSeries;
 import '../../selection_model/selection_model.dart' show SelectionModelType;
 import '../../series_datum.dart' show SeriesDatum;
@@ -241,10 +240,10 @@ abstract class KeyboardDomainNavigator<D> implements ChartBehavior<D> {
       final localChart = _chart as CartesianChart;
       if (localChart.vertical) {
         allSeriesDatum
-            .sort((a, b) => a!.chartPosition!.x.compareTo(b!.chartPosition!.x));
+            .sort((a, b) => a.chartPosition!.x.compareTo(b.chartPosition!.x));
       } else {
         allSeriesDatum
-            .sort((a, b) => a!.chartPosition!.y.compareTo(b!.chartPosition!.y));
+            .sort((a, b) => a.chartPosition!.y.compareTo(b.chartPosition!.y));
       }
     }
 
